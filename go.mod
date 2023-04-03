@@ -1,3 +1,3 @@
-module main
+module RedoLanguage
 
 go 1.19
