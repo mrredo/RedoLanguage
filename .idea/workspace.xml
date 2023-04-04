@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="26084cfd-6f6b-4d0b-90eb-783935da8951" name="Changes" comment="now u can use variables in functions and to declare them use &#10;var key = value &#10;there are 3 types bool, string, integer">
+    <list default="true" id="26084cfd-6f6b-4d0b-90eb-783935da8951" name="Changes" comment="added +=. -=, *=, /=, %=, = operators for variable assigning&#10;key = value&#10;key *= value">
+      <change afterPath="$PROJECT_DIR$/err/error.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lexer/lexerVariableOperator.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/interpreter/interpret.go" beforeDir="false" afterPath="$PROJECT_DIR$/interpreter/interpret.go" afterDir="false" />
@@ -85,7 +87,8 @@
     <MESSAGE value="Added basic parsing of variables need to check if key is a already exists when assigning to throw an error but only if var type is present" />
     <MESSAGE value="Making interpret function, made is Variable, isFunction method, have to replace identifiers with their value." />
     <MESSAGE value="now u can use variables in functions and to declare them use &#10;var key = value &#10;there are 3 types bool, string, integer" />
-    <option name="LAST_COMMIT_MESSAGE" value="now u can use variables in functions and to declare them use &#10;var key = value &#10;there are 3 types bool, string, integer" />
+    <MESSAGE value="added +=. -=, *=, /=, %=, = operators for variable assigning&#10;key = value&#10;key *= value" />
+    <option name="LAST_COMMIT_MESSAGE" value="added +=. -=, *=, /=, %=, = operators for variable assigning&#10;key = value&#10;key *= value" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
