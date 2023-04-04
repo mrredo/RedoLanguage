@@ -4,15 +4,33 @@ import (
 	lx "RedoLanguage/lexer"
 	"RedoLanguage/std"
 	"log"
+	"strings"
 )
 
 func Interpret(input string) {
-	lexer := lx.NewLexer(input)
+	lexer := lx.NewLexer(strings.ReplaceAll(input, " ", ""))
 	for {
+
 		curT := lexer.NextToken()
 		if curT.Type == lx.EOF {
 			break
 		}
+		if lx.IsVariableExpression(curT, lexer) { // hello +
+			key := curT
+			exp := lexer.NextToken()
+			val := lexer.NextToken()
+			_, err := lx.ParseVariableAssigningExpression(key, exp, val, lexer)
+			if err != nil {
+				log.Fatal(err)
+				break
+			}
+			/*
+				this works for
+				+ and +=
+			*/
+
+		}
+
 		if lx.IsVariable(curT) {
 			_, _, err := lx.ParseVariable(curT, lexer)
 			if err != nil {
@@ -32,5 +50,6 @@ func Interpret(input string) {
 			}
 
 		}
+
 	}
 }

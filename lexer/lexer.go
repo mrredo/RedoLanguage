@@ -24,6 +24,11 @@ const (
 	PLUS
 	MULTIPLY
 	SUBTRACT
+	PLUS_ASSIGN
+	SUBTRACT_ASSIGN
+	MULTIPLY_ASSIGN
+	DIVIDE_ASSIGN
+	MODULO_ASSIGN
 )
 
 type Token struct {
@@ -32,7 +37,7 @@ type Token struct {
 }
 
 type Lexer struct {
-	scanner scanner.Scanner
+	Scanner scanner.Scanner
 }
 
 func NewLexer(input string) *Lexer {
@@ -40,18 +45,18 @@ func NewLexer(input string) *Lexer {
 	s.Init(strings.NewReader(input))
 	s.Mode = scanner.ScanIdents | scanner.ScanFloats | scanner.ScanStrings |
 		scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments
-	return &Lexer{scanner: s}
+	return &Lexer{Scanner: s}
 }
 
 func (l *Lexer) NextToken() Token {
-	tok := l.scanner.Scan()
+	tok := l.Scanner.Scan()
 	for tok == scanner.Comment || tok == scanner.EOF {
 		if tok == scanner.EOF {
 			return Token{Type: EOF, Value: ""}
 		}
-		tok = l.scanner.Scan()
+		tok = l.Scanner.Scan()
 	}
-	val := l.scanner.TokenText()
+	val := l.Scanner.TokenText()
 
 	switch tok {
 	case scanner.Ident:
@@ -63,12 +68,43 @@ func (l *Lexer) NextToken() Token {
 		return Token{Type: IDENTIFIER, Value: val}
 	case '=':
 
-		if l.scanner.Peek() == '=' {
-			return Token{Type: EQUAL, Value: val}
+		if l.Scanner.Peek() == '=' {
+			l.NextToken()
+			return Token{Type: EQUAL, Value: "=="}
 		}
 
 		return Token{Type: ASSIGN, Value: val}
+	case '+':
+		if l.Scanner.Peek() == '=' {
+			l.NextToken()
+			return Token{Type: PLUS_ASSIGN, Value: "+="}
+		}
+		return Token{Type: PLUS, Value: val}
+	case '-':
+		if l.Scanner.Peek() == '=' {
+			l.NextToken()
+			return Token{Type: SUBTRACT_ASSIGN, Value: "-="}
+		}
+		return Token{Type: SUBTRACT, Value: val}
+	case '*':
+		if l.Scanner.Peek() == '=' {
+			l.NextToken()
+			return Token{Type: MULTIPLY_ASSIGN, Value: "*="}
+		}
+		return Token{Type: MULTIPLY, Value: val}
 
+	case '/':
+		if l.Scanner.Peek() == '=' {
+			l.NextToken()
+			return Token{Type: DIVIDE_ASSIGN, Value: "/="}
+		}
+		return Token{Type: DIVIDE, Value: val}
+	case '%':
+		if l.Scanner.Peek() == '=' {
+			l.NextToken()
+			return Token{Type: MODULO_ASSIGN, Value: "%="}
+		}
+		return Token{Type: MODULO, Value: val}
 	case ',':
 		return Token{Type: COMMA, Value: val}
 	case '(':
@@ -89,10 +125,10 @@ func (l *Lexer) NextToken() Token {
 }
 
 //func (l *Lexer) PeekToken() Token {
-//	currentPos := l.scanner.Pos()
+//	currentPos := l.Scanner.Pos()
 //
 //	tok := l.NextToken()
-//	l.scanner.Peek()
+//	l.Scanner.Peek()
 //	return tok
 //}
 

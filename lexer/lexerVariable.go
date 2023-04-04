@@ -7,7 +7,7 @@ import (
 )
 
 var Variables = map[string]any{
-	"hello": "hello",
+	"hello": 10,
 }
 
 func RuneToStr(ch rune) string {
@@ -21,7 +21,7 @@ func ParseVariable(curToken Token, lexer *Lexer) (key string, value interface{},
 		return "", nil, nil
 	}
 	if tok.Type != VAR {
-		return "", nil, errors.New("var error unkown")
+		return "", nil, errors.New("var err unkown")
 	}
 	if keyT.Type != IDENTIFIER {
 		return "", nil, errors.New(fmt.Sprintf("'%s' must be an identifier", keyT.Value))
@@ -32,7 +32,7 @@ func ParseVariable(curToken Token, lexer *Lexer) (key string, value interface{},
 		return "", nil, errors.New(fmt.Sprintf("'=' sign is expected after the '%s'", keyT.Value))
 	}
 	valT := lexer.NextToken()
-	parsedVal, err := parseVariableValue(valT)
+	parsedVal, err := ParseExpression(valT, lexer)
 	if err != nil {
 		return "", nil, err
 	}
@@ -66,7 +66,7 @@ func parseVariableValue(token Token) (interface{}, error) {
 		/*
 		   TODO: {
 		   1. check if identifier exists and if does return identifier value
-		   2. check if function then take function output if function returns nothing throw error
+		   2. check if function then take function output if function returns nothing throw err
 
 		   }
 

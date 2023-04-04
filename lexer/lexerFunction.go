@@ -46,56 +46,62 @@ func ParseExpression(tok Token, lexer *Lexer) (interface{}, error) {
 	switch tok.Type {
 	case 0:
 		return nil, nil
+	case BOOL:
+		return tok.Value == "true", nil
 	case NUMBER:
 		return strconv.Atoi(tok.Value)
 	case STRING:
 		return tok.Value[1 : len(tok.Value)-1], nil
 	case IDENTIFIER:
-		if val, ok := Variables[tok.Value]; ok {
-			return val, nil
+		if p := lexer.Scanner.Peek(); p != '(' {
+			if val, ok := Variables[tok.Value]; ok {
+				return val, nil
+			}
+			return nil, errors.New(fmt.Sprintf("'%s' is not defined", tok.Value))
 		}
-		if tok.Value == "true" {
-			return true, nil
-		} else if tok.Value == "false" {
-			return false, nil
-		} else {
 
-			// function call
-			funcName := tok.Value
-			tok := lexer.NextToken()
-			if tok.Type != LPAREN {
-				return nil, errors.New("expected '(' after function name")
-			}
-			args := make([]interface{}, 0)
-			for {
-				tok := lexer.NextToken()
-				if tok.Type == RPAREN {
-					break
-				}
-				arg, err := ParseExpression(tok, lexer)
-				if err != nil {
-					return nil, err
-				}
-				args = append(args, arg)
-				tok = lexer.NextToken()
-				if tok.Type == RPAREN {
-					break
-				} else if tok.Type != COMMA {
-					return nil, errors.New("expected ',' or ')' after argument")
-				}
-			}
-			fn, ok := std.Functions[funcName]
-			if !ok {
-				return nil, fmt.Errorf("undefined function '%s'", funcName)
-			}
-			return fn(args...), nil
+		//if tok.Value == "true" {
+		//	return true, nil
+		//} else if tok.Value == "false" {
+		//	return false, nil
+		//} else {
+
+		// function call
+		funcName := tok.Value
+		tok := lexer.NextToken()
+		if tok.Type != LPAREN {
+			return nil, errors.New("expected '(' after function name")
 		}
+		args := make([]interface{}, 0)
+		for {
+			tok := lexer.NextToken()
+			if tok.Type == RPAREN {
+				break
+			}
+			arg, err := ParseExpression(tok, lexer)
+			if err != nil {
+				return nil, err
+			}
+			args = append(args, arg)
+			tok = lexer.NextToken()
+			if tok.Type == RPAREN {
+				break
+			} else if tok.Type != COMMA {
+				return nil, errors.New("expected ',' or ')' after argument")
+			}
+		}
+		fn, ok := std.Functions[funcName]
+		if !ok {
+			return nil, fmt.Errorf("undefined function '%s'", funcName)
+		}
+		return fn(args...), nil
+		//}
 	default:
 		return nil, fmt.Errorf("unexpected token '%s'", tok.Value)
 	}
 }
 func IsFunction(token Token, lexer *Lexer) bool {
-	return token.Type == IDENTIFIER && lexer.scanner.Peek() == '('
+	return token.Type == IDENTIFIER && lexer.Scanner.Peek() == '('
 }
 func TestIsFunction() {
 	lx := NewLexer(`
