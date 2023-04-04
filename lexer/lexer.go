@@ -22,6 +22,11 @@ const (
 	ASSIGN
 	VAR
 	BOOL
+	MODULO
+	DIVIDE
+	PLUS
+	MULTIPLY
+	SUBTRACT
 )
 
 type Token struct {
@@ -85,6 +90,15 @@ func (l *Lexer) NextToken() Token {
 		return Token{Type: IDENTIFIER, Value: val}
 	}
 }
+
+//func (l *Lexer) PeekToken() Token {
+//	currentPos := l.scanner.Pos()
+//
+//	tok := l.NextToken()
+//	l.scanner.Peek()
+//	return tok
+//}
+
 func TestLexer() {
 	lexer := NewLexer(`
 println(add(1, 6))

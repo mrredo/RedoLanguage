@@ -8,8 +8,11 @@ import (
 
 var Variables = map[string]any{}
 
-func ParseVariable(lexer *Lexer) (key string, value interface{}, err error) {
-	tok := lexer.NextToken() //
+func RuneToStr(ch rune) string {
+	return fmt.Sprintf(`%q`, string(ch))
+}
+func ParseVariable(curToken Token, lexer *Lexer) (key string, value interface{}, err error) {
+	tok := curToken //
 	keyT := lexer.NextToken()
 	fmt.Println(tok)
 	if tok.Type == 0 {
@@ -19,12 +22,12 @@ func ParseVariable(lexer *Lexer) (key string, value interface{}, err error) {
 		return "", nil, errors.New("var error unkown")
 	}
 	if keyT.Type != IDENTIFIER {
-		return "", nil, errors.New("key must be an identifier")
+		return "", nil, errors.New(fmt.Sprintf("'%s' must be an identifier", keyT.Value))
 	}
 	Eq := lexer.NextToken()
 	fmt.Println(Eq)
 	if Eq.Type != ASSIGN {
-		return "", nil, errors.New("'=' sign is expected after the key")
+		return "", nil, errors.New(fmt.Sprintf("'=' sign is expected after the '%s'", keyT.Value))
 	}
 	valT := lexer.NextToken()
 	parsedVal, err := parseVariableValue(valT)
@@ -53,7 +56,17 @@ func parseVariableValue(token Token) (interface{}, error) {
 	case IDENTIFIER:
 		return parseIdentifier(token)
 	default:
+		/*
+		   TODO: {
+		   1. check if identifier exists and if does return identifier value
+		   2. check if function then take function output if function returns nothing throw error
 
+		   }
+
+
+
+
+		*/
 		return nil, nil
 
 	}

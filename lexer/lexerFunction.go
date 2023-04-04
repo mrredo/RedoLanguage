@@ -90,3 +90,17 @@ func ParseExpression(tok Token, lexer *Lexer) (interface{}, error) {
 		return nil, fmt.Errorf("unexpected token '%s'", tok.Value)
 	}
 }
+func IsFunction(token Token, lexer *Lexer) bool {
+	par := lexer.scanner.Peek()
+	if token.Type == IDENTIFIER && par == '(' {
+		return true
+	}
+	return false
+}
+func TestIsFunction() {
+	lx := NewLexer(`
+print()
+`)
+	c := lx.NextToken()
+	fmt.Println(IsFunction(c, lx))
+}
