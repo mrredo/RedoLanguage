@@ -2,16 +2,16 @@ package main
 
 import (
 	"RedoLanguage/interpreter"
-	lx "RedoLanguage/lexer"
-	"fmt"
 )
 
 func main() {
 	interpreter.Interpret(`
-var hello = "hello"
-`)
-	fmt.Println(lx.Variables["hello"])
-	lx.TestIsFunction()
+var hel = 10
+print(modulo(hel,3), o)
+	`)
+	////	fmt.Println(lx.Variables["hel"])
+	//lx.TestParseVariablesInArguments()
+	//lx.TestIsFunction()
 	//	lexer := lx.NewLexer(`
 	//	var hello = "hello"
 	//`)

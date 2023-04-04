@@ -3,10 +3,7 @@ package lexer
 import "fmt"
 
 func IsVariable(token Token) bool {
-	if token.Type == VAR {
-		return true
-	}
-	return false
+	return token.Type == VAR
 }
 
 func TestIsVariable() {

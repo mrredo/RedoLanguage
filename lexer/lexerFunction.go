@@ -7,9 +7,9 @@ import (
 	"strconv"
 )
 
-func ParseFunctionCall(lexer *Lexer) (string, []interface{}, error) {
+func ParseFunctionCall(curT Token, lexer *Lexer) (string, []interface{}, error) {
 	var args []interface{}
-	tok := lexer.NextToken()
+	tok := curT
 
 	if tok.Type == 0 {
 		return "", nil, nil
@@ -51,11 +51,15 @@ func ParseExpression(tok Token, lexer *Lexer) (interface{}, error) {
 	case STRING:
 		return tok.Value[1 : len(tok.Value)-1], nil
 	case IDENTIFIER:
+		if val, ok := Variables[tok.Value]; ok {
+			return val, nil
+		}
 		if tok.Value == "true" {
 			return true, nil
 		} else if tok.Value == "false" {
 			return false, nil
 		} else {
+
 			// function call
 			funcName := tok.Value
 			tok := lexer.NextToken()
@@ -91,11 +95,7 @@ func ParseExpression(tok Token, lexer *Lexer) (interface{}, error) {
 	}
 }
 func IsFunction(token Token, lexer *Lexer) bool {
-	par := lexer.scanner.Peek()
-	if token.Type == IDENTIFIER && par == '(' {
-		return true
-	}
-	return false
+	return token.Type == IDENTIFIER && lexer.scanner.Peek() == '('
 }
 func TestIsFunction() {
 	lx := NewLexer(`
@@ -103,4 +103,12 @@ print()
 `)
 	c := lx.NextToken()
 	fmt.Println(IsFunction(c, lx))
+}
+func TestParseVariablesInArguments() {
+	lx := NewLexer(`
+print(hello)
+`)
+
+	k, v, _ := ParseFunctionCall(lx.NextToken(), lx)
+	std.Functions[k](v...)
 }

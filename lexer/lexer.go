@@ -1,9 +1,6 @@
 package lexer
 
 import (
-	"RedoLanguage/std"
-	"io"
-	"log"
 	"strings"
 	"text/scanner"
 )
@@ -100,29 +97,29 @@ func (l *Lexer) NextToken() Token {
 //}
 
 func TestLexer() {
-	lexer := NewLexer(`
-println(add(1, 6))
-
-`)
-	for {
-		// Parse the next function call
-		funcName, args, err := ParseFunctionCall(lexer)
-
-		if err == io.EOF {
-			break // End of input
-		}
-		if err != nil {
-			log.Fatal(err)
-		}
-		if funcName == "" {
-			break
-		}
-		// Look up the function and call it with the arguments
-		fn, ok := std.Functions[funcName]
-		if !ok {
-
-			log.Fatalf("undefined function '%s'", funcName)
-		}
-		fn(args...)
-	}
+	//	lexer := NewLexer(`
+	//println(add(1, 6))
+	//
+	//`)
+	//for {
+	//	// Parse the next function call
+	//	funcName, args, err := ParseFunctionCall(lexer)
+	//
+	//	if err == io.EOF {
+	//		break // End of input
+	//	}
+	//	if err != nil {
+	//		log.Fatal(err)
+	//	}
+	//	if funcName == "" {
+	//		break
+	//	}
+	//	// Look up the function and call it with the arguments
+	//	fn, ok := std.Functions[funcName]
+	//	if !ok {
+	//
+	//		log.Fatalf("undefined function '%s'", funcName)
+	//	}
+	//	fn(args...)
+	//}
 }
