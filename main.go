@@ -7,7 +7,8 @@ import (
 func main() {
 	interpreter.Interpret(`
 var hel = 10
-print(modulo(hel,3), o)
+
+print(modulo(hel,3),o)
 	`)
 	////	fmt.Println(lx.Variables["hel"])
 	//lx.TestParseVariablesInArguments()
