@@ -29,4 +29,4 @@ value can be a string, boolean or a number
 - +, -, *, /, ==, <, >, <=, >=, % general operators
 - if/else if/else statements
 - for/while loops
-- function decleration
+- function declaration
