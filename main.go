@@ -2,28 +2,31 @@ package main
 
 import (
 	"RedoLanguage/interpreter"
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
 )
 
 func main() {
-	//	interpreter.Interpret(`
-	//var hel = 10
-	////hello
-	///*
-	//eeee
-	//*/
-	//print(modulo(hel,3))
-	//	`)
-	interpreter.Interpret(`
-	hello *= 20
-print(hello)
-`)
 
-	//	lexer := lx.NewLexer(`
-	//hello %= 2
-	//`)
-	//	key := lexer.NextToken()
-	//	expression := lexer.NextToken()
-	//	value := lexer.NextToken()
-	//
-	//	fmt.Println(lx.ParseVariableAssigningExpression(key, expression, value, lexer))
+	for {
+		reader := bufio.NewReader(os.Stdin)
+		fmt.Print("$ ")
+		inp, err := reader.ReadString('\n')
+		if err != nil {
+			fmt.Println("Error reading input:", err)
+			return
+		}
+		if inp == "exit" {
+			break
+		}
+		inp = strings.TrimRight(inp, "\n")
+
+		interpreter.Interpret(inp)
+		fmt.Println()
+		fmt.Println()
+
+	}
+
 }

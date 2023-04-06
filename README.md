@@ -5,7 +5,7 @@ Interpreter for redo langugae
 ### Methods:
 print(args...)
 println(args...)
-### Variable decleration
+### Variable declaration
 ```ts
 var key = value
 var key = false

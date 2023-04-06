@@ -13,9 +13,9 @@ var Variables = map[string]any{
 func RuneToStr(ch rune) string {
 	return fmt.Sprintf(`%q`, string(ch))
 }
-func ParseVariable(curToken Token, lexer *Lexer) (key string, value interface{}, err error) {
+func ParseVariable(curToken Token, sec Token, lexer *Lexer) (key string, value interface{}, err error) {
 	tok := curToken //
-	keyT := lexer.NextToken()
+	keyT := sec
 	//fmt.Println(tok)
 	if tok.Type == 0 {
 		return "", nil, nil

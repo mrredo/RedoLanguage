@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func ParseFunctionCall(curT Token, lexer *Lexer) (string, []interface{}, error) {
+func ParseFunctionCall(curT Token, sec Token, lexer *Lexer) (string, []interface{}, error) {
 	var args []interface{}
 	tok := curT
 
@@ -18,7 +18,10 @@ func ParseFunctionCall(curT Token, lexer *Lexer) (string, []interface{}, error) 
 		return "", nil, errors.New("expected function name")
 	}
 	funcName := tok.Value
-	tok = lexer.NextToken()
+	if _, ok := std.Functions[funcName]; !ok {
+		return funcName, nil, fmt.Errorf("undefined function '%s'", funcName)
+	}
+	tok = sec
 	if tok.Type != LPAREN {
 		return "", nil, errors.New("expected '(' after function name")
 	}
@@ -39,6 +42,7 @@ func ParseFunctionCall(curT Token, lexer *Lexer) (string, []interface{}, error) 
 			return "", nil, errors.New("expected ',' or ')' after argument")
 		}
 	}
+
 	return funcName, args, nil
 }
 
@@ -100,21 +104,14 @@ func ParseExpression(tok Token, lexer *Lexer) (interface{}, error) {
 		return nil, fmt.Errorf("unexpected token '%s'", tok.Value)
 	}
 }
-func IsFunction(token Token, lexer *Lexer) bool {
-	return token.Type == IDENTIFIER && lexer.Scanner.Peek() == '('
+func IsFunction(token Token, secondT Token, lexer *Lexer) bool {
+	return token.Type == IDENTIFIER && secondT.Type == LPAREN
 }
-func TestIsFunction() {
-	lx := NewLexer(`
-print()
-`)
-	c := lx.NextToken()
-	fmt.Println(IsFunction(c, lx))
-}
-func TestParseVariablesInArguments() {
-	lx := NewLexer(`
-print(hello)
-`)
 
-	k, v, _ := ParseFunctionCall(lx.NextToken(), lx)
-	std.Functions[k](v...)
-}
+//func TestIsFunction() {
+//	lx := NewLexer(`
+//print()
+//`)
+//	c := lx.NextToken()
+//	fmt.Println(IsFunction(c, lx))
+//}

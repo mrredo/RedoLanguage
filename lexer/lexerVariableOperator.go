@@ -3,7 +3,6 @@ package lexer
 import (
 	"fmt"
 	"reflect"
-	"strconv"
 )
 
 /*
@@ -24,29 +23,20 @@ key *= value
 key /= value
 key %= value
 */
-func ParseVariableExpression(curT Token, lexer *Lexer) (key string, value any, err error) {
-	operator := lexer.NextToken()
-	//value := lexer.NextToken()
-	switch operator.Type {
-	case PLUS_ASSIGN:
-
-	}
-	return "", nil, err
-}
 
 /*
 Only checks for +, -, *, /, %, =
 
 it detects its a expression, then u can to lexer.NextToken()
 */
-func IsVariableExpression(curT Token, lexer *Lexer) bool {
-	pk := lexer.Scanner.Peek()
+func IsVariableExpression(curT Token, exp Token, lexer *Lexer) bool {
+	//pk := lexer.Scanner.Peek()
 
-	return curT.Type == IDENTIFIER && (pk == '+' || pk == '-' || pk == '*' || pk == '/' || pk == '%' || pk == '=')
+	return curT.Type == IDENTIFIER && (exp.Type == PLUS_ASSIGN || exp.Type == SUBTRACT_ASSIGN || exp.Type == MULTIPLY_ASSIGN || exp.Type == DIVIDE_ASSIGN || exp.Type == MODULO_ASSIGN) //pk != '(' //(pk == '+' || pk == '-' || pk == '*' || pk == '/' || pk == '%' || pk == '=')
 }
 func ParseVariableAssigningExpression(key Token, expression Token, value Token, lexer *Lexer) (output int, err error) {
 	exp := expression
-	if value.Type != NUMBER {
+	if value.Type != NUMBER && value.Type != IDENTIFIER {
 		return 0, fmt.Errorf("expected an integer, but got '%s'", value.Value)
 	}
 	if key.Type != IDENTIFIER {
@@ -59,8 +49,8 @@ func ParseVariableAssigningExpression(key Token, expression Token, value Token, 
 	if reflect.TypeOf(k).String() != "int" {
 		return 0, fmt.Errorf("can not do math operations on a non integer '%s'", key.Value)
 	}
-	valI, err := strconv.Atoi(value.Value)
-
+	vals, err := ParseExpression(value, lexer)
+	valI := vals.(int)
 	if err != nil {
 
 		return 0, err
@@ -79,6 +69,7 @@ func ParseVariableAssigningExpression(key Token, expression Token, value Token, 
 		Variables[key.Value] = k.(int) / valI
 		return k.(int) / valI, nil
 	case MODULO_ASSIGN:
+		//fmt.Println(k.(int) % valI)
 		Variables[key.Value] = k.(int) % valI
 		return k.(int) % valI, nil
 	case ASSIGN:
@@ -87,6 +78,7 @@ func ParseVariableAssigningExpression(key Token, expression Token, value Token, 
 	}
 	return 0, nil
 }
+
 func ParseExpressionType(exp Token) TokenType {
 	switch exp.Value {
 	case "*=":
