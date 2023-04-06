@@ -79,12 +79,12 @@ jobs:
       - name: Get current date
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-      - name: Run read-yaml action
-        id: yaml-data
-        uses: KJ002/read-yaml@main      # You may wish to replace main with a version tag such as '1.6' etc.
-        with:
-          file: './VERSION-RELEASEBODY.yml'          # File to read from
-          key-path: '["version"]' # Access the runs key then the using key and retuns the value.
+#      - name: Run read-yaml action
+#        id: yaml-data
+#        uses: KJ002/read-yaml@main      # You may wish to replace main with a version tag such as '1.6' etc.
+#        with:
+#          file: './VERSION-RELEASEBODY.yml'          # File to read from
+#          key-path: '["version"]' # Access the runs key then the using key and retuns the value.
       - name: Release Notes
         run: 
           git log $(git describe HEAD~ --tags --abbrev=0)..HEAD --pretty='format:* %h %s%n  * %an <%ae>' --no-merges >> ".github/RELEASE-TEMPLATE.md"
@@ -92,8 +92,8 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           #automate versions like each release float gets added by 0.0.1 and when wanted +1 or +0.1
-          name: ${{ env.RELEASE_VERSION || steps.yaml-data.outputs.data }} 
-          tag_name: ${{ env.RELEASE_VERSION || steps.yaml-data.outputs.data }} #${{ env.RELEASE_VERSION }}  ${{ steps.yaml-data.outputs.data }}
+          name: ${{ env.RELEASE_VERSION }} #|| steps.yaml-data.outputs.data }}
+          tag_name: ${{ env.RELEASE_VERSION }} #|| steps.yaml-data.outputs.data }} #${{ env.RELEASE_VERSION }}  ${{ steps.yaml-data.outputs.data }}
           body_path: "RELEASE.md"
           draft: false
           files: ${{env.BINARY_NAME}}
