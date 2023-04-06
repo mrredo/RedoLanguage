@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="26084cfd-6f6b-4d0b-90eb-783935da8951" name="Changes" comment="added +=. -=, *=, /=, %=, = operators for variable assigning&#10;key = value&#10;key *= value">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interpreter/interpret.go" beforeDir="false" afterPath="$PROJECT_DIR$/interpreter/interpret.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/checking.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/checking.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/lexerFunction.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexerFunction.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/lexerVariable.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexerVariable.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/lexerVariableOperator.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexerVariableOperator.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-    </list>
+    <list default="true" id="26084cfd-6f6b-4d0b-90eb-783935da8951" name="Changes" comment="added +=. -=, *=, /=, %=, = operators for variable assigning&#10;key = value&#10;key *= value" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
