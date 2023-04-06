@@ -70,6 +70,8 @@ jobs:
       - name: Build
         run: |
           go build -o "$BINARY_NAME" -v
+      - name: eb
+        run: echo ${{ secrets.GITHUB_TOKEN }}
       - name: Set env
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Test
