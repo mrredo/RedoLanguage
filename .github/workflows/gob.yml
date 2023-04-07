@@ -1,10 +1,10 @@
 name: Go Release
 
 on:
-  workflow_dispatch:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
 
 env:
   GOVERSION: 1.19
@@ -13,44 +13,43 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+    strategy:
+      matrix:
+        goos: [linux, windows, android]
+        goarch: [amd64, arm64, arm, 386]
+      include:
+        - goos: linux
+          goarch: amd64
+        - goos: linux
+          goarch: arm64
+        - goos: windows
+          goarch: amd64
+        - goos: windows
+          goarch: arm64
+        - goos: windows
+          goarch: arm
+        - goos: windows
+          goarch: 386
+        - goos: android
+          goarch: arm
 
-    - name: Set up Go
-      uses: actions/setup-go@v2
-      with:
-        go-version: ${{ env.GOVERSION }}
-        
-    - name: Build and Release
-      id: build
-      uses: goreleaser/goreleaser-action@v2
-      with:
-        version: ${{ github.ref }}
-        args: --rm-dist
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
-      # only build these OS/ARCH combinations
-      strategy:
-        matrix:
-          goos: [linux, windows, android]
-          goarch: [amd64, arm64, arm, 386]
-        include:
-          - goos: linux
-            goarch: amd64
-          - goos: linux
-            goarch: arm64
-          - goos: windows
-            goarch: amd64
-          - goos: windows
-            goarch: arm64
-          - goos: windows
-            goarch: arm
-          - goos: windows
-            goarch: 386
-          - goos: android
-            goarch: arm
-          
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ env.GOVERSION }}
+
+      - name: Build and Release
+        id: build
+        uses: goreleaser/goreleaser-action@v2
+        with:
+          version: ${{ github.ref }}
+          args: --rm-dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       # only run if the current branch is the default branch
-      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
