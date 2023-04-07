@@ -50,7 +50,7 @@ jobs:
           - 'windows/arm'
 
           - 'windows/386'
-          - 'android/arm'
+          #- 'android/arm'
           # etc
     steps:
       - name: Checkout code
