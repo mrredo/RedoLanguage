@@ -22,7 +22,7 @@ func Interpret(input string) {
 			val := lexer.NextToken()
 			_, err := lx.ParseVariableAssigningExpression(key, exp, val, lexer)
 			if err != nil {
-				log.Fatal(err)
+				log.Println(err)
 				break
 			}
 			/*
@@ -35,7 +35,7 @@ func Interpret(input string) {
 		if lx.IsVariable(curT) {
 			_, _, err := lx.ParseVariable(curT, secondT, lexer)
 			if err != nil {
-				log.Fatal(err)
+				log.Println(err)
 				break
 			}
 			continue
@@ -43,7 +43,7 @@ func Interpret(input string) {
 		if lx.IsFunction(curT, secondT, lexer) {
 			funcName, val, err := lx.ParseFunctionCall(curT, secondT, lexer)
 			if err != nil {
-				log.Fatal(err)
+				log.Println(err)
 				break
 			}
 			if funcM, ok := std.Functions[funcName]; ok {
