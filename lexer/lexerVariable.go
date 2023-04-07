@@ -1,14 +1,11 @@
 package lexer
 
 import (
+	"RedoLanguage/std"
 	"errors"
 	"fmt"
 	"strconv"
 )
-
-var Variables = map[string]any{
-	"hello": 10,
-}
 
 func RuneToStr(ch rune) string {
 	return fmt.Sprintf(`%q`, string(ch))
@@ -39,12 +36,12 @@ func ParseVariable(curToken Token, sec Token, lexer *Lexer) (key string, value i
 	if VariableExists(keyT.Value) {
 		return "", nil, errors.New(fmt.Sprintf("'%s' is already declared", keyT.Value))
 	}
-	Variables[keyT.Value] = parsedVal
+	std.Variables[keyT.Value] = parsedVal
 	return keyT.Value, parsedVal, nil
 
 }
 func VariableExists(name string) bool {
-	return Variables[name] != nil
+	return std.Variables[name] != nil
 }
 func parseVariableValue(token Token) (interface{}, error) {
 	switch token.Type {
@@ -80,7 +77,7 @@ func parseVariableValue(token Token) (interface{}, error) {
 
 }
 func parseIdentifier(token Token) (interface{}, error) {
-	if val, ok := Variables[token.Value]; ok {
+	if val, ok := std.Variables[token.Value]; ok {
 		return val, nil
 	}
 	return nil, fmt.Errorf("undefined identifier: %s", token.Value)

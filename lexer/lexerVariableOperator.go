@@ -1,6 +1,7 @@
 package lexer
 
 import (
+	"RedoLanguage/std"
 	"fmt"
 	"reflect"
 )
@@ -42,7 +43,7 @@ func ParseVariableAssigningExpression(key Token, expression Token, value Token, 
 	if key.Type != IDENTIFIER {
 		return 0, fmt.Errorf("expected an identifier, but got '%s'", key.Value)
 	}
-	k, ok := Variables[key.Value]
+	k, ok := std.Variables[key.Value]
 	if !ok {
 		return 0, fmt.Errorf("'%s' is not defined", key.Value)
 	}
@@ -57,23 +58,23 @@ func ParseVariableAssigningExpression(key Token, expression Token, value Token, 
 	}
 	switch exp.Type {
 	case PLUS_ASSIGN:
-		Variables[key.Value] = k.(int) + valI
+		std.Variables[key.Value] = k.(int) + valI
 		return k.(int) + valI, nil
 	case SUBTRACT_ASSIGN:
-		Variables[key.Value] = k.(int) - valI
+		std.Variables[key.Value] = k.(int) - valI
 		return k.(int) - valI, nil
 	case MULTIPLY_ASSIGN:
-		Variables[key.Value] = k.(int) * valI
+		std.Variables[key.Value] = k.(int) * valI
 		return k.(int) * valI, nil
 	case DIVIDE_ASSIGN:
-		Variables[key.Value] = k.(int) / valI
+		std.Variables[key.Value] = k.(int) / valI
 		return k.(int) / valI, nil
 	case MODULO_ASSIGN:
 		//fmt.Println(k.(int) % valI)
-		Variables[key.Value] = k.(int) % valI
+		std.Variables[key.Value] = k.(int) % valI
 		return k.(int) % valI, nil
 	case ASSIGN:
-		Variables[key.Value] = valI
+		std.Variables[key.Value] = valI
 		return valI, nil
 	}
 	return 0, nil

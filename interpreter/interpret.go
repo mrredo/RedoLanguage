@@ -16,6 +16,7 @@ func Interpret(input string) {
 		if curT.Type == lx.EOF {
 			break
 		}
+
 		if lx.IsVariableExpression(curT, secondT, lexer) { // key +
 			key := curT
 			exp := secondT

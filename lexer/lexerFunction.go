@@ -58,7 +58,7 @@ func ParseExpression(tok Token, lexer *Lexer) (interface{}, error) {
 		return tok.Value[1 : len(tok.Value)-1], nil
 	case IDENTIFIER:
 		if p := lexer.Scanner.Peek(); p != '(' {
-			if val, ok := Variables[tok.Value]; ok {
+			if val, ok := std.Variables[tok.Value]; ok {
 				return val, nil
 			}
 			return nil, errors.New(fmt.Sprintf("'%s' is not defined", tok.Value))

@@ -11,6 +11,10 @@ import (
 func main() {
 	//
 	//n := lx.NewLexer(`(10+10)*10`)
+	//l := lx.NewLexer("10 + 10 * 10")
+	//
+	//fmt.Println(lx.IsMathExpression(l.NextToken(), l.NextToken(), l))
+	//os.Exit(1)
 	//fmt.Print(lx.ParseArithmeticExpressions(n.NextToken(), n.NextToken(), n))
 	for {
 		reader := bufio.NewReader(os.Stdin)
