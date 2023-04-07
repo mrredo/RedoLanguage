@@ -48,7 +48,9 @@ jobs:
           - 'windows/amd64'
           - 'windows/arm64'
           - 'windows/arm'
+
           - 'windows/386'
+          #- 'android/arm'
           # etc
     steps:
       - name: Checkout code
