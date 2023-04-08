@@ -47,6 +47,8 @@ const (
 	GREATER_THAN                           // >
 	GREATER_THAN_TO_EQUAL                  // >=
 	AND                                    // &&
+	SEMICOLON                              // ;
+	NEW_LINE                               // \n
 )
 
 var numReg = regexp.MustCompile(`\d`)
@@ -70,7 +72,12 @@ func NewLexer(input string) *Lexer {
 
 func (l *Lexer) NextToken() Token {
 	tok := l.Scanner.Scan()
+	//var lastLine int
 	for tok == scanner.Comment || tok == scanner.EOF {
+		//if l.Scanner.Pos().Line != lastLine { // check if the line number has changed
+		//	fmt.Println("Newline character found")
+		//	lastLine = l.Scanner.Pos().Line // update lastLine to the current line number
+		//}
 		if tok == scanner.EOF {
 			return Token{Type: EOF, Value: ""}
 		}
@@ -94,6 +101,10 @@ func (l *Lexer) NextToken() Token {
 		}
 
 		return Token{Type: ASSIGN, Value: val}
+	case '\n': // \n
+		return Token{Type: NEW_LINE, Value: "\n"}
+	case ';':
+		return Token{Type: SEMICOLON, Value: ";"}
 	case '+':
 		if l.Scanner.Peek() == '=' {
 			l.NextToken()

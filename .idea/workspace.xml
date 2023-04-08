@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="26084cfd-6f6b-4d0b-90eb-783935da8951" name="Changes" comment="added free function but it takes variable name as argument">
+    <list default="true" id="26084cfd-6f6b-4d0b-90eb-783935da8951" name="Changes" comment="still making math operators i will make them work on a paper then make it with a real plan">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexer/lexer.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexer.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexer/lexerArithmeticOperations.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexerArithmeticOperations.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/lexerVariableOperator.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexerVariableOperator.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/std/Variables.go" beforeDir="false" afterPath="$PROJECT_DIR$/std/Variables.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,14 +59,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Go Build.go build main.go">
-    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
-      <module name="RedoLanguage" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="FILE" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <method v="2" />
-    </configuration>
     <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="RedoLanguage" />
       <working_directory value="$PROJECT_DIR$" />
@@ -84,15 +77,6 @@
       <kind value="FILE" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$APPLICATION_CONFIG_DIR$/scratches/scratch_1.go" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
-      <module name="RedoLanguage" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="DIRECTORY" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <framework value="gotest" />
       <method v="2" />
     </configuration>
     <recent_temporary>
@@ -114,7 +98,8 @@
     <MESSAGE value="added +=. -=, *=, /=, %=, = operators for variable assigning&#10;key = value&#10;key *= value" />
     <MESSAGE value="e" />
     <MESSAGE value="added free function but it takes variable name as argument" />
-    <option name="LAST_COMMIT_MESSAGE" value="added free function but it takes variable name as argument" />
+    <MESSAGE value="still making math operators i will make them work on a paper then make it with a real plan" />
+    <option name="LAST_COMMIT_MESSAGE" value="still making math operators i will make them work on a paper then make it with a real plan" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
