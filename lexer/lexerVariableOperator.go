@@ -35,14 +35,14 @@ func IsVariableExpression(curT Token, exp Token, lexer *Lexer) bool {
 
 	return curT.Type == IDENTIFIER && (exp.Type == ASSIGN || exp.Type == PLUS_ASSIGN || exp.Type == SUBTRACT_ASSIGN || exp.Type == MULTIPLY_ASSIGN || exp.Type == DIVIDE_ASSIGN || exp.Type == MODULO_ASSIGN) //pk != '(' //(pk == '+' || pk == '-' || pk == '*' || pk == '/' || pk == '%' || pk == '=')
 }
-func ParseVariableAssigningExpression(key Token, expression Token, value Token, lexer *Lexer) (output int, err error) {
+func ParseVariableAssigningExpression(key Token, expression Token, value Token, lexer *Lexer) (output any, err error) {
 	exp := expression
-	if value.Type != NUMBER && value.Type != IDENTIFIER && value.Type != BOOL {
-		if exp.Type != ASSIGN {
-			return 0, fmt.Errorf("expected an integer, but got '%s'", value.Value)
-		}
-
-	}
+	//if value.Type != NUMBER && value.Type != IDENTIFIER && value.Type != BOOL {
+	//	if exp.Type != ASSIGN {
+	//		return 0, fmt.Errorf("expected an integer, but got '%s'", value.Value)
+	//	}
+	//
+	//}
 	if exp.Type != ASSIGN && value.Type == BOOL {
 		return 0, fmt.Errorf("booleans only support '=' operator for assigning")
 	}
@@ -51,22 +51,41 @@ func ParseVariableAssigningExpression(key Token, expression Token, value Token, 
 	}
 
 	k, ok := std.Variables[key.Value]
-	if value.Type == BOOL && expression.Type == ASSIGN {
-		std.Variables[key.Value] = value.Value == "true"
-		return 0, err
-	}
+	//if value.Type == BOOL && expression.Type == ASSIGN {
+	//	std.Variables[key.Value] = value.Value == "true"
+	//	return 0, err
+	//}
 	if !ok {
 		return 0, fmt.Errorf("'%s' is not defined", key.Value)
 	}
-	if reflect.TypeOf(k).String() != "int" {
-		return 0, fmt.Errorf("can not do math operations on a non integer '%s'", key.Value)
+	//if reflect.TypeOf(k).String() != "int" {
+	//	return 0, fmt.Errorf("can not do math operations on a non integer '%s'", key.Value)
+	//}
+	out, errs := MathExpressionTokensToEnd(value, lexer)
+	if errs != nil {
+		return 0, errs
 	}
-	vals, err := ParseExpression(value, lexer)
+	o, errss := ParseArithmeticExpressions(out)
+	if errss != nil {
+		return 0, errss
+	}
 
-	valI, ok := vals.(int)
+	//vals, err := ParseExpression(value, lexer)
+
+	bol, ok1 := o.(bool)
+
+	if ok1 {
+		if reflect.TypeOf(k).String() == "int" {
+			return 0, fmt.Errorf("can not assign a boolean to an integer")
+		}
+		if exp.Type != ASSIGN {
+			return 0, fmt.Errorf("booleans only support '=' operator for assigning")
+		}
+		return bol, nil
+	}
+	valI, ok := o.(int)
 
 	if err != nil {
-
 		return 0, err
 	}
 	if !ok {

@@ -60,14 +60,17 @@ type Token struct {
 
 type Lexer struct {
 	Scanner scanner.Scanner
+	Input   string
 }
 
 func NewLexer(input string) *Lexer {
 	var s scanner.Scanner
+
 	s.Init(strings.NewReader(input))
+
 	s.Mode = scanner.ScanIdents | scanner.ScanFloats | scanner.ScanStrings |
 		scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments
-	return &Lexer{Scanner: s}
+	return &Lexer{Scanner: s, Input: input}
 }
 
 func (l *Lexer) NextToken() Token {

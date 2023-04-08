@@ -8,6 +8,9 @@ import (
 )
 
 func Interpret(input string) {
+	if input[len(input)-1] != ';' {
+		input += ";"
+	}
 	lexer := lx.NewLexer(strings.ReplaceAll(input, " ", " "))
 	for {
 

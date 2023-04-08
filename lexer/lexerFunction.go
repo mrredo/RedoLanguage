@@ -30,10 +30,21 @@ func ParseFunctionCall(curT Token, sec Token, lexer *Lexer) (string, []interface
 		if tok.Type == RPAREN {
 			break
 		}
+		//out, errs := MathExpressionTokensToEnd(tok, lexer)
+		//
+		//if errs != nil {
+		//	return "", nil, errs
+		//}
+		//o, errss := ParseArithmeticExpressions(out)
+		//if errss != nil {
+		//	return "", nil, errss
+		//}
+		//fmt.Println(o)
 		arg, err := ParseExpression(tok, lexer)
 		if err != nil {
 			return "", nil, err
 		}
+
 		args = append(args, arg)
 		tok = lexer.NextToken()
 		if tok.Type == RPAREN {

@@ -23,21 +23,49 @@ func ParseVariable(curToken Token, sec Token, lexer *Lexer) (key string, value i
 	if keyT.Type != IDENTIFIER {
 		return "", nil, errors.New(fmt.Sprintf("'%s' must be an identifier", keyT.Value))
 	}
+	if VariableExists(keyT.Value) {
+		return "", nil, errors.New(fmt.Sprintf("'%s' is already declared", keyT.Value))
+	}
 	Eq := lexer.NextToken()
 	//fmt.Println(Eq)
 	if Eq.Type != ASSIGN {
 		return "", nil, errors.New(fmt.Sprintf("'=' sign is expected after the '%s'", keyT.Value))
 	}
 	valT := lexer.NextToken()
-	parsedVal, err := ParseExpression(valT, lexer)
+
+	if valT.Type == STRING {
+		parsedVal, err := ParseExpression(valT, lexer)
+		if err != nil {
+			return "", nil, err
+		}
+
+		std.Variables[keyT.Value] = parsedVal
+		return keyT.Value, parsedVal, nil
+	}
+
+	//parsedVal, err := ParseExpression(valT, lexer)
 	if err != nil {
 		return "", nil, err
 	}
-	if VariableExists(keyT.Value) {
-		return "", nil, errors.New(fmt.Sprintf("'%s' is already declared", keyT.Value))
+	out, errs := MathExpressionTokensToEnd(valT, lexer)
+	if errs != nil {
+		return "", nil, errs
 	}
-	std.Variables[keyT.Value] = parsedVal
-	return keyT.Value, parsedVal, nil
+	o, errss := ParseArithmeticExpressions(out)
+	if errss != nil {
+		return "", 0, errss
+	}
+	bol, ok1 := o.(bool)
+	if ok1 {
+		std.Variables[keyT.Value] = bol
+		return keyT.Value, bol, nil
+	}
+	valI, ok := o.(int)
+	if !ok {
+		return "", nil, fmt.Errorf("error parsing value to int")
+	}
+	std.Variables[keyT.Value] = valI
+	return keyT.Value, valI, nil
 
 }
 func VariableExists(name string) bool {

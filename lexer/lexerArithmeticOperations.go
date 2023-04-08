@@ -8,68 +8,47 @@ import (
 
 func ParseArithmeticExpressions(expression string) (any, error) {
 	// Create new expression with default token factory
+
 	expr, err := govaluate.NewEvaluableExpression(expression)
 	if err != nil {
-		return 0, fmt.Errorf("Error parsing expression: %v", err)
+		return 0, fmt.Errorf("error parsing expression: %v", err)
 	}
 
 	// Evaluate expression with empty parameter map
 	result, err := expr.Evaluate(nil)
 	if err != nil {
-		return 0, fmt.Errorf("Error evaluating expression: %v", err)
+		return 0, fmt.Errorf("error evaluating expression: %v", err)
 	}
 
 	// Convert result to int and return
-	if result == "true" || result == "false" {
-		return result == "true", nil
+	if result == true || result == false {
+		return result, nil
 	}
 	if val, ok := result.(float64); ok {
 		return int(val), nil
 	}
-	return 0, fmt.Errorf("Error converting result to int")
-}
-func IsMathExpression(curT Token, secondT Token, lexer *Lexer) bool { //10 +
-
-	switch curT.Type {
-	case LPAREN:
-		switch secondT.Type {
-		case IDENTIFIER, NUMBER, BOOL:
-			return true
-		default:
-			return false
-		}
-	case NUMBER:
-		switch secondT.Type {
-		//case :
-		}
-	}
-	return false
+	return 0, fmt.Errorf("error converting result to int")
 }
 
-func ReplaceAllIdentsWithValue(c Token, s Token, l *Lexer) (interface{}, error) {
-	return nil, nil
-}
-func TestMath() {
-	l := NewLexer("modulo(11,n)/n+10+10; 10")
-	c := l.NextToken()
-	str, _ := MathExpressionTokensToEnd(c, l)
-	fmt.Println(ParseArithmeticExpressions(str))
-}
 func MathExpressionTokensToEnd(c Token, l *Lexer) (string, error) {
 	var tokenArr []Token
 
-	RPcount, LPcount := 0, 0
-
+	var RPcount = 0
+	var LPcount = 0
 	var finalStr string
 	for {
 		if c.Type == SEMICOLON || c.Type == NEW_LINE || c.Type == EOF || c.Type == COMMA {
 			break
 		}
 
+		if p := l.Scanner.Peek(); p == ';' || p == '\n' {
+			break
+		}
+
 		switch c.Type {
 		case IDENTIFIER:
-			s := l.NextToken()
-			if s.Type == LPAREN {
+			if p := l.Scanner.Peek(); p == '(' {
+				s := l.NextToken()
 				f, args, err := ParseFunctionCall(c, s, l)
 				if err != nil {
 					return "", err
@@ -100,6 +79,7 @@ func MathExpressionTokensToEnd(c Token, l *Lexer) (string, error) {
 			finalStr += "("
 			tokenArr = append(tokenArr, c)
 		case RPAREN:
+
 			RPcount++
 			finalStr += ")"
 			tokenArr = append(tokenArr, c)
