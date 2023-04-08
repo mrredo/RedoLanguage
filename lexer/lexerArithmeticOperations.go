@@ -46,23 +46,35 @@ func IsMathExpression(curT Token, secondT Token, lexer *Lexer) bool { //10 +
 	return false
 }
 
-//func ReplaceAllIdentsWithValue(c Token, s Token, l *Lexer) (interface{}, error) {
-//	switch c.Type {
-//	case IDENTIFIER:
-//		if s.Type == RPAREN {
-//			funName, args, err := ParseFunctionCall(c, s, l)
-//			if err != nil {
-//				return nil, err
-//			}
-//
-//		}
-//		va, ok := std.Variables[c.Value]
-//		if !ok {
-//			return nil, fmt.Errorf("'%s' is not defined", c.Value)
-//		}
-//		return va, nil
-//
-//	default:
-//		return nil, nil
-//	}
-//}
+func ReplaceAllIdentsWithValue(c Token, s Token, l *Lexer) (interface{}, error) {
+	return nil, nil
+}
+func MathExpressionTokensToEnd(c Token, s Token, l *Lexer) ([]Token, error) {
+	var tokenArr []Token
+	RPcount, LPcount := 0, 0
+
+	if s.Type == RPAREN {
+		tokenArr = append(tokenArr, s)
+		RPcount++
+	}
+	switch c.Type {
+	case IDENTIFIER:
+		if s.Type == LPAREN {
+			//function
+		}
+
+		//variable
+	case BOOL, NUMBER:
+		tokenArr = append(tokenArr, c)
+	case LPAREN:
+		tokenArr = append(tokenArr, c)
+		LPcount++
+
+	case RPAREN:
+		return nil, fmt.Errorf("first token to a math expression can't be a ')'")
+	}
+	if LPcount != RPcount {
+		return nil, fmt.Errorf("invalid left/right parentheses count")
+	}
+	return tokenArr, nil
+}
