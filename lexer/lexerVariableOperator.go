@@ -43,8 +43,8 @@ func ParseVariableAssigningExpression(key Token, expression Token, value Token, 
 	//	}
 	//
 	//}
-	if exp.Type != ASSIGN && value.Type == BOOL {
-		return 0, fmt.Errorf("booleans only support '=' operator for assigning")
+	if exp.Type != ASSIGN && value.Type != NUMBER {
+		return 0, fmt.Errorf("non integers only support '=' operator for assigning")
 	}
 	if key.Type != IDENTIFIER {
 		return 0, fmt.Errorf("expected an identifier, but got '%s'", key.Value)
@@ -57,6 +57,10 @@ func ParseVariableAssigningExpression(key Token, expression Token, value Token, 
 	//}
 	if !ok {
 		return 0, fmt.Errorf("'%s' is not defined", key.Value)
+	}
+	if value.Type == STRING {
+		std.Variables[key.Value] = value.Value
+		return nil, err
 	}
 	//if reflect.TypeOf(k).String() != "int" {
 	//	return 0, fmt.Errorf("can not do math operations on a non integer '%s'", key.Value)
@@ -76,10 +80,10 @@ func ParseVariableAssigningExpression(key Token, expression Token, value Token, 
 
 	if ok1 {
 		if reflect.TypeOf(k).String() == "int" {
-			return 0, fmt.Errorf("can not assign a boolean to an integer")
+			return 0, fmt.Errorf("can not assign a non integer to an integer")
 		}
 		if exp.Type != ASSIGN {
-			return 0, fmt.Errorf("booleans only support '=' operator for assigning")
+			return 0, fmt.Errorf("non integers only support '=' operator for assigning")
 		}
 		return bol, nil
 	}

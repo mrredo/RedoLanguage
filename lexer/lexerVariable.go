@@ -21,7 +21,7 @@ func ParseVariable(curToken Token, sec Token, lexer *Lexer) (key string, value i
 		return "", nil, errors.New("var err unkown")
 	}
 	if keyT.Type != IDENTIFIER {
-		return "", nil, errors.New(fmt.Sprintf("'%s' must be an identifier", keyT.Value))
+		return "", nil, errors.New(fmt.Sprintf("expected an identifier, but got '%s'", keyT.Value))
 	}
 	if VariableExists(keyT.Value) {
 		return "", nil, errors.New(fmt.Sprintf("'%s' is already declared", keyT.Value))
