@@ -1,6 +1,6 @@
 # RedoLanguage
 Interpreter for redo langugae
-
+# URGENT: use 1.6 version if u want to use string arguments, in 1.7v they are broken
 # Features
 ### Methods:
 
