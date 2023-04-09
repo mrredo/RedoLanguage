@@ -21,15 +21,15 @@ func ParseVariable(curToken Token, sec Token, lexer *Lexer) (key string, value i
 		return "", nil, errors.New("var err unkown")
 	}
 	if keyT.Type != IDENTIFIER {
-		return "", nil, errors.New(fmt.Sprintf("expected an identifier, but got '%s'", keyT.Value))
+		return "", nil, fmt.Errorf("expected an identifier, but got '%s'", keyT.Value)
 	}
 	if VariableExists(keyT.Value) {
-		return "", nil, errors.New(fmt.Sprintf("'%s' is already declared", keyT.Value))
+		return "", nil, fmt.Errorf("'%s' is already declared", keyT.Value)
 	}
 	Eq := lexer.NextToken()
 	//fmt.Println(Eq)
 	if Eq.Type != ASSIGN {
-		return "", nil, errors.New(fmt.Sprintf("'=' sign is expected after the '%s'", keyT.Value))
+		return "", nil, fmt.Errorf("'=' sign is expected after the '%s'", keyT.Value)
 	}
 	valT := lexer.NextToken()
 

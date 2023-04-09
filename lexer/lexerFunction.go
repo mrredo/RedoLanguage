@@ -30,7 +30,21 @@ func ParseFunctionCall(curT Token, sec Token, lexer *Lexer) (string, []interface
 		if tok.Type == RPAREN {
 			break
 		}
-		if tok.Type == STRING {
+		if tok.Type == IDENTIFIER {
+			o, err := ParseExpression(tok, lexer)
+			if err != nil {
+				return "", nil, err
+			}
+			oo, ok := o.(string)
+			if ok {
+				args = append(args, oo)
+				// tok = lexer.NextToken()
+				continue
+			}
+			
+		}
+		if tok.Type == STRING  {
+			
 			args = append(args, tok.Value[1:len(tok.Value)-1])
 
 			tok = lexer.NextToken()
