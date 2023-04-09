@@ -3,8 +3,12 @@ Interpreter for redo langugae
 
 # Features
 ### Methods:
-print(args...)
-println(args...)
+
+- print(args...)
+- println(args...)
+- printf(format string, args...)
+- free(variableKey string)
+
 ### Variable declaration
 ```ts
 var key = value
