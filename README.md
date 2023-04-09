@@ -25,8 +25,9 @@ multi line comments
 value can be a string, boolean or a number
 # DONE
 - =, +=, -=, *=, /=, %= operators for variables
-# TODO
 - +, -, *, /, ==, <, >, <=, >=, % general operators
+# TODO
+
 - if/else if/else statements
 - for/while loops
 - function declaration
