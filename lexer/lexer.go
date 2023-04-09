@@ -49,6 +49,8 @@ const (
 	AND                                    // &&
 	SEMICOLON                              // ;
 	NEW_LINE                               // \n
+	BITWISE_OR                             // |
+	OR                                     // ||
 )
 
 var numReg = regexp.MustCompile(`\d`)
@@ -106,6 +108,22 @@ func (l *Lexer) NextToken() Token {
 		return Token{Type: ASSIGN, Value: val}
 	case '\n': // \n
 		return Token{Type: NEW_LINE, Value: "\n"}
+	case '&':
+
+		if p := l.Scanner.Peek(); p == '&' {
+			l.NextToken()
+			return Token{Type: OR, Value: "&&"}
+		}
+		return Token{Type: BITWISE_AND, Value: "&"}
+
+	case '|':
+		{
+			if p := l.Scanner.Peek(); p == '|' {
+				l.NextToken()
+				return Token{Type: AND, Value: "||"}
+			}
+			return Token{Type: BITWISE_OR, Value: "|"}
+		}
 	case ';':
 		return Token{Type: SEMICOLON, Value: ";"}
 	case '+':
