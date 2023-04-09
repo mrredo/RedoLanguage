@@ -30,21 +30,29 @@ func ParseFunctionCall(curT Token, sec Token, lexer *Lexer) (string, []interface
 		if tok.Type == RPAREN {
 			break
 		}
-		out, l, errs := MathExpressionTokensToEndFunctionArgument(tok, lexer)
-		if errs != nil {
-			return "", nil, errs
-		}
-		o, errss := ParseArithmeticExpressions(out)
-		if errss != nil {
-			return "", nil, errss
-		}
-		tok = l
-		//arg, err := ParseExpression(tok, lexer)
-		//if err != nil {
-		//	return "", nil, err
-		//}
+		if tok.Type == STRING {
+			args = append(args, tok.Value[1:len(tok.Value)-1])
 
-		args = append(args, o)
+			tok = lexer.NextToken()
+		}
+		if tok.Type == NUMBER || tok.Type == IDENTIFIER || tok.Type == BOOL || tok.Type == LPAREN {
+			out, l, errs := MathExpressionTokensToEndFunctionArgument(tok, lexer)
+			if errs != nil {
+				return "", nil, errs
+			}
+			o, errss := ParseArithmeticExpressions(out)
+			if errss != nil {
+				return "", nil, errss
+			}
+			tok = l
+			//arg, err := ParseExpression(tok, lexer)
+			//if err != nil {
+			//	return "", nil, err
+			//}
+
+			args = append(args, o)
+		}
+
 		//tok = lexer.NextToken()
 		if tok.Type == RPAREN {
 			break
@@ -52,7 +60,7 @@ func ParseFunctionCall(curT Token, sec Token, lexer *Lexer) (string, []interface
 			return "", nil, errors.New("expected ',' or ')' after argument")
 		}
 	}
-
+	//fmt.Println(args)
 	return funcName, args, nil
 }
 
