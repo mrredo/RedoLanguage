@@ -65,7 +65,7 @@ func ParseVariableAssigningExpression(key Token, expression Token, value Token, 
 	//if reflect.TypeOf(k).String() != "int" {
 	//	return 0, fmt.Errorf("can not do math operations on a non integer '%s'", key.Value)
 	//}
-	out, errs := MathExpressionTokensToEnd(value, lexer)
+	out, _, errs := MathExpressionTokensToEnd(value, lexer)
 	if errs != nil {
 		return 0, errs
 	}

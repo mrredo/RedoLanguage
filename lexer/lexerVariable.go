@@ -18,7 +18,7 @@ func ParseVariable(curToken Token, sec Token, lexer *Lexer) (key string, value i
 		return "", nil, nil
 	}
 	if tok.Type != VAR {
-		return "", nil, errors.New("var err unkown")
+		return "", nil, errors.New("var err unknown, (if you got this error message you messed up real bad)")
 	}
 	if keyT.Type != IDENTIFIER {
 		return "", nil, fmt.Errorf("expected an identifier, but got '%s'", keyT.Value)
@@ -47,7 +47,7 @@ func ParseVariable(curToken Token, sec Token, lexer *Lexer) (key string, value i
 	if err != nil {
 		return "", nil, err
 	}
-	out, errs := MathExpressionTokensToEnd(valT, lexer)
+	out, _, errs := MathExpressionTokensToEnd(valT, lexer)
 	if errs != nil {
 		return "", nil, errs
 	}

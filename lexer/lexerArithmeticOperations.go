@@ -5,6 +5,7 @@ import (
 	"RedoLanguage/std"
 	"fmt"
 	"github.com/Knetic/govaluate"
+	"reflect"
 )
 
 func ParseArithmeticExpressions(expression string) (any, error) {
@@ -22,6 +23,9 @@ func ParseArithmeticExpressions(expression string) (any, error) {
 	}
 
 	// Convert result to int and return
+	if val, ok := result.(string); ok {
+		return val, nil
+	}
 	if result == true || result == false {
 		return result, nil
 	}
@@ -101,30 +105,42 @@ func MathExpressionTokensToEndFunctionArgument(c Token, l *Lexer) (string, Token
 	return finalStr, c, nil
 }
 
-func MathExpressionTokensToEnd(c Token, l *Lexer) (string, error) {
+func MathExpressionTokensToEnd(c Token, l *Lexer, function ...bool) (string, Token, error) {
 	var tokenArr []Token
 
 	var RPcount = 0
 	var LPcount = 0
 	var finalStr string
 	var curType TokenType = -1
-	for {
 
+	for {
 		if c.Type == SEMICOLON || c.Type == NEW_LINE || c.Type == EOF || c.Type == COMMA {
 			break
 		}
 
+		if p := l.Scanner.Pos(); p.Offset == len(l.Input)-2 && len(function) >= 1 {
+			break
+		}
 		if p := l.Scanner.Peek(); p == ';' || p == '\n' {
 			break
 		}
-
 		switch c.Type {
-		case BOOL, STRING, NUMBER:
+		case STRING:
 			if curType == -1 {
 				curType = c.Type
 			}
 			if curType != c.Type {
-				return "", err.NewTypeError(l.Scanner.Pos())
+				return "", c, err.NewTypeError(l.Scanner.Pos())
+			}
+			finalStr += `"` + c.Value + `"`
+			tokenArr = append(tokenArr, c)
+		case BOOL, NUMBER:
+
+			if curType == -1 {
+				curType = c.Type
+			}
+			if curType != c.Type {
+				return "", c, err.NewTypeError(l.Scanner.Pos())
 			}
 			finalStr += c.Value
 			tokenArr = append(tokenArr, c)
@@ -136,33 +152,56 @@ func MathExpressionTokensToEnd(c Token, l *Lexer) (string, error) {
 				s := l.NextToken()
 				f, args, errs := ParseFunctionCall(c, s, l)
 				if errs != nil {
-					return "", errs
+					return "", c, errs
 				}
 				out, ok := std.Functions[f]
 
 				if !ok {
-					return "", fmt.Errorf("'%s' function is not defined", c.Value)
+					return "", c, fmt.Errorf("'%s' function is not defined", c.Value)
 				}
 				o := out(args...)
 				if o == nil {
-					return "", fmt.Errorf("invalid function call: '%s' function does not return a value", c.Value)
+					return "", c, fmt.Errorf("invalid function call: '%s' function does not return a value", c.Value)
 				}
-				finalStr += fmt.Sprint(o)
-				c = l.NextToken()
+				if vas, ok1 := o.(string); ok1 {
+					finalStr += fmt.Sprintf(`"%s"`, vas)
+				} else {
+					finalStr += fmt.Sprint(o)
+				}
+
 				if curType == -1 {
-					curType = c.Type
+					curType = ConvertToTokenType(reflect.TypeOf(fmt.Sprint(o)).String())
 				}
-				if curType != c.Type {
-					return "", err.NewTypeError(l.Scanner.Pos())
+				if curType != ConvertToTokenType(reflect.TypeOf(fmt.Sprint(o)).String()) {
+					if curType != c.Type {
+						return "", c, err.NewTypeError(l.Scanner.Pos())
+					}
 				}
+
+				c = l.NextToken()
+
 				continue
 			} else {
 				va, ok := std.Variables[c.Value]
 				if !ok {
-					return "", fmt.Errorf("'%s' is not defined", c.Value)
+					return "", c, fmt.Errorf("'%s' is not defined", c.Value)
 				}
-				finalStr += fmt.Sprint(va)
+				if vas, ok1 := va.(string); ok1 {
+					finalStr += fmt.Sprintf(`"%s"`, vas)
+				} else {
+					finalStr += fmt.Sprint(va)
+				}
+
 				tokenArr = append(tokenArr, c)
+				if curType == -1 {
+					curType = ConvertToTokenType(reflect.TypeOf(fmt.Sprint(va)).String())
+				}
+				if curType != ConvertToTokenType(reflect.TypeOf(fmt.Sprint(va)).String()) {
+					if curType != c.Type {
+						return "", c, err.NewTypeError(l.Scanner.Pos())
+					}
+
+				}
 			}
 
 		case LPAREN:
@@ -182,10 +221,10 @@ func MathExpressionTokensToEnd(c Token, l *Lexer) (string, error) {
 		c = l.NextToken()
 		//if c.Type != RPAREN || c.Type != LPAREN {
 		//	OperatorTurn = !OperatorTurn
-		//}
+
 	}
 	//if LPcount != RPcount {
 	//	return "", fmt.Errorf("invalid left/right parentheses count")
 	//}
-	return finalStr, nil
+	return finalStr, c, nil
 }

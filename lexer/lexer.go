@@ -70,7 +70,7 @@ func NewLexer(input string) *Lexer {
 	var s scanner.Scanner
 
 	s.Init(strings.NewReader(input))
-
+	s.Filename = "interpreter.rd"
 	s.Mode = scanner.ScanIdents | scanner.ScanFloats | scanner.ScanStrings |
 		scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments
 	return &Lexer{Scanner: s, Input: input}
