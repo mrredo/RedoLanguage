@@ -117,7 +117,7 @@ func MathExpressionTokensToEnd(c Token, l *Lexer, function ...bool) (string, Tok
 		if c.Type == SEMICOLON || c.Type == NEW_LINE || c.Type == EOF || c.Type == COMMA {
 			break
 		}
-
+		fmt.Println(c)
 		if p := l.Scanner.Pos(); p.Offset == len(l.Input)-2 && len(function) >= 1 {
 			break
 		}
@@ -132,7 +132,7 @@ func MathExpressionTokensToEnd(c Token, l *Lexer, function ...bool) (string, Tok
 			if curType != c.Type {
 				return "", c, err.NewTypeError(l.Scanner.Pos())
 			}
-			finalStr += `"` + c.Value + `"`
+			finalStr += c.Value
 			tokenArr = append(tokenArr, c)
 		case BOOL, NUMBER:
 
@@ -145,8 +145,6 @@ func MathExpressionTokensToEnd(c Token, l *Lexer, function ...bool) (string, Tok
 			finalStr += c.Value
 			tokenArr = append(tokenArr, c)
 
-		case AND, OR:
-			curType = -1
 		case IDENTIFIER:
 			if p := l.Scanner.Peek(); p == '(' {
 				s := l.NextToken()
@@ -203,7 +201,10 @@ func MathExpressionTokensToEnd(c Token, l *Lexer, function ...bool) (string, Tok
 
 				}
 			}
-
+		case OR, AND:
+			curType = -1
+			finalStr += c.Value
+			tokenArr = append(tokenArr, c)
 		case LPAREN:
 			LPcount++
 			finalStr += "("
@@ -214,6 +215,7 @@ func MathExpressionTokensToEnd(c Token, l *Lexer, function ...bool) (string, Tok
 			finalStr += ")"
 			tokenArr = append(tokenArr, c)
 		default:
+
 			finalStr += c.Value
 			tokenArr = append(tokenArr, c)
 		}

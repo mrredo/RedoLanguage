@@ -1,5 +1,3 @@
 package std
 
-var Variables = map[string]any{
-	"n": "!",
-}
+var Variables = map[string]any{}

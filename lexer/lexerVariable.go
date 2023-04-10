@@ -21,6 +21,7 @@ func ParseVariable(curToken Token, sec Token, lexer *Lexer) (key string, value i
 		return "", nil, errors.New("var err unknown, (if you got this error message you messed up real bad)")
 	}
 	if keyT.Type != IDENTIFIER {
+
 		return "", nil, fmt.Errorf("expected an identifier, but got '%s'", keyT.Value)
 	}
 	if VariableExists(keyT.Value) {
@@ -32,16 +33,16 @@ func ParseVariable(curToken Token, sec Token, lexer *Lexer) (key string, value i
 		return "", nil, fmt.Errorf("'=' sign is expected after the '%s'", keyT.Value)
 	}
 	valT := lexer.NextToken()
-
-	if valT.Type == STRING {
-		parsedVal, err := ParseExpression(valT, lexer)
-		if err != nil {
-			return "", nil, err
-		}
-
-		std.Variables[keyT.Value] = parsedVal
-		return keyT.Value, parsedVal, nil
-	}
+	//
+	//if valT.Type == STRING {
+	//	parsedVal, err := ParseExpression(valT, lexer)
+	//	if err != nil {
+	//		return "", nil, err
+	//	}
+	//
+	//	std.Variables[keyT.Value] = parsedVal
+	//	return keyT.Value, parsedVal, nil
+	//}
 
 	//parsedVal, err := ParseExpression(valT, lexer)
 	if err != nil {
@@ -55,17 +56,17 @@ func ParseVariable(curToken Token, sec Token, lexer *Lexer) (key string, value i
 	if errss != nil {
 		return "", 0, errss
 	}
-	bol, ok1 := o.(bool)
-	if ok1 {
-		std.Variables[keyT.Value] = bol
-		return keyT.Value, bol, nil
-	}
-	valI, ok := o.(int)
-	if !ok {
-		return "", nil, fmt.Errorf("error parsing value to int")
-	}
-	std.Variables[keyT.Value] = valI
-	return keyT.Value, valI, nil
+	//bol, ok1 := o.(bool)
+	//if ok1 {
+	//	std.Variables[keyT.Value] = bol
+	//	return keyT.Value, bol, nil
+	//}
+	//valI, ok := o.(int)
+	//if !ok {
+	//	return "", nil, fmt.Errorf("error parsing value to int")
+	//}
+	std.Variables[keyT.Value] = o
+	return keyT.Value, o, nil
 
 }
 func VariableExists(name string) bool {

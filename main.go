@@ -24,7 +24,7 @@ func main() {
 	//}))
 	for {
 		reader := bufio.NewReader(os.Stdin)
-		fmt.Print("$ ")
+		fmt.Print(">>> ")
 		inp, err := reader.ReadString('\n')
 		if err != nil {
 			fmt.Println("Error reading input:", err)
