@@ -51,6 +51,7 @@ const (
 	NEW_LINE                               // \n
 	BITWISE_OR                             // |
 	OR                                     // ||
+	ILLEGAL
 )
 
 var numReg = regexp.MustCompile(`\d`)
@@ -175,7 +176,7 @@ func (l *Lexer) NextToken() Token {
 
 	default:
 
-		return Token{Type: IDENTIFIER, Value: val}
+		return Token{Type: ILLEGAL, Value: val}
 	}
 }
 

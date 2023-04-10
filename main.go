@@ -1,11 +1,13 @@
 package main
 
 import (
+	"RedoLanguage/err"
 	"RedoLanguage/interpreter"
 	"bufio"
 	"fmt"
 	"os"
 	"strings"
+	"text/scanner"
 )
 
 func main() {
@@ -16,6 +18,12 @@ func main() {
 	//fmt.Println(lx.IsMathExpression(l.NextToken(), l.NextToken(), l))
 	//os.Exit(1)
 
+	fmt.Println(err.NewTypeError(scanner.Position{
+		Filename: "main.rd",
+		Offset:   100,
+		Line:     10,
+		Column:   10,
+	}))
 	for {
 		reader := bufio.NewReader(os.Stdin)
 		fmt.Print("$ ")

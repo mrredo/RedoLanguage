@@ -1,6 +1,7 @@
 package lexer
 
 import (
+	"RedoLanguage/err"
 	"RedoLanguage/std"
 	"fmt"
 	"github.com/Knetic/govaluate"
@@ -106,7 +107,9 @@ func MathExpressionTokensToEnd(c Token, l *Lexer) (string, error) {
 	var RPcount = 0
 	var LPcount = 0
 	var finalStr string
+	var curType TokenType = -1
 	for {
+
 		if c.Type == SEMICOLON || c.Type == NEW_LINE || c.Type == EOF || c.Type == COMMA {
 			break
 		}
@@ -116,12 +119,24 @@ func MathExpressionTokensToEnd(c Token, l *Lexer) (string, error) {
 		}
 
 		switch c.Type {
+		case BOOL, STRING, NUMBER:
+			if curType == -1 {
+				curType = c.Type
+			}
+			if curType != c.Type {
+				return "", err.NewTypeError(l.Scanner.Pos())
+			}
+			finalStr += c.Value
+			tokenArr = append(tokenArr, c)
+
+		case AND, OR:
+			curType = -1
 		case IDENTIFIER:
 			if p := l.Scanner.Peek(); p == '(' {
 				s := l.NextToken()
-				f, args, err := ParseFunctionCall(c, s, l)
-				if err != nil {
-					return "", err
+				f, args, errs := ParseFunctionCall(c, s, l)
+				if errs != nil {
+					return "", errs
 				}
 				out, ok := std.Functions[f]
 
@@ -134,6 +149,12 @@ func MathExpressionTokensToEnd(c Token, l *Lexer) (string, error) {
 				}
 				finalStr += fmt.Sprint(o)
 				c = l.NextToken()
+				if curType == -1 {
+					curType = c.Type
+				}
+				if curType != c.Type {
+					return "", err.NewTypeError(l.Scanner.Pos())
+				}
 				continue
 			} else {
 				va, ok := std.Variables[c.Value]
