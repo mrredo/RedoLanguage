@@ -54,11 +54,13 @@ func ParseFunctionCall(curT Token, sec Token, lexer *Lexer) (string, []interface
 		if errs != nil {
 			return "", nil, errs
 		}
-		o, errss := ParseArithmeticExpressions(out)
+		fmt.Println(out)
+		tok = l
+		o, errss := ParseArithmeticExpressions(out[:len(out)-1], lexer)
 		if errss != nil {
 			return "", nil, errss
 		}
-		tok = l
+		
 		//arg, err := ParseExpression(tok, lexer)
 		//if err != nil {
 		//	return "", nil, err
@@ -93,7 +95,7 @@ func ParseExpression(tok Token, lexer *Lexer) (interface{}, error) {
 			if val, ok := std.Variables[tok.Value]; ok {
 				return val, nil
 			}
-			return nil, errors.New(fmt.Sprintf("'%s' is not defined", tok.Value))
+			return nil, fmt.Errorf("'%s' is not defined", tok.Value)
 		}
 
 		//if tok.Value == "true" {

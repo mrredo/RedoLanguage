@@ -4,7 +4,7 @@ import (
 	"RedoLanguage/std"
 	"errors"
 	"fmt"
-	"strconv"
+
 )
 
 func RuneToStr(ch rune) string {
@@ -52,7 +52,7 @@ func ParseVariable(curToken Token, sec Token, lexer *Lexer) (key string, value i
 	if errs != nil {
 		return "", nil, errs
 	}
-	o, errss := ParseArithmeticExpressions(out)
+	o, errss := ParseArithmeticExpressions(out, lexer)
 	if errss != nil {
 		return "", 0, errss
 	}
@@ -72,42 +72,4 @@ func ParseVariable(curToken Token, sec Token, lexer *Lexer) (key string, value i
 func VariableExists(name string) bool {
 	return std.Variables[name] != nil
 }
-func parseVariableValue(token Token) (interface{}, error) {
-	switch token.Type {
-	case 0:
-		return nil, nil
-	case NUMBER:
-		return strconv.Atoi(token.Value)
-	case STRING:
-		return token.Value[1 : len(token.Value)-1], nil
-	case BOOL:
-		if token.Value == "true" {
-			return true, nil
-		}
-		return false, nil
 
-	case IDENTIFIER:
-		return parseIdentifier(token)
-	default:
-		/*
-		   TODO: {
-		   1. check if identifier exists and if does return identifier value
-		   2. check if function then take function output if function returns nothing throw err
-
-		   }
-
-
-
-
-		*/
-		return nil, nil
-
-	}
-
-}
-func parseIdentifier(token Token) (interface{}, error) {
-	if val, ok := std.Variables[token.Value]; ok {
-		return val, nil
-	}
-	return nil, fmt.Errorf("undefined identifier: %s", token.Value)
-}

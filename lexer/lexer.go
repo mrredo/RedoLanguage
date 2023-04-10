@@ -7,7 +7,6 @@ import (
 )
 
 type TokenType int
-
 const (
 	EOF                   TokenType = iota // end of file
 	LPAREN                                 // (

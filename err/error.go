@@ -17,3 +17,9 @@ func NewUndefinedError(variableName string, pos scanner.Position) error {
 func NewTypeError(pos scanner.Position) error {
 	return Error(MismatchedTypesInExpression, TypeError, pos)
 }
+func NewExpressionError(format string, msg string, pos scanner.Position) error {
+	return Error(fmt.Sprintf(format, msg), ExpressionError, pos)
+}
+func NewFunctionVoidError(variableName string, pos scanner.Position) error {
+	return Error(fmt.Sprintf(FunctionReturnsVoid, variableName), InvalidFunctionCall, pos)
+}

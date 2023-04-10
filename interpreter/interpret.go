@@ -3,7 +3,6 @@ package interpreter
 import (
 	lx "RedoLanguage/lexer"
 	"RedoLanguage/std"
-	"fmt"
 	"log"
 	"strings"
 )
@@ -19,7 +18,7 @@ func Interpret(input string) {
 
 		curT := secondTS
 		secondT := lexer.NextToken()
-		if curT.Type == lx.EOF {
+		if curT.Type == lx.EOF || secondT.Type == lx.EOF {
 			break
 		}
 
@@ -41,7 +40,7 @@ func Interpret(input string) {
 		}
 
 		if lx.IsVariable(curT) {
-			fmt.Println(curT, secondT)
+			
 			_, _, err := lx.ParseVariable(curT, secondT, lexer)
 			if err != nil {
 				log.Println(err)

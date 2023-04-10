@@ -4,6 +4,7 @@ import (
 	"RedoLanguage/std"
 	"fmt"
 	"reflect"
+
 )
 
 /*
@@ -43,9 +44,9 @@ func ParseVariableAssigningExpression(key Token, expression Token, value Token, 
 	//	}
 	//
 	//}
-	if exp.Type != ASSIGN && value.Type != NUMBER {
-		return 0, fmt.Errorf("non integers only support '=' operator for assigning")
-	}
+	// if exp.Type != ASSIGN && value.Type != NUMBER && value.Type != STRING {
+	// 	return 0, fmt.Errorf("non integers only support '=' operator for assigning")
+	// }
 	if key.Type != IDENTIFIER {
 		return 0, fmt.Errorf("expected an identifier, but got '%s'", key.Value)
 	}
@@ -58,10 +59,7 @@ func ParseVariableAssigningExpression(key Token, expression Token, value Token, 
 	if !ok {
 		return 0, fmt.Errorf("'%s' is not defined", key.Value)
 	}
-	if value.Type == STRING {
-		std.Variables[key.Value] = value.Value
-		return nil, err
-	}
+	
 	//if reflect.TypeOf(k).String() != "int" {
 	//	return 0, fmt.Errorf("can not do math operations on a non integer '%s'", key.Value)
 	//}
@@ -69,18 +67,34 @@ func ParseVariableAssigningExpression(key Token, expression Token, value Token, 
 	if errs != nil {
 		return 0, errs
 	}
-	o, errss := ParseArithmeticExpressions(out)
+	o, errss := ParseArithmeticExpressions(out, lexer)
 	if errss != nil {
 		return 0, errss
 	}
-
+//add mismatched type error message
+if reflect.TypeOf(o).String() != reflect.TypeOf(k).String() {
+	return 0, fmt.Errorf("mismatched types")
+}
 	//vals, err := ParseExpression(value, lexer)
-
-	bol, ok1 := o.(bool)
-
-	if ok1 {
+	if str, ok1 := o.(string); ok1 {
+		if ConvertToTokenType(reflect.TypeOf(k).String()) != STRING {
+			return 0, fmt.Errorf("can not assign a non string to an string")
+		}
+		switch exp.Type {
+		case ASSIGN:
+			std.Variables[key.Value] = str
+			return str, nil
+		case PLUS_ASSIGN:
+			std.Variables[key.Value] = k.(string) +  str
+			return str, nil
+		default:
+			return "", fmt.Errorf("invalid operator for string assigning")
+		}
+	}
+	
+	if bol, ok1 := o.(bool);ok1 {
 		if reflect.TypeOf(k).String() == "int" {
-			return 0, fmt.Errorf("can not assign a non integer to an integer")
+			return 0, fmt.Errorf("can not assign a non boolean to an boolean")
 		}
 		if exp.Type != ASSIGN {
 			return 0, fmt.Errorf("non integers only support '=' operator for assigning")
