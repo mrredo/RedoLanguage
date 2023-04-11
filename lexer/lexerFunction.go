@@ -55,7 +55,7 @@ func ParseFunctionCall(curT Token, sec Token, lexer *Lexer) (string, []interface
 			return "", nil, errs
 		}
 		tok = l
-
+		fmt.Printf("out: %s \n", out)
 		o, errss := ParseArithmeticExpressions(out, lexer)
 		if errss != nil {
 			return "", nil, errss

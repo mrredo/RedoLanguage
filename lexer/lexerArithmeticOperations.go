@@ -38,9 +38,11 @@ func ParseArithmeticExpressions(expression string, l *Lexer) (any, error) {
 func MathExpressionTokensToEnd(c Token, l *Lexer, function ...bool) (string, Token, error) {
 
 	var finalStr string
+	var firstfirstTok = c
+	var firstfirstExpired = false
 	var curType TokenType = -1
 	var nestingLevel int
-	var nestingLevelModified bool
+	//var nestingLevelModified bool
 	for {
 		if c.Type == SEMICOLON || c.Type == NEW_LINE || c.Type == EOF /*|| c.Type == COMMA*/ {
 			break
@@ -48,20 +50,27 @@ func MathExpressionTokensToEnd(c Token, l *Lexer, function ...bool) (string, Tok
 		//if p := l.Scanner.Pos(); p.Offset == len(l.Input)-2 && len(function) >= 1 {
 		//	break
 		//}
+		if firstfirstTok.Type == COMMA && !firstfirstExpired {
+			nestingLevel++
+			finalStr += "("
+			firstfirstExpired = true
+		}
 
 		if p := l.Scanner.Peek(); p == ';' || p == '\n' {
 			break
 		}
 		switch c.Type {
 		case COMMA:
-			if nestingLevelModified && nestingLevel != 0 {
+			fmt.Println(firstfirstExpired)
+			if firstfirstExpired {
 				nestingLevel--
 				finalStr += ")"
-			} else if !nestingLevelModified && nestingLevel != 0 {
-				nestingLevel++
-				finalStr += "("
-
+				fmt.Println(nestingLevel)
+				if nestingLevel == 0 {
+					break
+				}
 			}
+
 		case STRING:
 			if curType == -1 {
 				curType = c.Type
@@ -140,7 +149,7 @@ func MathExpressionTokensToEnd(c Token, l *Lexer, function ...bool) (string, Tok
 			curType = -1
 			finalStr += c.Value
 		case LPAREN:
-			nestingLevelModified = true
+			//nestingLevelModified = true
 			nestingLevel++
 			finalStr += "("
 		case RPAREN:

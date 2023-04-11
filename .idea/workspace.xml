@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="26084cfd-6f6b-4d0b-90eb-783935da8951" name="Changes" comment="later fixing stuff with parentheses almost done" />
+    <list default="true" id="26084cfd-6f6b-4d0b-90eb-783935da8951" name="Changes" comment="later fixing stuff with parentheses almost done">
+      <change afterPath="$PROJECT_DIR$/examples/helloworld.rd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interpreter/interpret.go" beforeDir="false" afterPath="$PROJECT_DIR$/interpreter/interpret.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/lexerArithmeticOperations.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexerArithmeticOperations.go" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,10 +50,11 @@
     "WebServerToolWindowPanel.toolwindow.show.permissions": "false",
     "WebServerToolWindowPanel.toolwindow.show.size": "false",
     "go.import.settings.migrated": "true",
-    "last_opened_file_path": "C:/Users/Lietotājs",
+    "last_opened_file_path": "C:/Users/Lietotājs/Documents/GitHub/RedoLanguage",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -78,9 +84,21 @@
       <filePath value="$APPLICATION_CONFIG_DIR$/scratches/scratch_1.go" />
       <method v="2" />
     </configuration>
+    <configuration name="go build scratch_2.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="RedoLanguage" />
+      <working_directory value="$PROJECT_DIR$" />
+      <envs>
+        <env name="GO111MODULE" value="off" />
+      </envs>
+      <kind value="FILE" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$APPLICATION_CONFIG_DIR$/scratches/scratch_2.go" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Go Build.go build main.go" />
+        <item itemvalue="Go Build.go build scratch_2.go" />
         <item itemvalue="Go Build.go build scratch_1.go" />
       </list>
     </recent_temporary>

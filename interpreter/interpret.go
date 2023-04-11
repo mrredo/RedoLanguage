@@ -14,9 +14,10 @@ func Interpret(input string) {
 
 	lexer := lx.NewLexer(strings.ReplaceAll(input, " ", " "))
 	var secondTS lx.Token = lexer.NextToken()
+	curT := secondTS
 	for {
 
-		curT := secondTS
+		curT = secondTS
 		secondT := lexer.NextToken()
 		if curT.Type == lx.EOF || secondT.Type == lx.EOF {
 			break
@@ -40,13 +41,12 @@ func Interpret(input string) {
 		}
 
 		if lx.IsVariable(curT) {
-			
 			_, _, err := lx.ParseVariable(curT, secondT, lexer)
 			if err != nil {
 				log.Println(err)
 				break
 			}
-			continue
+
 		}
 		if lx.IsFunction(curT, secondT, lexer) {
 			funcName, val, err := lx.ParseFunctionCall(curT, secondT, lexer)
