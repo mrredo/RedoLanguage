@@ -1,6 +1,7 @@
 package interpreter
 
 import (
+	"RedoLanguage/err"
 	lx "RedoLanguage/lexer"
 	"RedoLanguage/std"
 	"log"
@@ -8,21 +9,40 @@ import (
 )
 
 func Interpret(input string) {
-	if input[len(input)-1] != ';' {
-		input += ";"
-	}
+	// if input[len(input)-1] != ';' {
+	// 	input += ";"
+	// }
 
 	lexer := lx.NewLexer(strings.ReplaceAll(input, " ", " "))
 	var secondTS lx.Token = lexer.NextToken()
 	curT := secondTS
+	// var curPos, secPos = lexer.Scanner.Pos(), lexer.Scanner.Pos()
 	for {
 
 		curT = secondTS
+		// curPos = lexer.Scanner.Pos()
+
 		secondT := lexer.NextToken()
-		if curT.Type == lx.EOF || secondT.Type == lx.EOF {
+		// secPos = lexer.Scanner.Pos()
+		if curT.Type == lx.EOF {
 			break
 		}
-
+		if curT.Type == lx.IDENTIFIER {
+			_, ok := std.Variables[curT.Value]
+			_, ok1 := std.Functions[curT.Value]
+			
+				if !ok && !ok1 {
+					errs := err.NewUndefinedError(curT.Value, lexer.Scanner.Pos())
+					log.Println(errs)
+					break
+				} 
+				// if curPos.Line != secPos.Line {
+				// 	errs := err.NewUnusedError(curT.Value, lexer.Scanner.Pos())
+				// 	log.Println(errs)
+				// 	break
+				// }
+	
+			}
 		if lx.IsVariableExpression(curT, secondT, lexer) { // key +
 
 			key := curT
@@ -59,6 +79,7 @@ func Interpret(input string) {
 			}
 
 		}
+
 		secondTS = secondT
 	}
 }

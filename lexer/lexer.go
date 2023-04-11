@@ -80,7 +80,6 @@ func (l *Lexer) NextToken() Token {
 	//var lastLine int
 	for tok == scanner.Comment || tok == scanner.EOF {
 		//if l.Scanner.Pos().Line != lastLine { // check if the line number has changed
-		//	fmt.Println("Newline character found")
 		//	lastLine = l.Scanner.Pos().Line // update lastLine to the current line number
 		//}
 		if tok == scanner.EOF {

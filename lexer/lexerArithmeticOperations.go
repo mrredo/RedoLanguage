@@ -59,9 +59,9 @@ func MathExpressionTokensToEnd(c Token, l *Lexer, function ...bool) (string, Tok
 	
 		}
 		
-		if p := l.Scanner.Peek(); p == ';' || p == '\n' {
-			break
-		}
+		// if p := l.Scanner.Peek(); p == ';' || p == '\n' {
+		// 	break
+		// }
 		switch c.Type {
 		case COMMA:
 			

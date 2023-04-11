@@ -9,12 +9,7 @@ import (
 )
 
 func main() {
-	interpreter.Interpret(`
-	var ns = 10
-	print(10)
-	ns += 10
-	print(ns)
-	`)
+
 	//lx.TestMath()
 	//n := lx.NewLexer(`(10+10)*10`)
 	//l := lx.NewLexer("10 + 10 * 10")

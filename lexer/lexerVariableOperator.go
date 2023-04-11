@@ -122,7 +122,6 @@ func ParseVariableAssigningExpression(key Token, expression Token, value Token, 
 		std.Variables[key.Value] = k.(int) / valI
 		return k.(int) / valI, nil
 	case MODULO_ASSIGN:
-		//fmt.Println(k.(int) % valI)
 		std.Variables[key.Value] = k.(int) % valI
 		return k.(int) % valI, nil
 	case ASSIGN:

@@ -55,8 +55,12 @@ func ParseFunctionCall(curT Token, sec Token, lexer *Lexer) (string, []interface
 		if errs != nil {
 			return "", nil, errs
 		}
-		
 		tok = l
+		if out == "()" {
+			break
+		}
+		
+		
 		
 
 		o, errss := ParseArithmeticExpressions(out, lexer)
@@ -79,7 +83,6 @@ func ParseFunctionCall(curT Token, sec Token, lexer *Lexer) (string, []interface
 		}
 		//tok = lexer.NextToken()
 	}
-	//fmt.Println(args)
 	return funcName, args, nil
 }
 
@@ -150,5 +153,4 @@ func IsFunction(token Token, secondT Token, lexer *Lexer) bool {
 //print()
 //`)
 //	c := lx.NextToken()
-//	fmt.Println(IsFunction(c, lx))
 //}
