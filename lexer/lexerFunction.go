@@ -26,7 +26,7 @@ func ParseFunctionCall(curT Token, sec Token, lexer *Lexer) (string, []interface
 		return "", nil, errors.New("expected '(' after function name")
 	}
 	for {
-		tok = lexer.NextToken()
+
 		if tok.Type == RPAREN {
 			break
 		}
@@ -54,18 +54,17 @@ func ParseFunctionCall(curT Token, sec Token, lexer *Lexer) (string, []interface
 		if errs != nil {
 			return "", nil, errs
 		}
-		fmt.Println(out)
 		tok = l
-		o, errss := ParseArithmeticExpressions(out[:len(out)-1], lexer)
+
+		o, errss := ParseArithmeticExpressions(out, lexer)
 		if errss != nil {
 			return "", nil, errss
 		}
-		
+
 		//arg, err := ParseExpression(tok, lexer)
 		//if err != nil {
 		//	return "", nil, err
 		//}
-
 		args = append(args, o)
 		//}
 
@@ -75,6 +74,7 @@ func ParseFunctionCall(curT Token, sec Token, lexer *Lexer) (string, []interface
 		} else if tok.Type != COMMA {
 			return "", nil, errors.New("expected ',' or ')' after argument")
 		}
+		//tok = lexer.NextToken()
 	}
 	//fmt.Println(args)
 	return funcName, args, nil

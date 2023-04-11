@@ -37,23 +37,31 @@ func ParseArithmeticExpressions(expression string, l *Lexer) (any, error) {
 
 func MathExpressionTokensToEnd(c Token, l *Lexer, function ...bool) (string, Token, error) {
 
-	var RPcount = 0
-	var LPcount = 0
 	var finalStr string
 	var curType TokenType = -1
-
+	var nestingLevel int
+	var nestingLevelModified bool
 	for {
-		if c.Type == SEMICOLON || c.Type == NEW_LINE || c.Type == EOF || c.Type == COMMA {
+		if c.Type == SEMICOLON || c.Type == NEW_LINE || c.Type == EOF /*|| c.Type == COMMA*/ {
 			break
 		}
-		if p := l.Scanner.Pos(); p.Offset == len(l.Input)-2 && len(function) >= 1 {
-			break
-		}
+		//if p := l.Scanner.Pos(); p.Offset == len(l.Input)-2 && len(function) >= 1 {
+		//	break
+		//}
 
 		if p := l.Scanner.Peek(); p == ';' || p == '\n' {
 			break
 		}
 		switch c.Type {
+		case COMMA:
+			if nestingLevelModified && nestingLevel != 0 {
+				nestingLevel--
+				finalStr += ")"
+			} else if !nestingLevelModified && nestingLevel != 0 {
+				nestingLevel++
+				finalStr += "("
+
+			}
 		case STRING:
 			if curType == -1 {
 				curType = c.Type
@@ -132,18 +140,25 @@ func MathExpressionTokensToEnd(c Token, l *Lexer, function ...bool) (string, Tok
 			curType = -1
 			finalStr += c.Value
 		case LPAREN:
-			LPcount++
+			nestingLevelModified = true
+			nestingLevel++
 			finalStr += "("
 		case RPAREN:
-
-			RPcount++
+			nestingLevel--
+			if nestingLevel < 0 {
+				// unbalanced parentheses
+				return "", c, err.NewSyntaxError(err.UnbalancedParentheses, l.Scanner.Pos())
+			}
 			finalStr += ")"
 		default:
 
 			finalStr += c.Value
 		}
-
+		if nestingLevel == 0 {
+			break
+		}
 		c = l.NextToken()
+
 		//if c.Type != RPAREN || c.Type != LPAREN {
 		//	OperatorTurn = !OperatorTurn
 

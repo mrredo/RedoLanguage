@@ -4,7 +4,6 @@ import (
 	"RedoLanguage/std"
 	"fmt"
 	"reflect"
-
 )
 
 /*
@@ -59,7 +58,7 @@ func ParseVariableAssigningExpression(key Token, expression Token, value Token, 
 	if !ok {
 		return 0, fmt.Errorf("'%s' is not defined", key.Value)
 	}
-	
+
 	//if reflect.TypeOf(k).String() != "int" {
 	//	return 0, fmt.Errorf("can not do math operations on a non integer '%s'", key.Value)
 	//}
@@ -71,10 +70,10 @@ func ParseVariableAssigningExpression(key Token, expression Token, value Token, 
 	if errss != nil {
 		return 0, errss
 	}
-//add mismatched type error message
-if reflect.TypeOf(o).String() != reflect.TypeOf(k).String() {
-	return 0, fmt.Errorf("mismatched types")
-}
+	//add mismatched type error message
+	if reflect.TypeOf(o).String() != reflect.TypeOf(k).String() {
+		return 0, fmt.Errorf("mismatched types")
+	}
 	//vals, err := ParseExpression(value, lexer)
 	if str, ok1 := o.(string); ok1 {
 		if ConvertToTokenType(reflect.TypeOf(k).String()) != STRING {
@@ -85,14 +84,14 @@ if reflect.TypeOf(o).String() != reflect.TypeOf(k).String() {
 			std.Variables[key.Value] = str
 			return str, nil
 		case PLUS_ASSIGN:
-			std.Variables[key.Value] = k.(string) +  str
+			std.Variables[key.Value] = k.(string) + str
 			return str, nil
 		default:
 			return "", fmt.Errorf("invalid operator for string assigning")
 		}
 	}
-	
-	if bol, ok1 := o.(bool);ok1 {
+
+	if bol, ok1 := o.(bool); ok1 {
 		if reflect.TypeOf(k).String() == "int" {
 			return 0, fmt.Errorf("can not assign a non boolean to an boolean")
 		}

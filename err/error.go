@@ -23,3 +23,6 @@ func NewExpressionError(format string, msg string, pos scanner.Position) error {
 func NewFunctionVoidError(variableName string, pos scanner.Position) error {
 	return Error(fmt.Sprintf(FunctionReturnsVoid, variableName), InvalidFunctionCall, pos)
 }
+func NewSyntaxError(format string, pos scanner.Position, args ...any) error {
+	return Error(fmt.Sprintf(format, args), SyntaxError, pos)
+}

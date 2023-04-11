@@ -6,9 +6,10 @@ const (
 	FunctionReturnsVoid         = "'%s' method returns void"
 	VariableAlreadyDeclared     = "'%s' is already declared"
 	//math
-	ErrorParsingExpression = "failed parsing math expression - %v"
-	ErrorEvaluatingExpression = "failed evaluating math expression - %v"
+	ErrorParsingExpression     = "failed parsing math expression - %v"
+	ErrorEvaluatingExpression  = "failed evaluating math expression - %v"
 	ErrorConvertingResultToInt = ""
+	UnbalancedParentheses      = "unbalanced parentheses"
 	//
 
 )
