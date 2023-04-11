@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="26084cfd-6f6b-4d0b-90eb-783935da8951" name="Changes" comment="added to some spots advanced error messages">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/err/error.go" beforeDir="false" afterPath="$PROJECT_DIR$/err/error.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/err/errorMessages.go" beforeDir="false" afterPath="$PROJECT_DIR$/err/errorMessages.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/lexerArithmeticOperations.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexerArithmeticOperations.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/lexerFunction.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexerFunction.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/lexerVariableOperator.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexerVariableOperator.go" afterDir="false" />
-    </list>
+    <list default="true" id="26084cfd-6f6b-4d0b-90eb-783935da8951" name="Changes" comment="later fixing stuff with parentheses almost done" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -123,7 +116,8 @@
     <MESSAGE value="v1.8 fix is done" />
     <MESSAGE value="|| &amp;&amp; operators" />
     <MESSAGE value="added to some spots advanced error messages" />
-    <option name="LAST_COMMIT_MESSAGE" value="added to some spots advanced error messages" />
+    <MESSAGE value="later fixing stuff with parentheses almost done" />
+    <option name="LAST_COMMIT_MESSAGE" value="later fixing stuff with parentheses almost done" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
