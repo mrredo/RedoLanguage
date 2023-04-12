@@ -1,2 +1,9 @@
 var hello = "Hello"
-println(hello + " World!")
+//this works
+println(hello + " World!");
+
+/*
+this also works
+*/
+
+printf("%s World!", hello);

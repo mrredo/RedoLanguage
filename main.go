@@ -2,6 +2,7 @@ package main
 
 import (
 	"RedoLanguage/interpreter"
+	"RedoLanguage/reader"
 	"bufio"
 	"fmt"
 	"os"
@@ -22,6 +23,7 @@ func main() {
 	//	Line:     10,
 	//	Column:   10,
 	//}))
+	fmt.Println(reader.ReadFileContent("hello.rd"))
 	for {
 		reader := bufio.NewReader(os.Stdin)
 		fmt.Print(">>> ")
