@@ -63,6 +63,7 @@ type Token struct {
 type Lexer struct {
 	Scanner scanner.Scanner
 	Input   string
+	// curLine int
 }
 
 func NewLexer(input string) *Lexer {
@@ -88,7 +89,11 @@ func (l *Lexer) NextToken() Token {
 		tok = l.Scanner.Scan()
 	}
 	val := l.Scanner.TokenText()
+	// if l.Scanner.Pos().Line != l.curLine {
+	// 	l.curLine = l.Scanner.Pos().Line
+	// 	return Token{Type: NEW_LINE, Value: "\n"}
 
+	// }
 	switch tok {
 	case scanner.Ident:
 		if val == "var" {

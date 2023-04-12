@@ -25,6 +25,13 @@ func Interpret(input string, fileName string) {
 
 		secondT := lexer.NextToken()
 		// secPos = lexer.Scanner.Pos()
+		if curT.Type == lx.ILLEGAL {
+			log.Println(err.NewIllegalTokenError(curT.Value, lexer.Scanner.Pos()))
+			break
+		} else if secondT.Type == lx.ILLEGAL {
+			log.Println(err.NewIllegalTokenError(secondT.Value, lexer.Scanner.Pos()))
+			break
+		}
 		if curT.Type == lx.EOF {
 			break
 		}

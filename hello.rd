@@ -1,3 +1,6 @@
+
 var hello = "noob"
-hello = " world" + "eeeeee"
+
+hello = (" world" + "eeeeee")
+
 printf("%s yesss", hello)

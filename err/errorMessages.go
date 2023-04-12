@@ -12,5 +12,5 @@ const (
 	ErrorConvertingResultToInt = ""
 	UnbalancedParentheses      = "unbalanced parentheses"
 	//
-
+	IllegalToken = "'%s' is illegal token"
 )

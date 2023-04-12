@@ -29,3 +29,6 @@ func NewFunctionVoidError(variableName string, pos scanner.Position) error {
 func NewSyntaxError(format string, pos scanner.Position, args ...any) error {
 	return Error(fmt.Sprintf(format, args), SyntaxError, pos)
 }
+func NewIllegalTokenError(tokenVal string, pos scanner.Position) error {
+	return Error(fmt.Sprintf(IllegalToken, tokenVal), SyntaxError, pos)
+}
