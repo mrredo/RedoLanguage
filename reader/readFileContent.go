@@ -2,7 +2,6 @@ package reader
 
 import (
 	"errors"
-	"fmt"
 	"io"
 	"os"
 	"strings"
@@ -24,6 +23,5 @@ func ReadFileContent(filename string) (string, error) {
 	}
 
 	// Print the contents of the file
-	fmt.Println(string(content))
 	return string(content), nil
 }

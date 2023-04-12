@@ -5,12 +5,12 @@ import (
 	"RedoLanguage/reader"
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"strings"
 )
 
 func main() {
-
 	//lx.TestMath()
 	//n := lx.NewLexer(`(10+10)*10`)
 	//l := lx.NewLexer("10 + 10 * 10")
@@ -24,24 +24,32 @@ func main() {
 	//	Line:     10,
 	//	Column:   10,
 	//}))
-	fmt.Println(reader.ReadFileContent("hello.rd"))
-	for {
-		reader := bufio.NewReader(os.Stdin)
-		fmt.Print(">>> ")
-		inp, err := reader.ReadString('\n')
-		if err != nil {
-			fmt.Println("Error reading input:", err)
-			return
-		}
-		if inp == "exit" {
-			break
-		}
-		inp = strings.TrimRight(inp, "\n")
 
-		interpreter.Interpret(inp)
-		fmt.Println()
-		fmt.Println()
+	if len(os.Args) <= 1 {
 
+		for {
+			reader := bufio.NewReader(os.Stdin)
+			fmt.Print(">>> ")
+			inp, err := reader.ReadString('\n')
+			if err != nil {
+				fmt.Println("Error reading input:", err)
+				return
+			}
+
+			inp = strings.TrimRight(inp, "\n")
+
+			interpreter.Interpret(inp, "interpret.rd")
+			fmt.Println()
+			fmt.Println()
+
+		}
 	}
+	fileName := os.Args[1]
+	str, err := reader.ReadFileContent(fileName)
+	if err != nil {
+		log.Println(err.Error())
+		return
+	}
+	interpreter.Interpret(str, fileName)
 
 }

@@ -8,12 +8,13 @@ import (
 	"strings"
 )
 
-func Interpret(input string) {
+func Interpret(input string, fileName string) {
 	// if input[len(input)-1] != ';' {
 	// 	input += ";"
 	// }
 
 	lexer := lx.NewLexer(strings.ReplaceAll(input, " ", " "))
+	lexer.Scanner.Filename = fileName
 	var secondTS lx.Token = lexer.NextToken()
 	curT := secondTS
 	// var curPos, secPos = lexer.Scanner.Pos(), lexer.Scanner.Pos()
@@ -30,19 +31,19 @@ func Interpret(input string) {
 		if curT.Type == lx.IDENTIFIER {
 			_, ok := std.Variables[curT.Value]
 			_, ok1 := std.Functions[curT.Value]
-			
-				if !ok && !ok1 {
-					errs := err.NewUndefinedError(curT.Value, lexer.Scanner.Pos())
-					log.Println(errs)
-					break
-				} 
-				// if curPos.Line != secPos.Line {
-				// 	errs := err.NewUnusedError(curT.Value, lexer.Scanner.Pos())
-				// 	log.Println(errs)
-				// 	break
-				// }
-	
+
+			if !ok && !ok1 {
+				errs := err.NewUndefinedError(curT.Value, lexer.Scanner.Pos())
+				log.Println(errs)
+				break
 			}
+			// if curPos.Line != secPos.Line {
+			// 	errs := err.NewUnusedError(curT.Value, lexer.Scanner.Pos())
+			// 	log.Println(errs)
+			// 	break
+			// }
+
+		}
 		if lx.IsVariableExpression(curT, secondT, lexer) { // key +
 
 			key := curT
