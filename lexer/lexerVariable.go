@@ -13,7 +13,6 @@ func RuneToStr(ch rune) string {
 func ParseVariable(curToken Token, sec Token, lexer *Lexer) (key string, value interface{}, err error) {
 	tok := curToken //
 	keyT := sec
-	//fmt.Println(tok)
 	if tok.Type == 0 {
 		return "", nil, nil
 	}
@@ -28,7 +27,6 @@ func ParseVariable(curToken Token, sec Token, lexer *Lexer) (key string, value i
 		return "", nil, fmt.Errorf("'%s' is already declared", keyT.Value)
 	}
 	Eq := lexer.NextToken()
-	//fmt.Println(Eq)
 	if Eq.Type != ASSIGN {
 		return "", nil, fmt.Errorf("'=' sign is expected after the '%s'", keyT.Value)
 	}

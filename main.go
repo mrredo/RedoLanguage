@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+
 	//lx.TestMath()
 	//n := lx.NewLexer(`(10+10)*10`)
 	//l := lx.NewLexer("10 + 10 * 10")

@@ -11,6 +11,9 @@ func NewError(msg string, pos scanner.Position) error {
 func Error(errFormat string, errType string, pos scanner.Position) error {
 	return fmt.Errorf("./%s:%d:%d: %s: %s", pos.Filename, pos.Line, pos.Column, errType, errFormat)
 }
+func NewUnusedError(variableName string, pos scanner.Position) error {
+	return Error(fmt.Sprintf(VariableNotUsed, variableName), RefrenceError, pos)
+}
 func NewUndefinedError(variableName string, pos scanner.Position) error {
 	return Error(fmt.Sprintf(VariableNotDefined, variableName), RefrenceError, pos)
 }

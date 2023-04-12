@@ -50,12 +50,19 @@ func ParseFunctionCall(curT Token, sec Token, lexer *Lexer) (string, []interface
 		//	tok = lexer.NextToken()
 		//}
 		//if tok.Type == NUMBER || tok.Type == IDENTIFIER || tok.Type == BOOL || tok.Type == LPAREN {
-		out, l, errs := MathExpressionTokensToEnd(tok, lexer, true)
+		
+			out, l, errs := MathExpressionTokensToEnd(tok, lexer, true)
 		if errs != nil {
 			return "", nil, errs
 		}
 		tok = l
-		fmt.Printf("out: %s \n", out)
+		if out == "()" {
+			break
+		}
+		
+		
+		
+
 		o, errss := ParseArithmeticExpressions(out, lexer)
 		if errss != nil {
 			return "", nil, errss
@@ -76,7 +83,6 @@ func ParseFunctionCall(curT Token, sec Token, lexer *Lexer) (string, []interface
 		}
 		//tok = lexer.NextToken()
 	}
-	//fmt.Println(args)
 	return funcName, args, nil
 }
 
@@ -147,5 +153,4 @@ func IsFunction(token Token, secondT Token, lexer *Lexer) bool {
 //print()
 //`)
 //	c := lx.NextToken()
-//	fmt.Println(IsFunction(c, lx))
 //}

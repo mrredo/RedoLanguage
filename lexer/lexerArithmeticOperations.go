@@ -43,33 +43,35 @@ func MathExpressionTokensToEnd(c Token, l *Lexer, function ...bool) (string, Tok
 	var curType TokenType = -1
 	var nestingLevel int
 	//var nestingLevelModified bool
+	loop:
 	for {
 		if c.Type == SEMICOLON || c.Type == NEW_LINE || c.Type == EOF /*|| c.Type == COMMA*/ {
 			break
 		}
-		//if p := l.Scanner.Pos(); p.Offset == len(l.Input)-2 && len(function) >= 1 {
-		//	break
-		//}
-		if firstfirstTok.Type == COMMA && !firstfirstExpired {
-			nestingLevel++
-			finalStr += "("
-			firstfirstExpired = true
+		if len(function) > 0 {
+			if firstfirstTok.Type == COMMA && !firstfirstExpired {
+				nestingLevel++
+				finalStr += "("
+				firstfirstExpired = true
+				c = l.NextToken()
+				continue loop
+			}
+	
 		}
-
-		if p := l.Scanner.Peek(); p == ';' || p == '\n' {
-			break
-		}
+		
+		// if p := l.Scanner.Peek(); p == ';' || p == '\n' {
+		// 	break
+		// }
 		switch c.Type {
 		case COMMA:
-			fmt.Println(firstfirstExpired)
-			if firstfirstExpired {
+			
+
 				nestingLevel--
 				finalStr += ")"
-				fmt.Println(nestingLevel)
 				if nestingLevel == 0 {
-					break
+					break loop
 				}
-			}
+			
 
 		case STRING:
 			if curType == -1 {
@@ -154,8 +156,8 @@ func MathExpressionTokensToEnd(c Token, l *Lexer, function ...bool) (string, Tok
 			finalStr += "("
 		case RPAREN:
 			nestingLevel--
-			if nestingLevel < 0 {
-				// unbalanced parentheses
+			if nestingLevel != 0 {
+
 				return "", c, err.NewSyntaxError(err.UnbalancedParentheses, l.Scanner.Pos())
 			}
 			finalStr += ")"
@@ -163,17 +165,14 @@ func MathExpressionTokensToEnd(c Token, l *Lexer, function ...bool) (string, Tok
 
 			finalStr += c.Value
 		}
+
 		if nestingLevel == 0 {
 			break
 		}
 		c = l.NextToken()
 
-		//if c.Type != RPAREN || c.Type != LPAREN {
-		//	OperatorTurn = !OperatorTurn
 
 	}
-	//if LPcount != RPcount {
-	//	return "", fmt.Errorf("invalid left/right parentheses count")
-	//}
+
 	return finalStr, c, nil
 }
