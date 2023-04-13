@@ -1,6 +1,7 @@
 package lexer
 
 import (
+	"RedoLanguage/err"
 	"regexp"
 	"strings"
 	"text/scanner"
@@ -104,7 +105,7 @@ func NewLexer(input string) *Lexer {
 	s.Mode = scanner.ScanIdents | scanner.ScanFloats | scanner.ScanStrings |
 		scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments
 
-	return &Lexer{Scanner: s, Input: input, semiColonLine: s.Pos().Line}
+	return &Lexer{Scanner: s, Input: input, semiColonLine: 0}
 }
 
 func (l *Lexer) NextToken() Token {
@@ -119,13 +120,13 @@ func (l *Lexer) NextToken() Token {
 		}
 		tok = l.Scanner.Scan()
 	}
-	//if tok == ';' && l.semiColonLine != l.Scanner.Pos().Line {
-	//	l.semiColonLine = l.Scanner.Pos().Line + 1
-	//	return Token{Type: SEMICOLON, Value: ";"}
-	//} else if l.semiColonLine != l.Scanner.Pos().Line {
-	//	l.SemErr = err.NewSemiColonError(l.Scanner.Pos())
-	//	return Token{Type: ILLEGAL, Value: ";"}
-	//}
+	if tok == ';' && l.semiColonLine != l.Scanner.Pos().Line {
+		l.semiColonLine = l.Scanner.Pos().Line + 1
+		return Token{Type: SEMICOLON, Value: ";"}
+	} else if l.semiColonLine != l.Scanner.Pos().Line {
+		l.SemErr = err.NewSemiColonError(l.Scanner.Pos())
+		return Token{Type: ILLEGAL, Value: ";"}
+	}
 	val := l.Scanner.TokenText()
 	// if l.Scanner.Pos().Line != l.curLine {
 	// 	l.curLine = l.Scanner.Pos().Line

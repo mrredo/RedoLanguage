@@ -45,6 +45,7 @@ func MathExpressionTokensToEnd(c Token, l *Lexer, function ...bool) (string, Tok
 	var firstfirstExpired = false
 	var curType TokenType = -1
 	var nestingLevel int
+
 	//var isOperatorTurn bool
 	//var nestingLevelModified bool
 loop:
