@@ -1,5 +1,23 @@
 # RedoLanguage
-Interpreter for redo langugae
+Interpreter for redo language
+## ADDING SEMICOLONS AFTER EXPRESSIONS WILL
+for example
+```
+var hello = "Hello " + "World" + "!";
+hello += "10";
+println(hello)//outputs: Hello World!10
+```
+if u dont put `;` at end of expression(not required in functions, after functions u dont need semicolons)
+```
+var hello = "Hello " + "World" + "!"
+hello += "10"
+```
+it would say `hello is not defined` because it doesnt stop reading the expression, and stops reading when semicolon is added
+NOTE: This is required in this current situation, in further updates hopefully ill figure it out
+
+
+
+
 
 # Features
 ### Methods:

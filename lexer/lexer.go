@@ -1,7 +1,7 @@
 package lexer
 
 import (
-	"RedoLanguage/err"
+	// "RedoLanguage/err"
 	"regexp"
 	"strings"
 	"text/scanner"
@@ -134,8 +134,7 @@ func (l *Lexer) NextToken() Token {
 
 	// }
 	switch tok {
-		case ';': 
-		return Token{Type: SEMICOLON, Value: ";"}
+
 	case scanner.Ident:
 		if val == "var" {
 			return Token{Type: VAR, Value: "var"}
