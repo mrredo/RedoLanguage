@@ -17,10 +17,10 @@ func Interpret(input string, fileName string) {
 	lexer.Scanner.Filename = fileName
 	var secondTS lx.Token = lexer.NextToken()
 	curT := secondTS
-	if lexer.SemErr != nil {
-		log.Println(lexer.SemErr)
-		return
-	}
+	//if lexer.SemErr != nil {
+	//	log.Println(lexer.SemErr)
+	//	return
+	//}
 	// var curPos, secPos = lexer.Scanner.Pos(), lexer.Scanner.Pos()
 	for {
 
@@ -28,10 +28,10 @@ func Interpret(input string, fileName string) {
 		// curPos = lexer.Scanner.Pos()
 
 		secondT := lexer.NextToken()
-		if lexer.SemErr != nil {
-			log.Println(lexer.SemErr)
-			break
-		}
+		//if lexer.SemErr != nil {
+		//	log.Println(lexer.SemErr)
+		//	break
+		//}
 		// secPos = lexer.Scanner.Pos()
 		if curT.Type == lx.ILLEGAL {
 			log.Println(err.NewIllegalTokenError(curT.Value, lexer.Scanner.Pos()))
