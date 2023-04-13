@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="26084cfd-6f6b-4d0b-90eb-783935da8951" name="Changes" comment="now you can read files but i havent aded that to args">
+    <list default="true" id="26084cfd-6f6b-4d0b-90eb-783935da8951" name="Changes" comment="variable assiging operator += string this doesnt work&#10;var hello = &quot;world&quot;&#10;hello += &quot;!&quot; + &quot;!&quot;&#10;print(hello)//output: world!&#10;hello = &quot;world&quot;&#10;hello = &quot;!&quot; + &quot;!&quot;&#10;print(hello)//output: world!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/helloworld.rd" beforeDir="false" afterPath="$PROJECT_DIR$/examples/helloworld.rd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hello.rd" beforeDir="false" afterPath="$PROJECT_DIR$/hello.rd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interpreter/interpret.go" beforeDir="false" afterPath="$PROJECT_DIR$/interpreter/interpret.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reader/readFileContent.go" beforeDir="false" afterPath="$PROJECT_DIR$/reader/readFileContent.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/err/error.go" beforeDir="false" afterPath="$PROJECT_DIR$/err/error.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/err/errorMessages.go" beforeDir="false" afterPath="$PROJECT_DIR$/err/errorMessages.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/lexer.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.exe" beforeDir="false" afterPath="$PROJECT_DIR$/main.exe" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +20,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Go File" />
+        <option value="RedoLanguage" />
       </list>
     </option>
   </component>
@@ -49,45 +49,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;TODO_SCOPE&quot;: &quot;All Places&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowPanel.toolwindow.highlight.mappings&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowPanel.toolwindow.highlight.symlinks&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowPanel.toolwindow.show.date&quot;: &quot;false&quot;,
-    &quot;WebServerToolWindowPanel.toolwindow.show.permissions&quot;: &quot;false&quot;,
-    &quot;WebServerToolWindowPanel.toolwindow.show.size&quot;: &quot;false&quot;,
-    &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lietotājs/Documents/GitHub/RedoLanguage&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.fileTypes&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "TODO_SCOPE": "All Places",
+    "WebServerToolWindowFactoryState": "true",
+    "WebServerToolWindowPanel.toolwindow.highlight.mappings": "true",
+    "WebServerToolWindowPanel.toolwindow.highlight.symlinks": "true",
+    "WebServerToolWindowPanel.toolwindow.show.date": "false",
+    "WebServerToolWindowPanel.toolwindow.show.permissions": "false",
+    "WebServerToolWindowPanel.toolwindow.show.size": "false",
+    "full.screen.before.presentation.mode": "false",
+    "go.import.settings.migrated": "true",
+    "last_opened_file_path": "C:/Users/Lietotājs/Documents/GitHub/RedoLanguage",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "fileTemplates",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Lietotājs\Documents\GitHub\RedoLanguage\reader" />
     </key>
   </component>
   <component name="RunManager" selected="Go Build.go build main.go">
-    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
-      <module name="RedoLanguage" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="FILE" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <method v="2" />
-    </configuration>
     <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="RedoLanguage" />
       <working_directory value="$PROJECT_DIR$" />
@@ -117,6 +109,15 @@
       <kind value="FILE" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$APPLICATION_CONFIG_DIR$/scratches/scratch_2.go" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
+      <module name="RedoLanguage" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="DIRECTORY" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
       <method v="2" />
     </configuration>
     <recent_temporary>
@@ -160,7 +161,8 @@
     <MESSAGE value="added to some spots advanced error messages" />
     <MESSAGE value="later fixing stuff with parentheses almost done" />
     <MESSAGE value="now you can read files but i havent aded that to args" />
-    <option name="LAST_COMMIT_MESSAGE" value="now you can read files but i havent aded that to args" />
+    <MESSAGE value="variable assiging operator += string this doesnt work&#10;var hello = &quot;world&quot;&#10;hello += &quot;!&quot; + &quot;!&quot;&#10;print(hello)//output: world!&#10;hello = &quot;world&quot;&#10;hello = &quot;!&quot; + &quot;!&quot;&#10;print(hello)//output: world!" />
+    <option name="LAST_COMMIT_MESSAGE" value="variable assiging operator += string this doesnt work&#10;var hello = &quot;world&quot;&#10;hello += &quot;!&quot; + &quot;!&quot;&#10;print(hello)//output: world!&#10;hello = &quot;world&quot;&#10;hello = &quot;!&quot; + &quot;!&quot;&#10;print(hello)//output: world!" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

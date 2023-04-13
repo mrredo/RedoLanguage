@@ -5,9 +5,6 @@ import (
 	"text/scanner"
 )
 
-func NewError(msg string, pos scanner.Position) error {
-	return fmt.Errorf("%s:%d:%d: %s", pos.Filename, pos.Line, pos.Column, msg)
-}
 func Error(errFormat string, errType string, pos scanner.Position) error {
 	return fmt.Errorf("./%s:%d:%d: %s: %s", pos.Filename, pos.Line, pos.Column, errType, errFormat)
 }
@@ -28,4 +25,7 @@ func NewFunctionVoidError(variableName string, pos scanner.Position) error {
 }
 func NewSyntaxError(format string, pos scanner.Position, args ...any) error {
 	return Error(fmt.Sprintf(format, args), SyntaxError, pos)
+}
+func NewSemiColonError(pos scanner.Position) error {
+	return Error(MissingSemicolon, SyntaxError, pos)
 }

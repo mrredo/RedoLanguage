@@ -2,7 +2,7 @@ package err
 
 const (
 	VariableNotDefined          = "'%s' is not defined"
-	VariableNotUsed = "'%s' is not used"
+	VariableNotUsed             = "'%s' is not used"
 	MismatchedTypesInExpression = "mismatched types in expression"
 	FunctionReturnsVoid         = "'%s' method returns void"
 	VariableAlreadyDeclared     = "'%s' is already declared"
@@ -12,5 +12,5 @@ const (
 	ErrorConvertingResultToInt = ""
 	UnbalancedParentheses      = "unbalanced parentheses"
 	//
-
+	MissingSemicolon = "missing semicolon"
 )

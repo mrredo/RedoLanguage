@@ -1,7 +1,6 @@
 package interpreter
 
 import (
-	"RedoLanguage/err"
 	lx "RedoLanguage/lexer"
 	"RedoLanguage/std"
 	"log"
@@ -17,6 +16,10 @@ func Interpret(input string, fileName string) {
 	lexer.Scanner.Filename = fileName
 	var secondTS lx.Token = lexer.NextToken()
 	curT := secondTS
+	if lexer.SemErr != nil {
+		log.Println(lexer.SemErr)
+		return
+	}
 	// var curPos, secPos = lexer.Scanner.Pos(), lexer.Scanner.Pos()
 	for {
 
@@ -24,26 +27,32 @@ func Interpret(input string, fileName string) {
 		// curPos = lexer.Scanner.Pos()
 
 		secondT := lexer.NextToken()
+		if lexer.SemErr != nil {
+			log.Println(lexer.SemErr)
+			break
+		}
 		// secPos = lexer.Scanner.Pos()
 		if curT.Type == lx.EOF {
 			break
 		}
-		if curT.Type == lx.IDENTIFIER {
-			_, ok := std.Variables[curT.Value]
-			_, ok1 := std.Functions[curT.Value]
 
-			if !ok && !ok1 {
-				errs := err.NewUndefinedError(curT.Value, lexer.Scanner.Pos())
-				log.Println(errs)
-				break
-			}
-			// if curPos.Line != secPos.Line {
-			// 	errs := err.NewUnusedError(curT.Value, lexer.Scanner.Pos())
-			// 	log.Println(errs)
-			// 	break
-			// }
-
-		}
+		//later will be added when I want to fix it
+		//if curT.Type == lx.IDENTIFIER {
+		//	_, ok := std.Variables[curT.Value]
+		//	_, ok1 := std.Functions[curT.Value]
+		//
+		//	if !ok && !ok1 {
+		//		errs := err.NewUndefinedError(curT.Value, lexer.Scanner.Pos())
+		//		log.Println(errs)
+		//		break
+		//	}
+		//	// if curPos.Line != secPos.Line {
+		//	// 	errs := err.NewUnusedError(curT.Value, lexer.Scanner.Pos())
+		//	// 	log.Println(errs)
+		//	// 	break
+		//	// }
+		//
+		//}
 		if lx.IsVariableExpression(curT, secondT, lexer) { // key +
 
 			key := curT

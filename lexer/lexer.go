@@ -7,6 +7,7 @@ import (
 )
 
 type TokenType int
+
 const (
 	EOF                   TokenType = iota // end of file
 	LPAREN                                 // (
@@ -51,7 +52,35 @@ const (
 	BITWISE_OR                             // |
 	OR                                     // ||
 	ILLEGAL
+
+	SEMICOLON_ERROR // does not have a string but is
 )
+
+var OperatorNumToString = map[TokenType]string{
+	LPAREN:                "(",
+	RPAREN:                ")",
+	EQUAL:                 "==",
+	MODULO:                "%",
+	DIVIDE:                "/",
+	PLUS:                  "+",
+	MULTIPLY:              "*",
+	SUBTRACT:              "-",
+	PLUS_PLUS:             "++",
+	SUBTRACT_SUBTRACT:     "--",
+	BITWISE_XOR:           "^",
+	LEFT_SHIFT:            "<<",
+	RIGHT_SHIFT:           ">>",
+	BITWISE_AND:           "&",
+	EQUAL_TO:              "==",
+	NOT_EQUAL_TO:          "!=",
+	LESS_THAN:             "<",
+	LESS_THAN_OR_EQUAL:    "<=",
+	GREATER_THAN:          ">",
+	GREATER_THAN_TO_EQUAL: ">=",
+	AND:                   "&&",
+	BITWISE_OR:            "|",
+	OR:                    "||",
+}
 
 var numReg = regexp.MustCompile(`\d`)
 
@@ -61,8 +90,10 @@ type Token struct {
 }
 
 type Lexer struct {
-	Scanner scanner.Scanner
-	Input   string
+	Scanner       scanner.Scanner
+	Input         string
+	semiColonLine int
+	SemErr        error
 }
 
 func NewLexer(input string) *Lexer {
@@ -72,7 +103,8 @@ func NewLexer(input string) *Lexer {
 	s.Filename = "interpreter.rd"
 	s.Mode = scanner.ScanIdents | scanner.ScanFloats | scanner.ScanStrings |
 		scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments
-	return &Lexer{Scanner: s, Input: input}
+
+	return &Lexer{Scanner: s, Input: input, semiColonLine: s.Pos().Line}
 }
 
 func (l *Lexer) NextToken() Token {
@@ -87,8 +119,14 @@ func (l *Lexer) NextToken() Token {
 		}
 		tok = l.Scanner.Scan()
 	}
+	//if tok == ';' && l.semiColonLine != l.Scanner.Pos().Line {
+	//	l.semiColonLine = l.Scanner.Pos().Line + 1
+	//	return Token{Type: SEMICOLON, Value: ";"}
+	//} else if l.semiColonLine != l.Scanner.Pos().Line {
+	//	l.SemErr = err.NewSemiColonError(l.Scanner.Pos())
+	//	return Token{Type: ILLEGAL, Value: ";"}
+	//}
 	val := l.Scanner.TokenText()
-
 	switch tok {
 	case scanner.Ident:
 		if val == "var" {

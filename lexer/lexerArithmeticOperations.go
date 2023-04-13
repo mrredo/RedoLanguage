@@ -34,7 +34,10 @@ func ParseArithmeticExpressions(expression string, l *Lexer) (any, error) {
 	}
 	return 0, err.NewExpressionError(err.ErrorConvertingResultToInt, "", l.Scanner.Pos()) //fmt.Errorf("error converting result to int")
 }
-
+func isOperator(op Token) bool {
+	_, ok := OperatorNumToString[op.Type]
+	return ok
+}
 func MathExpressionTokensToEnd(c Token, l *Lexer, function ...bool) (string, Token, error) {
 
 	var finalStr string
@@ -42,12 +45,28 @@ func MathExpressionTokensToEnd(c Token, l *Lexer, function ...bool) (string, Tok
 	var firstfirstExpired = false
 	var curType TokenType = -1
 	var nestingLevel int
+	//var isOperatorTurn bool
 	//var nestingLevelModified bool
-	loop:
+loop:
 	for {
 		if c.Type == SEMICOLON || c.Type == NEW_LINE || c.Type == EOF /*|| c.Type == COMMA*/ {
 			break
 		}
+		//fmt.Println(isOperator(c), isOperatorTurn, c)
+		//if isOperator(c) {
+		//	if !isOperatorTurn {
+		//		break
+		//
+		//	}
+		//	isOperatorTurn = false
+		//
+		//} else {
+		//	if isOperatorTurn {
+		//		break
+		//	}
+		//	isOperatorTurn = true
+		//}
+
 		if len(function) > 0 {
 			if firstfirstTok.Type == COMMA && !firstfirstExpired {
 				nestingLevel++
@@ -56,22 +75,19 @@ func MathExpressionTokensToEnd(c Token, l *Lexer, function ...bool) (string, Tok
 				c = l.NextToken()
 				continue loop
 			}
-	
+
 		}
-		
+
 		// if p := l.Scanner.Peek(); p == ';' || p == '\n' {
 		// 	break
 		// }
 		switch c.Type {
 		case COMMA:
-			
-
-				nestingLevel--
-				finalStr += ")"
-				if nestingLevel == 0 {
-					break loop
-				}
-			
+			nestingLevel--
+			finalStr += ")"
+			if nestingLevel == 0 {
+				break loop
+			}
 
 		case STRING:
 			if curType == -1 {
@@ -165,12 +181,13 @@ func MathExpressionTokensToEnd(c Token, l *Lexer, function ...bool) (string, Tok
 
 			finalStr += c.Value
 		}
-
-		if nestingLevel == 0 {
-			break
+		if len(function) > 0 {
+			if nestingLevel == 0 {
+				break
+			}
 		}
-		c = l.NextToken()
 
+		c = l.NextToken()
 
 	}
 
