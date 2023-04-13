@@ -1,6 +1,7 @@
 package interpreter
 
 import (
+	"RedoLanguage/err"
 	lx "RedoLanguage/lexer"
 	"RedoLanguage/std"
 	"log"

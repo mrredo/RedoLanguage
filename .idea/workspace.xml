@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="26084cfd-6f6b-4d0b-90eb-783935da8951" name="Changes" comment="variable assiging operator += string this doesnt work&#10;var hello = &quot;world&quot;&#10;hello += &quot;!&quot; + &quot;!&quot;&#10;print(hello)//output: world!&#10;hello = &quot;world&quot;&#10;hello = &quot;!&quot; + &quot;!&quot;&#10;print(hello)//output: world!">
+    <list default="true" id="26084cfd-6f6b-4d0b-90eb-783935da8951" name="Changes" comment="everything works well if u use semicolons at ends">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/err/error.go" beforeDir="false" afterPath="$PROJECT_DIR$/err/error.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/err/errorMessages.go" beforeDir="false" afterPath="$PROJECT_DIR$/err/errorMessages.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/lexer.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexer.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.exe" beforeDir="false" afterPath="$PROJECT_DIR$/main.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interpreter/interpret.go" beforeDir="false" afterPath="$PROJECT_DIR$/interpreter/interpret.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +159,8 @@
     <MESSAGE value="later fixing stuff with parentheses almost done" />
     <MESSAGE value="now you can read files but i havent aded that to args" />
     <MESSAGE value="variable assiging operator += string this doesnt work&#10;var hello = &quot;world&quot;&#10;hello += &quot;!&quot; + &quot;!&quot;&#10;print(hello)//output: world!&#10;hello = &quot;world&quot;&#10;hello = &quot;!&quot; + &quot;!&quot;&#10;print(hello)//output: world!" />
-    <option name="LAST_COMMIT_MESSAGE" value="variable assiging operator += string this doesnt work&#10;var hello = &quot;world&quot;&#10;hello += &quot;!&quot; + &quot;!&quot;&#10;print(hello)//output: world!&#10;hello = &quot;world&quot;&#10;hello = &quot;!&quot; + &quot;!&quot;&#10;print(hello)//output: world!" />
+    <MESSAGE value="everything works well if u use semicolons at ends" />
+    <option name="LAST_COMMIT_MESSAGE" value="everything works well if u use semicolons at ends" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
