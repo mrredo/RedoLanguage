@@ -127,6 +127,11 @@ func (l *Lexer) NextToken() Token {
 	//	return Token{Type: ILLEGAL, Value: ";"}
 	//}
 	val := l.Scanner.TokenText()
+	// if l.Scanner.Pos().Line != l.curLine {
+	// 	l.curLine = l.Scanner.Pos().Line
+	// 	return Token{Type: NEW_LINE, Value: "\n"}
+
+	// }
 	switch tok {
 	case scanner.Ident:
 		if val == "var" {

@@ -13,4 +13,5 @@ const (
 	UnbalancedParentheses      = "unbalanced parentheses"
 	//
 	MissingSemicolon = "missing semicolon"
+	IllegalToken     = "'%s' is illegal token"
 )
