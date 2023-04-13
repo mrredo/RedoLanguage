@@ -120,13 +120,13 @@ func (l *Lexer) NextToken() Token {
 		}
 		tok = l.Scanner.Scan()
 	}
-	if tok == ';' && l.semiColonLine != l.Scanner.Pos().Line {
-		l.semiColonLine = l.Scanner.Pos().Line + 1
-		return Token{Type: SEMICOLON, Value: ";"}
-	} else if l.semiColonLine != l.Scanner.Pos().Line {
-		l.SemErr = err.NewSemiColonError(l.Scanner.Pos())
-		return Token{Type: ILLEGAL, Value: ";"}
-	}
+	//if tok == ';' && l.semiColonLine != l.Scanner.Pos().Line {
+		//l.semiColonLine = l.Scanner.Pos().Line + 1
+		//return Token{Type: SEMICOLON, Value: ";"}
+	//} else if l.semiColonLine != l.Scanner.Pos().Line {
+		//l.SemErr = err.NewSemiColonError(l.Scanner.Pos())
+		//return Token{Type: ILLEGAL, Value: ";"}
+	//}
 	val := l.Scanner.TokenText()
 	// if l.Scanner.Pos().Line != l.curLine {
 	// 	l.curLine = l.Scanner.Pos().Line
@@ -134,6 +134,8 @@ func (l *Lexer) NextToken() Token {
 
 	// }
 	switch tok {
+		case ';': 
+		return Token{Type: SEMICOLON, Value: ";"}
 	case scanner.Ident:
 		if val == "var" {
 			return Token{Type: VAR, Value: "var"}
