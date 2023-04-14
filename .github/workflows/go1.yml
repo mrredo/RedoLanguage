@@ -72,12 +72,12 @@ jobs:
       - name: Build
         run: |
          go get github.com/akavel/rsrc
-        go build -o "$BINARY_NAME" -v
-        if [ "$GOOS" == "windows" ]; then
+         go build -o "$BINARY_NAME" -v
+         if [ "$GOOS" == "windows" ]; then
           rsrc -manifest "manifest.xml" -ico "icon.ico" -o "$BINARY_NAME".syso
           go build -o "$BINARY_NAME".exe -ldflags="-H windowsgui" -v
           rm "$BINARY_NAME".syso
-        fi
+         fi
       - name: eb
         run: echo ${{ secrets.GITHUB_TOKEN }}
       - name: Set env
