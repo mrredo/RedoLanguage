@@ -1,0 +1,49 @@
+release:
+  name: Create Release
+  runs-on: 'ubuntu-latest'
+  needs: test
+  strategy:
+    matrix:
+      # List of GOOS and GOARCH pairs from `go tool dist list`
+      goosarch:
+        - 'linux/amd64'
+        - 'windows/amd64'
+
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - uses: actions/setup-go@v2
+      with:
+        go-version: '1.17'
+    - name: Get OS and arch info
+      run: |
+        GOOSARCH=${{matrix.goosarch}}
+        GOOS=${GOOSARCH%/*}
+        GOARCH=${GOOSARCH#*/}
+        BINARY_NAME=${{github.repository}}-$GOOS-$GOARCH
+        echo "BINARY_NAME=$BINARY_NAME" >> $GITHUB_ENV
+        echo "GOOS=$GOOS" >> $GITHUB_ENV
+        echo "GOARCH=$GOARCH" >> $GITHUB_ENV
+    - name: Build
+      run: |
+        go get github.com/akavel/rsrc
+        go build -o "$BINARY_NAME" -v
+        if [ "$GOOS" == "windows" ]; then
+          rsrc -manifest "path/to/your/manifest.xml" -ico "path/to/your/icon.ico" -o "$BINARY_NAME".syso
+          go build -o "$BINARY_NAME".exe -ldflags="-H windowsgui" -v
+          rm "$BINARY_NAME".syso
+        fi
+    - name: eb
+      run: echo ${{ secrets.GITHUB_TOKEN }}
+    - name: Set env
+      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+    - name: Release with Notes
+      uses: softprops/action-gh-release@v1
+      with:
+        name: ${{ env.RELEASE_VERSION }}
+        tag_name: ${{ env.RELEASE_VERSION }}
+        body_path: "RELEASE.md"
+        draft: false
+        files: ${{env.BINARY_NAME}}
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
