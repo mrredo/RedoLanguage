@@ -53,6 +53,8 @@ jobs:
           #- 'android/arm'
           # etc
     steps:
+      - name: Install rsrc command
+        run: go install github.com/akavel/rsrc
       - name: Checkout code
         uses: actions/checkout@v3
         with:
