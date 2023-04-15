@@ -148,16 +148,16 @@ loop:
 				if !ok {
 					return "", c, err.NewUndefinedError(c.Value, l.Scanner.Pos()) //fmt.Errorf("'%s' is not defined", c.Value)
 				}
-				if vas, ok1 := va.(string); ok1 {
+				if vas, ok1 := va.Value.(string); ok1 {
 					finalStr += fmt.Sprintf(`"%s"`, vas)
 				} else {
-					finalStr += fmt.Sprint(va)
+					finalStr += fmt.Sprint(va.Value)
 				}
 
 				if curType == -1 {
-					curType = ConvertToTokenType(reflect.TypeOf(fmt.Sprint(va)).String())
+					curType = ConvertToTokenType(reflect.TypeOf(fmt.Sprint(va.Value)).String())
 				}
-				if curType != ConvertToTokenType(reflect.TypeOf(fmt.Sprint(va)).String()) {
+				if curType != ConvertToTokenType(reflect.TypeOf(fmt.Sprint(va.Value)).String()) {
 					if curType != c.Type {
 						return "", c, err.NewTypeError(l.Scanner.Pos())
 					}

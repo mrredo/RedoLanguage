@@ -4,7 +4,6 @@ import (
 	"RedoLanguage/std"
 	"errors"
 	"fmt"
-
 )
 
 func RuneToStr(ch rune) string {
@@ -63,11 +62,13 @@ func ParseVariable(curToken Token, sec Token, lexer *Lexer) (key string, value i
 	//if !ok {
 	//	return "", nil, fmt.Errorf("error parsing value to int")
 	//}
-	std.Variables[keyT.Value] = o
+	v := std.Variables[keyT.Value]
+	v.SetValue(o)
+	v.Key = keyT.Value
+	std.Variables[keyT.Value] = v
 	return keyT.Value, o, nil
 
 }
 func VariableExists(name string) bool {
-	return std.Variables[name] != nil
+	return std.Variables[name].Key != ""
 }
-
