@@ -71,20 +71,22 @@ func ParseVariableAssigningExpression(key Token, expression Token, value Token, 
 		return 0, errss
 	}
 	//add mismatched type error message
-	if reflect.TypeOf(o).String() != reflect.TypeOf(k).String() {
+	if reflect.TypeOf(o).String() != reflect.TypeOf(k.Value).String() {
 		return 0, fmt.Errorf("mismatched types")
 	}
 	//vals, err := ParseExpression(value, lexer)
 	if str, ok1 := o.(string); ok1 {
-		if ConvertToTokenType(reflect.TypeOf(k).String()) != STRING {
+		if ConvertToTokenType(reflect.TypeOf(k.Value).String()) != STRING {
 			return 0, fmt.Errorf("can not assign a non string to an string")
 		}
 		switch exp.Type {
 		case ASSIGN:
-			std.Variables[key.Value] = str
+			k.SetValue(str)
+			std.Variables[key.Value] = k
 			return str, nil
 		case PLUS_ASSIGN:
-			std.Variables[key.Value] = k.(string) + str
+			k.SetValue(k.Value.(string) + str)
+			std.Variables[key.Value] = k
 			return str, nil
 		default:
 			return "", fmt.Errorf("invalid operator for string assigning")
@@ -92,12 +94,14 @@ func ParseVariableAssigningExpression(key Token, expression Token, value Token, 
 	}
 
 	if bol, ok1 := o.(bool); ok1 {
-		if reflect.TypeOf(k).String() == "int" {
+		if reflect.TypeOf(k.Value).String() == "int" {
 			return 0, fmt.Errorf("can not assign a non boolean to an boolean")
 		}
 		if exp.Type != ASSIGN {
 			return 0, fmt.Errorf("non integers only support '=' operator for assigning")
 		}
+		k.SetValue(bol)
+		std.Variables[key.Value] = k
 		return bol, nil
 	}
 	valI, ok := o.(int)
@@ -108,24 +112,31 @@ func ParseVariableAssigningExpression(key Token, expression Token, value Token, 
 	if !ok {
 		return 0, nil
 	}
+
 	switch exp.Type {
 	case PLUS_ASSIGN:
-		std.Variables[key.Value] = k.(int) + valI
-		return k.(int) + valI, nil
+		k.SetValue(k.Value.(int) + valI)
+		std.Variables[key.Value] = k
+		return k.Value.(int), nil
 	case SUBTRACT_ASSIGN:
-		std.Variables[key.Value] = k.(int) - valI
-		return k.(int) - valI, nil
+		k.SetValue(k.Value.(int) - valI)
+		std.Variables[key.Value] = k
+		return k.Value.(int), nil
 	case MULTIPLY_ASSIGN:
-		std.Variables[key.Value] = k.(int) * valI
-		return k.(int) * valI, nil
+		k.SetValue(k.Value.(int) * valI)
+		std.Variables[key.Value] = k
+		return k.Value.(int), nil
 	case DIVIDE_ASSIGN:
-		std.Variables[key.Value] = k.(int) / valI
-		return k.(int) / valI, nil
+		k.SetValue(k.Value.(int) / valI)
+		std.Variables[key.Value] = k
+		return k.Value.(int), nil
 	case MODULO_ASSIGN:
-		std.Variables[key.Value] = k.(int) % valI
-		return k.(int) % valI, nil
+		k.SetValue(k.Value.(int) % valI)
+		std.Variables[key.Value] = k
+		return k.Value.(int), nil
 	case ASSIGN:
-		std.Variables[key.Value] = valI
+		k.SetValue(valI)
+		std.Variables[key.Value] = k
 		return valI, nil
 	}
 	return 0, nil

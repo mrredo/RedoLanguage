@@ -5,9 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26084cfd-6f6b-4d0b-90eb-783935da8951" name="Changes" comment="everything works well if u use semicolons at ends">
-      <change beforePath="$PROJECT_DIR$/hello.rd" beforeDir="false" afterPath="$PROJECT_DIR$/hello.rd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexer/lexer.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexer.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexer/lexerArithmeticOperations.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexerArithmeticOperations.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/lexerVariable.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexerVariable.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/lexerVariableOperator.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexerVariableOperator.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/outputTokens.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/outputTokens.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.exe" beforeDir="false" afterPath="$PROJECT_DIR$/main.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/std/Variables.go" beforeDir="false" afterPath="$PROJECT_DIR$/std/Variables.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,6 +121,15 @@
       <kind value="FILE" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$APPLICATION_CONFIG_DIR$/scratches/scratch_2.go" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
+      <module name="RedoLanguage" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="DIRECTORY" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
       <method v="2" />
     </configuration>
     <recent_temporary>
