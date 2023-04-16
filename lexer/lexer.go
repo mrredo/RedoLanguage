@@ -95,12 +95,70 @@ type Token struct {
 	Type  TokenType
 	Value string
 }
-
+type IfStatement struct {
+	Position int
+	Condition string
+	Output bool
+	
+}
 type Lexer struct {
 	Scanner       scanner.Scanner
 	Input         string
-	semiColonLine int
-	SemErr        error
+	CurrentNestingLevel int
+	IfPositions map[int]int // IfPositions[nestingLevel]
+	ElseIfPositions map[int]int // ElseIfPositions[nestingLevel]
+	ElsePositions map[int]int // ElsePositions[nestingLevel]
+	/*
+	algorithm
+
+
+	when token == "if":
+ifPositions := mapOfPosIf[nestingLevel]
+if ifPositions != nil:
+position := len(ifPositions) + 1
+ifPositions[position] = true
+else:
+mapOfPosIf[nestingLevel] = map[int]bool{1: true}
+position = 1
+nestingLevel++
+// parse the expression and block of the if statement
+// ...
+when next_token == "}":
+nestingLevel--
+ifPositions = mapOfPosIf[nestingLevel]
+if ifPositions != nil:
+delete(ifPositions, len(ifPositions))
+else:
+mapOfPosIf[nestingLevel] = nil
+when token == "else":
+ifPositions := mapOfPosIf[nestingLevel]
+if ifPositions != nil:
+position := len(ifPositions) + 1
+ifPositions[position] = true
+nestingLevel++
+// parse the block of the else statement
+// ...
+when next_token == "}":
+nestingLevel--
+when token == "else" && next_token == "if":
+ifPositions := mapOfPosIf[nestingLevel]
+if ifPositions != nil:
+position := len(ifPositions) + 1
+ifPositions[position] = true
+else:
+mapOfPosIf[nestingLevel] = map[int]bool{1: true}
+position = 1
+nestingLevel++
+// parse the expression and block of the else if statement
+// ...
+when next_token == "}":
+nestingLevel--
+ifPositions = mapOfPosIf[nestingLevel]
+if ifPositions != nil:
+delete(ifPositions, len(ifPositions))
+else:
+mapOfPosIf[nestingLevel] = nil
+	*/
 }
 
 func NewLexer(input string) *Lexer {
@@ -111,7 +169,13 @@ func NewLexer(input string) *Lexer {
 	s.Mode = scanner.ScanIdents | scanner.ScanFloats | scanner.ScanStrings |
 		scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments
 
-	return &Lexer{Scanner: s, Input: input, semiColonLine: 0}
+	return &Lexer{
+		Scanner: s, 
+		Input: input,
+		IfPositions: map[int]int{},
+		ElseIfPositions: map[int]int{},
+		ElsePositions: map[int]int{},
+	}
 }
 
 func (l *Lexer) NextToken() Token {
