@@ -1,6 +1,11 @@
 package std
 
-var Variables = map[string]Variable{}
+var Variables = map[string]Variable{
+	"e": {
+		Key: "e",
+		Value: 10,
+	},
+}
 
 type Variable struct {
 	Value        any

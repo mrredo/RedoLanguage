@@ -153,14 +153,12 @@ loop:
 				} else {
 					finalStr += fmt.Sprint(va.Value)
 				}
-
+				
 				if curType == -1 {
-					curType = ConvertToTokenType(reflect.TypeOf(fmt.Sprint(va.Value)).String())
+					curType = ConvertToTokenType(reflect.TypeOf(va.Value).String())
 				}
-				if curType != ConvertToTokenType(reflect.TypeOf(fmt.Sprint(va.Value)).String()) {
-					if curType != c.Type {
-						return "", c, err.NewTypeError(l.Scanner.Pos())
-					}
+				if !(curType != ConvertToTokenType(reflect.TypeOf(fmt.Sprint(va.Value)).String()) && curType != c.Type) {
+					return "", c, err.NewTypeError(l.Scanner.Pos())
 
 				}
 			}
