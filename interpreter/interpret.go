@@ -17,6 +17,7 @@ func Interpret(input string, fileName string) {
 	lexer.Scanner.Filename = fileName
 	var secondTS lx.Token = lexer.NextToken()
 	curT := secondTS
+
 	//if lexer.SemErr != nil {
 	//	log.Println(lexer.SemErr)
 	//	return
@@ -96,6 +97,17 @@ func Interpret(input string, fileName string) {
 				funcM(val...)
 			}
 
+		}
+		if curT.Type == lx.IDENTIFIER {
+			_, ok := std.Variables[curT.Value]
+			if !ok {
+				errS := err.NewUndefinedError(curT.Value, curT.Position)
+				log.Println(errS)
+				break
+			}
+			errS := err.NewUnusedError(curT.Value, curT.Position)
+			log.Println(errS)
+			break
 		}
 
 		secondTS = secondT

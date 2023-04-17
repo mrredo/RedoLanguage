@@ -92,72 +92,72 @@ var OperatorNumToString = map[TokenType]string{
 var numReg = regexp.MustCompile(`\d`)
 
 type Token struct {
-	Type  TokenType
-	Value string
+	Type     TokenType
+	Value    string
+	Position scanner.Position
 }
 type IfStatement struct {
-	Position int
+	Position  int
 	Condition string
-	Output bool
-	
+	Output    bool
 }
 type Lexer struct {
-	Scanner       scanner.Scanner
-	Input         string
+	Scanner             scanner.Scanner
+	Input               string
 	CurrentNestingLevel int
-	IfPositions map[int]int // IfPositions[nestingLevel]
-	ElseIfPositions map[int]int // ElseIfPositions[nestingLevel]
-	ElsePositions map[int]int // ElsePositions[nestingLevel]
+	IfPositions         map[int]int // IfPositions[nestingLevel]
+	ElseIfPositions     map[int]int // ElseIfPositions[nestingLevel]
+	ElsePositions       map[int]int // ElsePositions[nestingLevel]
 	/*
-	algorithm
+			algorithm
 
 
-	when token == "if":
-ifPositions := mapOfPosIf[nestingLevel]
-if ifPositions != nil:
-position := len(ifPositions) + 1
-ifPositions[position] = true
-else:
-mapOfPosIf[nestingLevel] = map[int]bool{1: true}
-position = 1
-nestingLevel++
-// parse the expression and block of the if statement
-// ...
-when next_token == "}":
-nestingLevel--
-ifPositions = mapOfPosIf[nestingLevel]
-if ifPositions != nil:
-delete(ifPositions, len(ifPositions))
-else:
-mapOfPosIf[nestingLevel] = nil
-when token == "else":
-ifPositions := mapOfPosIf[nestingLevel]
-if ifPositions != nil:
-position := len(ifPositions) + 1
-ifPositions[position] = true
-nestingLevel++
-// parse the block of the else statement
-// ...
-when next_token == "}":
-nestingLevel--
-when token == "else" && next_token == "if":
-ifPositions := mapOfPosIf[nestingLevel]
-if ifPositions != nil:
-position := len(ifPositions) + 1
-ifPositions[position] = true
-else:
-mapOfPosIf[nestingLevel] = map[int]bool{1: true}
-position = 1
-nestingLevel++
-// parse the expression and block of the else if statement
-// ...
-when next_token == "}":
-nestingLevel--
-ifPositions = mapOfPosIf[nestingLevel]
-if ifPositions != nil:
-delete(ifPositions, len(ifPositions))
-else:
-mapOfPosIf[nestingLevel] = nil
+			when token == "if":
+		ifPositions := mapOfPosIf[nestingLevel]
+		if ifPositions != nil:
+		position := len(ifPositions) + 1
+		ifPositions[position] = true
+		else:
+		mapOfPosIf[nestingLevel] = map[int]bool{1: true}
+		position = 1
+		nestingLevel++
+		// parse the expression and block of the if statement
+		// ...
+		when next_token == "}":
+		nestingLevel--
+		ifPositions = mapOfPosIf[nestingLevel]
+		if ifPositions != nil:
+		delete(ifPositions, len(ifPositions))
+		else:
+		mapOfPosIf[nestingLevel] = nil
+		when token == "else":
+		ifPositions := mapOfPosIf[nestingLevel]
+		if ifPositions != nil:
+		position := len(ifPositions) + 1
+		ifPositions[position] = true
+		nestingLevel++
+		// parse the block of the else statement
+		// ...
+		when next_token == "}":
+		nestingLevel--
+		when token == "else" && next_token == "if":
+		ifPositions := mapOfPosIf[nestingLevel]
+		if ifPositions != nil:
+		position := len(ifPositions) + 1
+		ifPositions[position] = true
+		else:
+		mapOfPosIf[nestingLevel] = map[int]bool{1: true}
+		position = 1
+		nestingLevel++
+		// parse the expression and block of the else if statement
+		// ...
+		when next_token == "}":
+		nestingLevel--
+		ifPositions = mapOfPosIf[nestingLevel]
+		if ifPositions != nil:
+		delete(ifPositions, len(ifPositions))
+		else:
+		mapOfPosIf[nestingLevel] = nil
 	*/
 }
 
@@ -170,11 +170,11 @@ func NewLexer(input string) *Lexer {
 		scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments
 
 	return &Lexer{
-		Scanner: s, 
-		Input: input,
-		IfPositions: map[int]int{},
+		Scanner:         s,
+		Input:           input,
+		IfPositions:     map[int]int{},
 		ElseIfPositions: map[int]int{},
-		ElsePositions: map[int]int{},
+		ElsePositions:   map[int]int{},
 	}
 }
 
@@ -207,89 +207,89 @@ func (l *Lexer) NextToken() Token {
 
 	case scanner.Ident:
 		if val == "var" {
-			return Token{Type: VAR, Value: "var"}
+			return Token{Type: VAR, Value: "var", Position: l.Scanner.Pos()}
 		} else if val == "true" || val == "false" {
-			return Token{Type: BOOL, Value: val}
+			return Token{Type: BOOL, Value: val, Position: l.Scanner.Pos()}
 		}
-		return Token{Type: IDENTIFIER, Value: val}
+		return Token{Type: IDENTIFIER, Value: val, Position: l.Scanner.Pos()}
 	case '=':
 
 		if l.Scanner.Peek() == '=' {
 			l.NextToken()
-			return Token{Type: EQUAL, Value: "=="}
+			return Token{Type: EQUAL, Value: "==", Position: l.Scanner.Pos()}
 		}
 
-		return Token{Type: ASSIGN, Value: val}
+		return Token{Type: ASSIGN, Value: val, Position: l.Scanner.Pos()}
 	case '\n': // \n
-		return Token{Type: NEW_LINE, Value: "\n"}
+		return Token{Type: NEW_LINE, Value: "\n", Position: l.Scanner.Pos()}
 	case '&':
 
 		if p := l.Scanner.Peek(); p == '&' {
 			l.NextToken()
-			return Token{Type: OR, Value: "&&"}
+			return Token{Type: OR, Value: "&&", Position: l.Scanner.Pos()}
 		}
-		return Token{Type: BITWISE_AND, Value: "&"}
+		return Token{Type: BITWISE_AND, Value: "&", Position: l.Scanner.Pos()}
 
 	case '|':
 		{
 			if p := l.Scanner.Peek(); p == '|' {
 				l.NextToken()
-				return Token{Type: AND, Value: "||"}
+				return Token{Type: AND, Value: "||", Position: l.Scanner.Pos()}
 			}
-			return Token{Type: BITWISE_OR, Value: "|"}
+			return Token{Type: BITWISE_OR, Value: "|", Position: l.Scanner.Pos()}
 		}
 	case ';':
-		return Token{Type: SEMICOLON, Value: ";"}
+		return Token{Type: SEMICOLON, Value: ";", Position: l.Scanner.Pos()}
 	case '+':
 		if l.Scanner.Peek() == '=' {
 			l.NextToken()
-			return Token{Type: PLUS_ASSIGN, Value: "+="}
+			return Token{Type: PLUS_ASSIGN, Value: "+=", Position: l.Scanner.Pos()}
 		}
-		return Token{Type: PLUS, Value: val}
+		return Token{Type: PLUS, Value: val, Position: l.Scanner.Pos()}
 	case '-':
 		if l.Scanner.Peek() == '=' {
 			l.NextToken()
-			return Token{Type: SUBTRACT_ASSIGN, Value: "-="}
+			return Token{Type: SUBTRACT_ASSIGN, Value: "-=", Position: l.Scanner.Pos()}
 		} else if numReg.MatchString(string(l.Scanner.Peek())) {
-			return Token{Type: NUMBER, Value: "-" + l.NextToken().Value}
+			return Token{Type: NUMBER, Value: "-" + l.NextToken().Value, Position: l.Scanner.Pos()}
 		}
 
-		return Token{Type: SUBTRACT, Value: val}
+		return Token{Type: SUBTRACT, Value: val, Position: l.Scanner.Pos()}
 	case '*':
 		if l.Scanner.Peek() == '=' {
 			l.NextToken()
-			return Token{Type: MULTIPLY_ASSIGN, Value: "*="}
+			return Token{Type: MULTIPLY_ASSIGN, Value: "*=", Position: l.Scanner.Pos()}
 		}
-		return Token{Type: MULTIPLY, Value: val}
+		return Token{Type: MULTIPLY, Value: val, Position: l.Scanner.Pos()}
 
 	case '/':
 		if l.Scanner.Peek() == '=' {
 			l.NextToken()
-			return Token{Type: DIVIDE_ASSIGN, Value: "/="}
+			return Token{Type: DIVIDE_ASSIGN, Value: "/=", Position: l.Scanner.Pos()}
 		}
-		return Token{Type: DIVIDE, Value: val}
+		return Token{Type: DIVIDE, Value: val, Position: l.Scanner.Pos()}
 	case '%':
 		if l.Scanner.Peek() == '=' {
 			l.NextToken()
-			return Token{Type: MODULO_ASSIGN, Value: "%="}
+			return Token{Type: MODULO_ASSIGN, Value: "%=", Position: l.Scanner.Pos()}
 		}
-		return Token{Type: MODULO, Value: val}
+		return Token{Type: MODULO, Value: val, Position: l.Scanner.Pos()}
 	case ',':
-		return Token{Type: COMMA, Value: val}
+		return Token{Type: COMMA, Value: val, Position: l.Scanner.Pos()}
 	case '(':
-		return Token{Type: LPAREN, Value: val}
+		return Token{Type: LPAREN, Value: val, Position: l.Scanner.Pos()}
 	case ')':
-		return Token{Type: RPAREN, Value: val}
+		return Token{Type: RPAREN, Value: val, Position: l.Scanner.Pos()}
 	case scanner.Float:
-		return Token{Type: NUMBER, Value: val}
+		return Token{Type: NUMBER, Value: val, Position: l.Scanner.Pos()}
 	case scanner.Int:
-		return Token{Type: NUMBER, Value: val}
+		return Token{Type: NUMBER, Value: val, Position: l.Scanner.Pos()}
 	case scanner.String:
-		return Token{Type: STRING, Value: val}
+		return Token{Type: STRING, Value: val, Position: l.Scanner.Pos()}
 
 	default:
 
-		return Token{Type: ILLEGAL, Value: val}
+		return Token{Type: ILLEGAL, Value: val, Position: l.Scanner.Pos()}
 	}
 }
 
