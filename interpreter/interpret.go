@@ -98,17 +98,17 @@ func Interpret(input string, fileName string) {
 			}
 
 		}
-		if curT.Type == lx.IDENTIFIER {
-			_, ok := std.Variables[curT.Value]
-			if !ok {
-				errS := err.NewUndefinedError(curT.Value, curT.Position)
-				log.Println(errS)
-				break
-			}
-			errS := err.NewUnusedError(curT.Value, curT.Position)
-			log.Println(errS)
-			break
-		}
+		// if curT.Type == lx.IDENTIFIER {
+		// 	_, ok := std.Variables[curT.Value]
+		// 	if !ok {
+		// 		errS := err.NewUndefinedError(curT.Value, curT.Position)
+		// 		log.Println(errS)
+		// 		break
+		// 	}
+		// 	errS := err.NewUnusedError(curT.Value, curT.Position)
+		// 	log.Println(errS)
+		// 	break
+		// }
 
 		secondTS = secondT
 	}
