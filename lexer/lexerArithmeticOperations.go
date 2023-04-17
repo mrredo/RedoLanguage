@@ -21,8 +21,6 @@ func ParseArithmeticExpressions(expression string, l *Lexer) (any, error) {
 	if errss != nil {
 		return 0, err.NewExpressionError(err.ErrorEvaluatingExpression, errss.Error(), l.Scanner.Pos()) //fmt.Errorf("error evaluating expression: %v", err)
 	}
-
-	// Convert result to int and return
 	if val, ok := result.(string); ok {
 		return val, nil
 	}
@@ -32,7 +30,9 @@ func ParseArithmeticExpressions(expression string, l *Lexer) (any, error) {
 	if val, ok := result.(float64); ok {
 		return int(val), nil
 	}
-	return 0, err.NewExpressionError(err.ErrorConvertingResultToInt, "", l.Scanner.Pos()) //fmt.Errorf("error converting result to int")
+	// Convert result to int and return
+
+	return result, err.NewExpressionError(err.ErrorConvertingResultToInt, "", l.Scanner.Pos()) //fmt.Errorf("error converting result to int")
 }
 func isOperator(op Token) bool {
 	_, ok := OperatorNumToString[op.Type]
@@ -171,10 +171,10 @@ loop:
 			finalStr += "("
 		case RPAREN:
 			nestingLevel--
-			if nestingLevel != 0 {
-
-				return "", c, err.NewSyntaxError(err.UnbalancedParentheses, l.Scanner.Pos())
-			}
+			// if nestingLevel != 0 {
+			// 	fmt.Println(nestingLevel)
+			// 	return "", c, err.NewSyntaxError(err.UnbalancedParentheses, l.Scanner.Pos())
+			// }
 			finalStr += ")"
 		default:
 
@@ -183,12 +183,19 @@ loop:
 		if len(function) > 0 {
 			if nestingLevel == 0 {
 				break
-			}
+			} 
 		}
 
 		c = l.NextToken()
 
 	}
+	if len(function) > 0 {
+		if nestingLevel != 0 {
+			return "", c, err.NewSyntaxError(err.UnbalancedParentheses, l.Scanner.Pos())
+		}
+
+	}
+	
 
 	return finalStr, c, nil
 }

@@ -1,10 +1,10 @@
 package std
 
 var Variables = map[string]Variable{
-	"e": {
-		Key: "e",
-		Value: 10,
-	},
+	// "e": {
+	// 	Key: "e",
+	// 	Value: 10,
+	// },
 }
 
 type Variable struct {
