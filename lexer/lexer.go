@@ -108,6 +108,8 @@ type Lexer struct {
 	IfPositions         map[int]int // IfPositions[nestingLevel]
 	ElseIfPositions     map[int]int // ElseIfPositions[nestingLevel]
 	ElsePositions       map[int]int // ElsePositions[nestingLevel]
+	CurrentPosition     int
+
 	/*
 			algorithm
 
@@ -170,11 +172,13 @@ func NewLexer(input string) *Lexer {
 		scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments
 
 	return &Lexer{
-		Scanner:         s,
-		Input:           input,
-		IfPositions:     map[int]int{},
-		ElseIfPositions: map[int]int{},
-		ElsePositions:   map[int]int{},
+		Scanner:             s,
+		Input:               input,
+		CurrentNestingLevel: 0,
+		CurrentPosition:     0,
+		IfPositions:         map[int]int{},
+		ElseIfPositions:     map[int]int{},
+		ElsePositions:       map[int]int{},
 	}
 }
 
