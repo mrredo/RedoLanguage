@@ -34,10 +34,7 @@ func ParseArithmeticExpressions(expression string, l *Lexer) (any, error) {
 
 	return result, err.NewExpressionError(err.ErrorConvertingResultToInt, "", l.Scanner.Pos()) //fmt.Errorf("error converting result to int")
 }
-func isOperator(op Token) bool {
-	_, ok := OperatorNumToString[op.Type]
-	return ok
-}
+
 func MathExpressionTokensToEnd(c Token, l *Lexer, function ...bool) (string, Token, error) {
 
 	var finalStr string

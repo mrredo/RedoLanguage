@@ -29,6 +29,9 @@ func NewSyntaxError(format string, pos scanner.Position, args ...any) error {
 func NewSemiColonError(pos scanner.Position) error {
 	return Error(MissingSemicolon, SyntaxError, pos)
 }
+func NewInvalidIfExpressionError(pos scanner.Position) error {
+	return Error(IfExpressionResultNotBool, ExpressionError, pos)
+}
 func NewIllegalTokenError(tokenVal string, pos scanner.Position) error {
 	return Error(fmt.Sprintf(IllegalToken, tokenVal), SyntaxError, pos)
 }

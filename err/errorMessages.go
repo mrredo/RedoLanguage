@@ -14,4 +14,6 @@ const (
 	//
 	MissingSemicolon = "missing semicolon"
 	IllegalToken     = "'%s' is illegal token"
+
+	IfExpressionResultNotBool = "invalid expression in if statements expression must return a boolean"
 )
