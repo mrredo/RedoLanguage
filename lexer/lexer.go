@@ -105,9 +105,7 @@ type Lexer struct {
 	Scanner             scanner.Scanner
 	Input               string
 	CurrentNestingLevel int
-	IfPositions         map[int]int // IfPositions[nestingLevel]
-	ElseIfPositions     map[int]int // ElseIfPositions[nestingLevel]
-	ElsePositions       map[int]int // ElsePositions[nestingLevel]
+	IfPositions         map[int]If // IfPositions[nestingLevel]
 	CurrentPosition     int
 
 	/*
@@ -176,9 +174,7 @@ func NewLexer(input string) *Lexer {
 		Input:               input,
 		CurrentNestingLevel: 0,
 		CurrentPosition:     0,
-		IfPositions:         map[int]int{},
-		ElseIfPositions:     map[int]int{},
-		ElsePositions:       map[int]int{},
+		IfPositions:         map[int]If{},
 	}
 }
 
@@ -210,12 +206,34 @@ func (l *Lexer) NextToken() Token {
 	switch tok {
 
 	case scanner.Ident:
-		if val == "var" {
+		switch val {
+		case "var":
 			return Token{Type: VAR, Value: "var", Position: l.Scanner.Pos()}
-		} else if val == "true" || val == "false" {
+		case "true", "false":
 			return Token{Type: BOOL, Value: val, Position: l.Scanner.Pos()}
+		case "if":
+
+			return Token{Type: IF, Value: val, Position: l.Scanner.Pos()}
+		case "else":
+			if l.Scanner.Peek() != '{' {
+				l.NextToken()
+				return Token{Type: ELSE_IF, Value: val, Position: l.Scanner.Pos()}
+			}
+			return Token{Type: ELSE, Value: val, Position: l.Scanner.Pos()}
+
 		}
-		return Token{Type: IDENTIFIER, Value: val, Position: l.Scanner.Pos()}
+		return Token{Type: ILLEGAL, Value: val, Position: l.Scanner.Pos()}
+	//if val == "var" {
+	//	return Token{Type: VAR, Value: "var", Position: l.Scanner.Pos()}
+	//} else if val == "true" || val == "false" {
+	//	return Token{Type: BOOL, Value: val, Position: l.Scanner.Pos()}
+	//}
+	//return Token{Type: IDENTIFIER, Value: val, Position: l.Scanner.Pos()}c
+	case '{':
+		return Token{Type: LBRACE, Value: val}
+	case '}':
+		return Token{Type: RBRACE, Value: val}
+
 	case '=':
 
 		if l.Scanner.Peek() == '=' {
