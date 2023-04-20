@@ -1,22 +1,22 @@
 package lexer
 
-func IsIfStatement(c, s Token, lx *Lexer) (bool, *If, error) {
+import "fmt"
+
+func IsIfStatement(c, s Token, lx *Lexer) (bool, error) {
 	switch c.Type {
 	case IF, ELSE, ELSE_IF:
-
 		break
 
 	default:
-		return false, nil, nil
+		return false, nil
 	}
 	lx.CurrentNestingLevel++
-	lx.CurrentPosition ++
-	lx.IfPositions[lx.CurrentNestingLevel] = If{
-		Condition: "",
-		Position: lx.CurrentPosition,
+	lx.CurrentPosition++
+	var e *If = &If{
+		Position:     lx.CurrentPosition,
 		NestingLevel: lx.CurrentNestingLevel,
-		ElseIfs: []elseIf{},
 	}
-	return false, nil, nil
-	
+	fmt.Println(e)
+	return false, nil
+
 }
