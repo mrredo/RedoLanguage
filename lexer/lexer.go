@@ -222,7 +222,7 @@ func (l *Lexer) NextToken() Token {
 			return Token{Type: ELSE, Value: val, Position: l.Scanner.Pos()}
 
 		}
-		return Token{Type: ILLEGAL, Value: val, Position: l.Scanner.Pos()}
+		return Token{Type: IDENTIFIER, Value: val, Position: l.Scanner.Pos()}
 	//if val == "var" {
 	//	return Token{Type: VAR, Value: "var", Position: l.Scanner.Pos()}
 	//} else if val == "true" || val == "false" {

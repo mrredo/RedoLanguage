@@ -4,6 +4,7 @@ import (
 	"RedoLanguage/err"
 	lx "RedoLanguage/lexer"
 	"RedoLanguage/std"
+	"fmt"
 	"log"
 	"strings"
 )
@@ -62,6 +63,27 @@ func Interpret(input string, fileName string) {
 		//	// }
 		//
 		//}
+		if curT.Type == lx.RBRACE {
+			lexer.CurrentNestingLevel--
+		}
+		if lx.IsIfStatement(curT) {
+			if curT.Type == lx.IF {
+				lexer.CurrentPosition++
+				lexer.CurrentNestingLevel++
+			}
+
+			tok := secondT
+			i := lx.If{Position: lexer.CurrentPosition, NestingLevel: lexer.CurrentNestingLevel}
+
+			for {
+				if tok.Type == lx.LBRACE {
+					break
+				}
+				i.Condition += tok.Value
+				tok = lexer.NextToken()
+			}
+			fmt.Println(i)
+		}
 		if lx.IsVariableExpression(curT, secondT, lexer) { // key +
 
 			key := curT

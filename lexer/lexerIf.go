@@ -2,7 +2,7 @@ package lexer
 
 import "fmt"
 
-func IsIfStatement(c, s Token, lx *Lexer) (bool, error) {
+func HandleIfStatement(c, s Token, lx *Lexer) (bool, error) {
 	switch c.Type {
 	case IF, ELSE, ELSE_IF:
 		break
@@ -19,4 +19,7 @@ func IsIfStatement(c, s Token, lx *Lexer) (bool, error) {
 	fmt.Println(e)
 	return false, nil
 
+}
+func IsIfStatement(c Token) bool {
+	return c.Type == IF || c.Type == ELSE || c.Type == ELSE_IF
 }
