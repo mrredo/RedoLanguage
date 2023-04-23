@@ -4,6 +4,7 @@ import (
 	"RedoLanguage/err"
 	lx "RedoLanguage/lexer"
 	"RedoLanguage/std"
+	"errors"
 	"fmt"
 	"log"
 	"strings"
@@ -67,21 +68,24 @@ func Interpret(input string, fileName string) {
 			lexer.CurrentNestingLevel--
 		}
 		if lx.IsIfStatement(curT) {
-			if curT.Type == lx.IF {
-				lexer.CurrentPosition++
-				lexer.CurrentNestingLevel++
-			}
 
 			tok := secondT
 			i := lx.If{Position: lexer.CurrentPosition, NestingLevel: lexer.CurrentNestingLevel}
-
+		forif:
 			for {
-				if tok.Type == lx.LBRACE {
-					break
+				switch tok.Type {
+				case lx.EOF:
+					break forif
+				case lx.LBRACE:
+					lexer.CurrentPosition++
+					lexer.CurrentNestingLevel++
+					break forif
 				}
+
 				i.Condition += tok.Value
 				tok = lexer.NextToken()
 			}
+
 			fmt.Println(i)
 		}
 		if lx.IsVariableExpression(curT, secondT, lexer) { // key +
@@ -133,5 +137,13 @@ func Interpret(input string, fileName string) {
 		// }
 
 		secondTS = secondT
+
+	}
+	if lexer.CurrentNestingLevel < 0 {
+		log.Println(errors.New("missing start of statement"))
+	}
+	if lexer.CurrentNestingLevel > 0 {
+		log.Println(errors.New("missing end of statement"))
+
 	}
 }

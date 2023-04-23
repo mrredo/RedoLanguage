@@ -1,35 +1,6 @@
-if true == true {
-
+if true {
+var e = 10;
+print(e);
 }
-
-if true == true {
-if true == true {
-if true == true {
-if true == true {
-if true == true {
-if true == true {
-if true == true {
-if true == true {
-if true == true {
-if true == true {
-if true == true {
-if true == true {
-
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-if true == true {
-
-}
-if true == true {
-
-}
+var ee = 10;
+print(e);

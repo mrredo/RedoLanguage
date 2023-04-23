@@ -65,7 +65,10 @@ func ParseVariable(curToken Token, sec Token, lexer *Lexer) (key string, value i
 	v := std.Variables[keyT.Value]
 	v.SetValue(o)
 	v.Key = keyT.Value
+	v.NestingLevel = lexer.CurrentNestingLevel
+	v.Position = lexer.CurrentPosition
 	std.Variables[keyT.Value] = v
+	fmt.Println(v)
 	return keyT.Value, o, nil
 
 }

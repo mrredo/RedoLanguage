@@ -11,7 +11,7 @@ type Variable struct {
 	Value        any
 	Key          string
 	NestingLevel int
-	ID           int
+	Position     int
 }
 
 func (this *Variable) SetValue(val any) {
