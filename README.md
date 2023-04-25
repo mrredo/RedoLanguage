@@ -1,6 +1,6 @@
 # RedoLanguage
 Interpreter for redo language
-## ADDING SEMICOLONS AFTER EXPRESSIONS WILL
+## Semicolons are needed after expressions where () characters arent present 
 for example
 ```
 var hello = "Hello " + "World" + "!";
