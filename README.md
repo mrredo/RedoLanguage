@@ -18,15 +18,15 @@ NOTE: This is required in this current situation, in further updates hopefully i
 
 
 #BETA features
+###Currently there are none
+
+# Features
 ### IF statements
-Note: Only supports hard coded values
 ```go
 if true {
 print(true)
 }
 ```
-
-# Features
 ### Methods:
 
 - print(args...)
