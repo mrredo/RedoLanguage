@@ -5,11 +5,11 @@ print(e);
 }
 var ee = 10;
 print(e);*/
-
-if true {
-if true {
-if true {
-if true {
+var bool = true;
+if bool {
+if bool {
+if bool {
+if bool {
 print(10)
 }
 }
