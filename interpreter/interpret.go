@@ -38,13 +38,13 @@ func Interpret(input string, fileName string) {
 		// secPos = lexer.Scanner.Pos()
 		if curT.Type == lx.ILLEGAL {
 			log.Println(err.NewIllegalTokenError(curT.Value, lexer.Scanner.Pos()))
-			break
+			return
 		} else if secondT.Type == lx.ILLEGAL {
 			log.Println(err.NewIllegalTokenError(secondT.Value, lexer.Scanner.Pos()))
-			break
+			return
 		}
 		if curT.Type == lx.EOF {
-			break
+			return
 		}
 
 		//later will be added when I want to fix it
@@ -68,8 +68,9 @@ func Interpret(input string, fileName string) {
 			lexer.CurrentNestingLevel--
 		}
 		if lx.IsIfStatement(curT) {
-
+			curNes := lexer.CurrentNestingLevel
 			tok := secondT
+			fmt.Println(curT, secondT)
 			i := lx.If{Position: lexer.CurrentPosition, NestingLevel: lexer.CurrentNestingLevel}
 		forif:
 			for {
@@ -85,9 +86,36 @@ func Interpret(input string, fileName string) {
 				i.Condition += tok.Value
 				tok = lexer.NextToken()
 			}
+			if curNes == lexer.CurrentNestingLevel {
+				log.Println(errors.New("missing start of statement"))
+				return
+			}
+			lexer.IfPositions[lexer.CurrentNestingLevel] = i
+			if v, err := i.Output(lexer); err != nil {
+				log.Println(err)
+				return
+			} else {
+				if !v {
+				forfalse:
+					for {
+						switch tok.Type {
+						case lx.EOF:
+							break forfalse
+						case lx.RBRACE:
 
-			fmt.Println(i)
+							lexer.CurrentNestingLevel--
+							break forfalse
+						}
+
+						tok = lexer.NextToken()
+
+					}
+
+				}
+			}
+
 		}
+
 		if lx.IsVariableExpression(curT, secondT, lexer) { // key +
 
 			key := curT
@@ -114,6 +142,7 @@ func Interpret(input string, fileName string) {
 
 		}
 		if lx.IsFunction(curT, secondT, lexer) {
+			fmt.Println(lexer.IfPositions)
 			funcName, val, err := lx.ParseFunctionCall(curT, secondT, lexer)
 			if err != nil {
 				log.Println(err)
