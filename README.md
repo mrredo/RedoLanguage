@@ -17,7 +17,14 @@ NOTE: This is required in this current situation, in further updates hopefully i
 
 
 
-
+#BETA features
+### IF statements
+Note: Only supports hard coded values
+```go
+if true {
+print(true)
+}
+```
 
 # Features
 ### Methods:
