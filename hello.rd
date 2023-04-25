@@ -5,16 +5,15 @@ print(e);
 }
 var ee = 10;
 print(e);*/
-var bool = true;
+var bool = false;
+if bool == false {
 if bool {
 if bool {
 if bool {
-if bool {
-print(10)
+println(10)
 }
 }
 }
+print(19191919)
 }
-if true|| true {
-}
-print(10)
+print(19)

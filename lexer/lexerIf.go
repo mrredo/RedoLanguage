@@ -1,24 +1,61 @@
 package lexer
 
-import "fmt"
+import (
+	"errors"
+)
 
-func HandleIfStatement(c, s Token, lx *Lexer) (bool, error) {
-	switch c.Type {
-	case IF, ELSE, ELSE_IF:
-		break
+func ExecuteIf(c, s Token, lx *Lexer) error {
+	curNes := lx.CurrentNestingLevel
+	tok := s
+	i := If{Position: lx.CurrentPosition, NestingLevel: lx.CurrentNestingLevel}
+forif:
+	for {
+		switch tok.Type {
+		case EOF:
+			break forif
+		case LBRACE:
+			lx.CurrentPosition++
+			lx.CurrentNestingLevel++
+			break forif
+		}
 
-	default:
-		return false, nil
+		i.Condition += tok.Value
+		tok = lx.NextToken()
 	}
-	lx.CurrentNestingLevel++
-	lx.CurrentPosition++
-	var e *If = &If{
-		Position:     lx.CurrentPosition,
-		NestingLevel: lx.CurrentNestingLevel,
-	}
-	fmt.Println(e)
-	return false, nil
 
+	if curNes == lx.CurrentNestingLevel {
+		return errors.New("missing start of statement")
+	}
+	curNes = lx.CurrentNestingLevel
+	lx.IfPositions[lx.CurrentNestingLevel] = i
+	if v, err := i.Output(); err != nil {
+		return err
+	} else {
+		if !v {
+		forfalse:
+			for {
+
+				switch tok.Type {
+				case EOF:
+					break forfalse
+				case RBRACE:
+
+					lx.CurrentNestingLevel--
+					if lx.CurrentNestingLevel == curNes {
+						break forfalse
+					}
+
+				case LBRACE:
+					lx.CurrentNestingLevel++
+				}
+
+				tok = lx.NextToken()
+
+			}
+
+		}
+	}
+	return nil
 }
 func IsIfStatement(c Token) bool {
 	return c.Type == IF || c.Type == ELSE || c.Type == ELSE_IF

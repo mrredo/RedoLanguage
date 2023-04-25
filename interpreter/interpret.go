@@ -5,7 +5,6 @@ import (
 	lx "RedoLanguage/lexer"
 	"RedoLanguage/std"
 	"errors"
-	"fmt"
 	"log"
 	"strings"
 )
@@ -68,51 +67,55 @@ func Interpret(input string, fileName string) {
 			lexer.CurrentNestingLevel--
 		}
 		if lx.IsIfStatement(curT) {
-			curNes := lexer.CurrentNestingLevel
-			tok := secondT
-			fmt.Println(curT, secondT)
-			i := lx.If{Position: lexer.CurrentPosition, NestingLevel: lexer.CurrentNestingLevel}
-		forif:
-			for {
-				switch tok.Type {
-				case lx.EOF:
-					break forif
-				case lx.LBRACE:
-					lexer.CurrentPosition++
-					lexer.CurrentNestingLevel++
-					break forif
-				}
-
-				i.Condition += tok.Value
-				tok = lexer.NextToken()
-			}
-			if curNes == lexer.CurrentNestingLevel {
-				log.Println(errors.New("missing start of statement"))
-				return
-			}
-			lexer.IfPositions[lexer.CurrentNestingLevel] = i
-			if v, err := i.Output(lexer); err != nil {
+			if err := lx.ExecuteIf(curT, secondT, lexer); err != nil {
 				log.Println(err)
 				return
-			} else {
-				if !v {
-				forfalse:
-					for {
-						switch tok.Type {
-						case lx.EOF:
-							break forfalse
-						case lx.RBRACE:
-
-							lexer.CurrentNestingLevel--
-							break forfalse
-						}
-
-						tok = lexer.NextToken()
-
-					}
-
-				}
 			}
+			//	curNes := lexer.CurrentNestingLevel
+			//	tok := secondT
+			//	fmt.Println(curT, secondT)
+			//	i := lx.If{Position: lexer.CurrentPosition, NestingLevel: lexer.CurrentNestingLevel}
+			//forif:
+			//	for {
+			//		switch tok.Type {
+			//		case lx.EOF:
+			//			break forif
+			//		case lx.LBRACE:
+			//			lexer.CurrentPosition++
+			//			lexer.CurrentNestingLevel++
+			//			break forif
+			//		}
+			//
+			//		i.Condition += tok.Value
+			//		tok = lexer.NextToken()
+			//	}
+			//	if curNes == lexer.CurrentNestingLevel {
+			//		log.Println(errors.New("missing start of statement"))
+			//		return
+			//	}
+			//	lexer.IfPositions[lexer.CurrentNestingLevel] = i
+			//	if v, err := i.Output(lexer); err != nil {
+			//		log.Println(err)
+			//		return
+			//	} else {
+			//		if !v {
+			//		forfalse:
+			//			for {
+			//				switch tok.Type {
+			//				case lx.EOF:
+			//					break forfalse
+			//				case lx.RBRACE:
+			//
+			//					lexer.CurrentNestingLevel--
+			//					break forfalse
+			//				}
+			//
+			//				tok = lexer.NextToken()
+			//
+			//			}
+			//
+			//		}
+			//	}
 
 		}
 
@@ -142,7 +145,6 @@ func Interpret(input string, fileName string) {
 
 		}
 		if lx.IsFunction(curT, secondT, lexer) {
-			fmt.Println(lexer.IfPositions)
 			funcName, val, err := lx.ParseFunctionCall(curT, secondT, lexer)
 			if err != nil {
 				log.Println(err)

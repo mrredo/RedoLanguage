@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="26084cfd-6f6b-4d0b-90eb-783935da8951" name="Changes" comment="still making, school is slowing me down">
+    <list default="true" id="26084cfd-6f6b-4d0b-90eb-783935da8951" name="Changes" comment="if statements dont work with variables only with hard coded values">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hello.rd" beforeDir="false" afterPath="$PROJECT_DIR$/hello.rd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/interpreter/interpret.go" beforeDir="false" afterPath="$PROJECT_DIR$/interpreter/interpret.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/If.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/If.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/lexerIf.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexerIf.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/lexerVariable.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexerVariable.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +44,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectId" id="2NuWmoc321lwmW9dXbkBVyKUv0g" />
   <component name="ProjectViewState">
@@ -84,6 +90,14 @@
     </option>
   </component>
   <component name="RunManager" selected="Go Build.go build main.go">
+    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="RedoLanguage" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
     <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="RedoLanguage" />
       <working_directory value="$PROJECT_DIR$" />
@@ -113,6 +127,15 @@
       <kind value="FILE" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$APPLICATION_CONFIG_DIR$/scratches/scratch_2.go" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
+      <module name="RedoLanguage" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="DIRECTORY" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
       <method v="2" />
     </configuration>
     <recent_temporary>
@@ -159,7 +182,9 @@
     <MESSAGE value="variable assiging operator += string this doesnt work&#10;var hello = &quot;world&quot;&#10;hello += &quot;!&quot; + &quot;!&quot;&#10;print(hello)//output: world!&#10;hello = &quot;world&quot;&#10;hello = &quot;!&quot; + &quot;!&quot;&#10;print(hello)//output: world!" />
     <MESSAGE value="everything works well if u use semicolons at ends" />
     <MESSAGE value="still making, school is slowing me down" />
-    <option name="LAST_COMMIT_MESSAGE" value="still making, school is slowing me down" />
+    <MESSAGE value="if statements are made but only if works else, else if doesnt work" />
+    <MESSAGE value="if statements dont work with variables only with hard coded values" />
+    <option name="LAST_COMMIT_MESSAGE" value="if statements dont work with variables only with hard coded values" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
