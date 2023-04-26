@@ -50,7 +50,7 @@ loop:
 		if c.Type == SEMICOLON || c.Type == NEW_LINE || c.Type == EOF /*|| c.Type == COMMA*/ {
 			break
 		}
-		//fmt.Println(isOperator(c), isOperatorTurn, c)
+		//(isOperator(c), isOperatorTurn, c)
 		//if isOperator(c) {
 		//	if !isOperatorTurn {
 		//		break
@@ -169,7 +169,6 @@ loop:
 		case RPAREN:
 			nestingLevel--
 			// if nestingLevel != 0 {
-			// 	fmt.Println(nestingLevel)
 			// 	return "", c, err.NewSyntaxError(err.UnbalancedParentheses, l.Scanner.Pos())
 			// }
 			finalStr += ")"

@@ -17,7 +17,10 @@ func (ifs *If) Output() (bool, error) {
 	if errs != nil {
 		return false, errs
 	}
-	val, e := ParseArithmeticExpressions(parsedExpression, lx)
+	if len(parsedExpression) == 2 {
+		return false, nil
+	}
+	val, e := ParseArithmeticExpressions(parsedExpression[1:len(parsedExpression)-1], lx)
 	if e != nil {
 		return false, e
 	}

@@ -1,19 +1,7 @@
-/*
-if true {
-var e = 10;
-print(e);
-}
-var ee = 10;
-print(e);*/
-var bool = false;
-if bool == false {
+var bool = true;
+
 if bool {
-if bool {
-if bool {
-println(10)
+    println("Bool is true")
+} else {
+    println("Bool is false")
 }
-}
-}
-print(19191919)
-}
-print(19)

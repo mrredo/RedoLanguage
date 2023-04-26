@@ -46,76 +46,61 @@ func Interpret(input string, fileName string) {
 			return
 		}
 
-		//later will be added when I want to fix it
-		//if curT.Type == lx.IDENTIFIER {
-		//	_, ok := std.Variables[curT.Value]
-		//	_, ok1 := std.Functions[curT.Value]
-		//
-		//	if !ok && !ok1 {
-		//		errs := err.NewUndefinedError(curT.Value, lexer.Scanner.Pos())
-		//		log.Println(errs)
-		//		break
-		//	}
-		//	// if curPos.Line != secPos.Line {
-		//	// 	errs := err.NewUnusedError(curT.Value, lexer.Scanner.Pos())
-		//	// 	log.Println(errs)
-		//	// 	break
-		//	// }
-		//
-		//}
+
 		if curT.Type == lx.RBRACE {
 			lexer.CurrentNestingLevel--
 		}
 		if lx.IsIfStatement(curT) {
-			if err := lx.ExecuteIf(curT, secondT, lexer); err != nil {
-				log.Println(err)
-				return
+			switch curT.Type {
+			case lx.ELSE:
+				if secondT.Type == lx.IF {
+					n := lexer.NextToken()
+					if err := lx.ExecuteIf(secondT, n, lexer); err != nil {
+						log.Println(err)
+						return
+					}
+					break
+				}
+				if secondT.Type != lx.LBRACE {
+					log.Println(errors.New("invalid else statement"))
+					return
+				}
+				curIf := lexer.IfPositions[lexer.CurrentNestingLevel+1]
+				b, errs := curIf.Output()
+				if errs != nil {
+					log.Println(errs)
+					return
+				}
+				tok := secondT
+				prevNes := lexer.CurrentNestingLevel
+				if b/*b==false*/ {
+					for {
+
+						switch tok.Type {
+						case lx.LBRACE:
+							lexer.CurrentNestingLevel++
+						case lx.RBRACE:
+							lexer.CurrentNestingLevel--
+						case lx.EOF:
+							return
+						}
+						if prevNes == lexer.CurrentNestingLevel {
+							break
+						}
+						tok = lexer.NextToken()
+					}
+					//skip
+
+				}
+
+			default:
+				if err := lx.ExecuteIf(curT, secondT, lexer); err != nil {
+					log.Println(err)
+					return
+				}
 			}
-			//	curNes := lexer.CurrentNestingLevel
-			//	tok := secondT
-			//	fmt.Println(curT, secondT)
-			//	i := lx.If{Position: lexer.CurrentPosition, NestingLevel: lexer.CurrentNestingLevel}
-			//forif:
-			//	for {
-			//		switch tok.Type {
-			//		case lx.EOF:
-			//			break forif
-			//		case lx.LBRACE:
-			//			lexer.CurrentPosition++
-			//			lexer.CurrentNestingLevel++
-			//			break forif
-			//		}
-			//
-			//		i.Condition += tok.Value
-			//		tok = lexer.NextToken()
-			//	}
-			//	if curNes == lexer.CurrentNestingLevel {
-			//		log.Println(errors.New("missing start of statement"))
-			//		return
-			//	}
-			//	lexer.IfPositions[lexer.CurrentNestingLevel] = i
-			//	if v, err := i.Output(lexer); err != nil {
-			//		log.Println(err)
-			//		return
-			//	} else {
-			//		if !v {
-			//		forfalse:
-			//			for {
-			//				switch tok.Type {
-			//				case lx.EOF:
-			//					break forfalse
-			//				case lx.RBRACE:
-			//
-			//					lexer.CurrentNestingLevel--
-			//					break forfalse
-			//				}
-			//
-			//				tok = lexer.NextToken()
-			//
-			//			}
-			//
-			//		}
-			//	}
+
+			
 
 		}
 

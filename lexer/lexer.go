@@ -56,6 +56,7 @@ const (
 	BITWISE_OR            // |
 	OR                    // ||
 	ILLEGAL
+	NOT 				  // !
 
 	IF      // if
 	ELSE    // else
@@ -108,57 +109,6 @@ type Lexer struct {
 	IfPositions         map[int]If // IfPositions[nestingLevel]
 	CurrentPosition     int
 
-	/*
-			algorithm
-
-
-			when token == "if":
-		ifPositions := mapOfPosIf[nestingLevel]
-		if ifPositions != nil:
-		position := len(ifPositions) + 1
-		ifPositions[position] = true
-		else:
-		mapOfPosIf[nestingLevel] = map[int]bool{1: true}
-		position = 1
-		nestingLevel++
-		// parse the expression and block of the if statement
-		// ...
-		when next_token == "}":
-		nestingLevel--
-		ifPositions = mapOfPosIf[nestingLevel]
-		if ifPositions != nil:
-		delete(ifPositions, len(ifPositions))
-		else:
-		mapOfPosIf[nestingLevel] = nil
-		when token == "else":
-		ifPositions := mapOfPosIf[nestingLevel]
-		if ifPositions != nil:
-		position := len(ifPositions) + 1
-		ifPositions[position] = true
-		nestingLevel++
-		// parse the block of the else statement
-		// ...
-		when next_token == "}":
-		nestingLevel--
-		when token == "else" && next_token == "if":
-		ifPositions := mapOfPosIf[nestingLevel]
-		if ifPositions != nil:
-		position := len(ifPositions) + 1
-		ifPositions[position] = true
-		else:
-		mapOfPosIf[nestingLevel] = map[int]bool{1: true}
-		position = 1
-		nestingLevel++
-		// parse the expression and block of the else if statement
-		// ...
-		when next_token == "}":
-		nestingLevel--
-		ifPositions = mapOfPosIf[nestingLevel]
-		if ifPositions != nil:
-		delete(ifPositions, len(ifPositions))
-		else:
-		mapOfPosIf[nestingLevel] = nil
-	*/
 }
 
 func NewLexer(input string) *Lexer {
@@ -207,6 +157,7 @@ func (l *Lexer) NextToken() Token {
 
 	case scanner.Ident:
 		switch val {
+		
 		case "var":
 			return Token{Type: VAR, Value: "var", Position: l.Scanner.Pos()}
 		case "true", "false":
@@ -215,10 +166,10 @@ func (l *Lexer) NextToken() Token {
 
 			return Token{Type: IF, Value: val, Position: l.Scanner.Pos()}
 		case "else":
-			if l.Scanner.Peek() != '{' {
-				l.NextToken()
-				return Token{Type: ELSE_IF, Value: val, Position: l.Scanner.Pos()}
-			}
+			// if l.Scanner.Peek() != '{' {
+			// 	l.NextToken()
+			// 	return Token{Type: ELSE_IF, Value: val, Position: l.Scanner.Pos()}
+			// }
 			return Token{Type: ELSE, Value: val, Position: l.Scanner.Pos()}
 
 		}
@@ -229,6 +180,8 @@ func (l *Lexer) NextToken() Token {
 	//	return Token{Type: BOOL, Value: val, Position: l.Scanner.Pos()}
 	//}
 	//return Token{Type: IDENTIFIER, Value: val, Position: l.Scanner.Pos()}c
+	case '!': 
+		return Token{Type: NOT, Value: val}
 	case '{':
 		return Token{Type: LBRACE, Value: val}
 	case '}':
