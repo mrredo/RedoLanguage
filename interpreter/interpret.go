@@ -24,11 +24,12 @@ func Interpret(input string, fileName string) {
 	//	return
 	//}
 	// var curPos, secPos = lexer.Scanner.Pos(), lexer.Scanner.Pos()
+	forl:
 	for {
 
 		curT = secondTS
 		// curPos = lexer.Scanner.Pos()
-
+		
 		secondT := lexer.NextToken()
 		//if lexer.SemErr != nil {
 		//	log.Println(lexer.SemErr)
@@ -51,15 +52,18 @@ func Interpret(input string, fileName string) {
 			lexer.CurrentNestingLevel--
 		}
 		if lx.IsIfStatement(curT) {
+			
 			switch curT.Type {
 			case lx.ELSE:
 				if secondT.Type == lx.IF {
-					n := lexer.NextToken()
-					if err := lx.ExecuteIf(secondT, n, lexer); err != nil {
-						log.Println(err)
-						return
-					}
-					break
+					// n := lexer.NextToken()
+					// if err := lx.ExecuteIf(secondT, n, lexer); err != nil {
+					// 	log.Println(err)
+					// 	return
+					// }
+					secondTS = secondT
+					continue forl
+					
 				}
 				if secondT.Type != lx.LBRACE {
 					log.Println(errors.New("invalid else statement"))
@@ -130,6 +134,7 @@ func Interpret(input string, fileName string) {
 
 		}
 		if lx.IsFunction(curT, secondT, lexer) {
+			
 			funcName, val, err := lx.ParseFunctionCall(curT, secondT, lexer)
 			if err != nil {
 				log.Println(err)

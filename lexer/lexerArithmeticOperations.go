@@ -79,6 +79,7 @@ loop:
 		// if p := l.Scanner.Peek(); p == ';' || p == '\n' {
 		// 	break
 		// }
+		
 		switch c.Type {
 		case COMMA:
 			nestingLevel--
@@ -101,11 +102,13 @@ loop:
 				curType = c.Type
 			}
 			if curType != c.Type {
+				
 				return "", c, err.NewTypeError(l.Scanner.Pos())
 			}
 			finalStr += c.Value
 
 		case IDENTIFIER:
+			
 			if p := l.Scanner.Peek(); p == '(' {
 				s := l.NextToken()
 				f, args, errs := ParseFunctionCall(c, s, l)
