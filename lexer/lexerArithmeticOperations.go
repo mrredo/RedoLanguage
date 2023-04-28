@@ -157,7 +157,7 @@ loop:
 				if curType == -1 {
 					curType = ConvertToTokenType(reflect.TypeOf(va.Value).String())
 				}
-				if (curType != ConvertToTokenType(reflect.TypeOf(fmt.Sprint(va.Value)).String()) && curType != c.Type) {
+				if (curType != ConvertToTokenType(reflect.TypeOf(va.Value).String()) && curType != c.Type) {
 					fmt.Println(curType, ConvertToTokenType(reflect.TypeOf(fmt.Sprint(va.Value)).String()))
 					return "", c, err.NewTypeError(l.Scanner.Pos())
 

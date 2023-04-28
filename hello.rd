@@ -1,4 +1,2 @@
-var bool = "true";
-if bool == "true" {
-    println(bool)
-}
+var bool = true;
+println(bool=="s")
