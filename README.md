@@ -21,10 +21,14 @@ NOTE: This is required in this current situation, in further updates hopefully i
 ###Currently there are none
 
 # Features
-### IF statements
+### IF/ELSE/ELSE IF statements
 ```go
 if true {
 print(true)
+} else if "true" == "true" {
+println("true is true")
+} else {
+println("true is not true")
 }
 ```
 ### Methods:
