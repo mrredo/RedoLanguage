@@ -61,6 +61,5 @@ value can be a string, boolean or a number
 - +, -, *, /, ==, <, >, <=, >=, % general operators
 # TODO
 
-- if/else if/else statements
 - for/while loops
 - function declaration
