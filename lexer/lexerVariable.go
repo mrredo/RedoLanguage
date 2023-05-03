@@ -22,7 +22,9 @@ func ParseVariable(curToken Token, sec Token, lexer *Lexer) (key string, value i
 
 		return "", nil, fmt.Errorf("expected an identifier, but got '%s'", keyT.Value)
 	}
-	if VariableExists(keyT.Value) {
+	_, ok := std.Variables[keyT.Value]
+
+	if ok {
 		return "", nil, fmt.Errorf("'%s' is already declared", keyT.Value)
 	}
 	Eq := lexer.NextToken()
@@ -72,5 +74,6 @@ func ParseVariable(curToken Token, sec Token, lexer *Lexer) (key string, value i
 
 }
 func VariableExists(name string) bool {
+	
 	return std.Variables[name].Key != ""
 }

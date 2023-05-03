@@ -146,22 +146,27 @@ loop:
 			} else {
 				va, ok := std.Variables[c.Value]
 				if !ok {
-					return "", c, err.NewUndefinedError(c.Value, l.Scanner.Pos()) //fmt.Errorf("'%s' is not defined", c.Value)
+					return "", c, err.NewUndefinedError(c.Value, c.Position) //fmt.Errorf("'%s' is not defined", c.Value)
 				}
 				if vas, ok1 := va.Value.(string); ok1 {
 					finalStr += fmt.Sprintf(`"%s"`, vas)
 				} else {
 					finalStr += fmt.Sprint(va.Value)
 				}
-				
+				if va.NestingLevel > l.CurrentNestingLevel {
+					return "", c, err.NewUndefinedError(va.Key, c.Position)
+				}
 				if curType == -1 {
 					curType = ConvertToTokenType(reflect.TypeOf(va.Value).String())
+				} else {
+					if (curType != ConvertToTokenType(reflect.TypeOf(fmt.Sprint(va.Value)).String()) && curType != c.Type) {
+						fmt.Println(curType, ConvertToTokenType(reflect.TypeOf(fmt.Sprint(va.Value)).String()))
+						return "", c, err.NewTypeError(c.Position)
+	
+					}
 				}
-				if (curType != ConvertToTokenType(reflect.TypeOf(fmt.Sprint(va.Value)).String()) && curType != c.Type) {
-					fmt.Println(curType, ConvertToTokenType(reflect.TypeOf(fmt.Sprint(va.Value)).String()))
-					return "", c, err.NewTypeError(l.Scanner.Pos())
+				
 
-				}
 			}
 		case OR, AND:
 			curType = -1
