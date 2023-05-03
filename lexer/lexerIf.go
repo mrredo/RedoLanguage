@@ -7,7 +7,9 @@ import (
 func ExecuteIf(c, s Token, lx *Lexer) error {
 		curNes := lx.CurrentNestingLevel
 		tok := s
-		i := If{Position: lx.CurrentPosition, NestingLevel: lx.CurrentNestingLevel}
+		i := If{Position: lx.PositionMap[lx.CurrentNestingLevel], NestingLevel: lx.CurrentNestingLevel}
+		
+		//i := If{Position: lx.CurrentPosition, NestingLevel: lx.CurrentNestingLevel}
 		forif:
 		for {
 			switch tok.Type {
@@ -29,6 +31,7 @@ func ExecuteIf(c, s Token, lx *Lexer) error {
 		}
 		curNes = lx.CurrentNestingLevel
 		lx.IfPositions[lx.CurrentNestingLevel] = i
+		lx.PositionMap[lx.CurrentNestingLevel]++
 		if v, err := i.Output(); err != nil {
 			return err
 		} else {

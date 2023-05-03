@@ -100,7 +100,8 @@ func Interpret(input string, fileName string) {
 			default:
 				if err := lx.ExecuteIf(curT, secondT, lexer); err != nil {
 					log.Println(err)
-					return
+					
+					return 
 				}
 			}
 
@@ -116,7 +117,7 @@ func Interpret(input string, fileName string) {
 			_, err := lx.ParseVariableAssigningExpression(key, exp, val, lexer)
 			if err != nil {
 				log.Println(err)
-				break
+				return
 			}
 			/*
 				this works for
@@ -129,7 +130,7 @@ func Interpret(input string, fileName string) {
 			_, _, err := lx.ParseVariable(curT, secondT, lexer)
 			if err != nil {
 				log.Println(err)
-				break
+				return
 			}
 
 		}
@@ -138,7 +139,7 @@ func Interpret(input string, fileName string) {
 			funcName, val, err := lx.ParseFunctionCall(curT, secondT, lexer)
 			if err != nil {
 				log.Println(err)
-				break
+				return
 			}
 			if funcM, ok := std.Functions[funcName]; ok {
 				funcM(val...)

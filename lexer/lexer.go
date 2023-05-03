@@ -108,7 +108,7 @@ type Lexer struct {
 	CurrentNestingLevel int
 	IfPositions         map[int]If // IfPositions[nestingLevel]
 	CurrentPosition     int
-
+	PositionMap map[int]int //map[nesting_level]position
 }
 
 func NewLexer(input string) *Lexer {
@@ -124,6 +124,7 @@ func NewLexer(input string) *Lexer {
 		Input:               input,
 		CurrentNestingLevel: 0,
 		CurrentPosition:     0,
+		PositionMap: map[int]int{},
 		IfPositions:         map[int]If{},
 	}
 }

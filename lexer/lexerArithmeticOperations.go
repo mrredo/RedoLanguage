@@ -153,14 +153,13 @@ loop:
 				} else {
 					finalStr += fmt.Sprint(va.Value)
 				}
-				if va.NestingLevel > l.CurrentNestingLevel {
+				if va.NestingLevel > l.CurrentNestingLevel || (va.Position != l.PositionMap[l.CurrentNestingLevel] && va.NestingLevel == l.CurrentNestingLevel) {
 					return "", c, err.NewUndefinedError(va.Key, c.Position)
 				}
 				if curType == -1 {
 					curType = ConvertToTokenType(reflect.TypeOf(va.Value).String())
 				} else {
-					if (curType != ConvertToTokenType(reflect.TypeOf(fmt.Sprint(va.Value)).String()) && curType != c.Type) {
-						fmt.Println(curType, ConvertToTokenType(reflect.TypeOf(fmt.Sprint(va.Value)).String()))
+					if (curType != ConvertToTokenType(reflect.TypeOf(va.Value).String()) && curType != c.Type) {
 						return "", c, err.NewTypeError(c.Position)
 	
 					}

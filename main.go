@@ -3,7 +3,6 @@ package main
 import (
 	"RedoLanguage/interpreter"
 	"RedoLanguage/reader"
-	"RedoLanguage/std"
 	"bufio"
 	"fmt"
 	"log"
@@ -52,5 +51,4 @@ func main() {
 		return
 	}
 	interpreter.Interpret(str, fileName)
-	fmt.Println(std.Variables)
 }
