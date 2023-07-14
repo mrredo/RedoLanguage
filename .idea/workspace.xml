@@ -4,13 +4,40 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="26084cfd-6f6b-4d0b-90eb-783935da8951" name="Changes" comment="if statements dont work with variables only with hard coded values">
+    <list default="true" id="580614e5-8554-404d-9cc0-8f3c279d4496" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/RedoLanguage.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hello.rd" beforeDir="false" afterPath="$PROJECT_DIR$/hello.rd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interpreter/interpret.go" beforeDir="false" afterPath="$PROJECT_DIR$/interpreter/interpret.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/If.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/If.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/lexerIf.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexerIf.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/lexerVariable.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexerVariable.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ast/ast.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/err/error.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/err/errorMessages.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/err/errorTypes.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/helloworld.rd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/parseArithmeticOperations.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hello.rd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/interpreter/interpret.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/interpreter/interpret_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/If.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/checking.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/lexer.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/lexerArithmeticOperations.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/lexerFunction.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/lexerIf.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/lexerVariable.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/lexerVariableOperator.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/outputTokens.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/parseExpressionv2.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer/reflectTypeToTokenType.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/oryxBuildBinary" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reader/readFileContent.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std/Variables.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/std/functions.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tokens/tokens.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/ast.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/token.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,170 +48,41 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Go File" />
-        <option value="RedoLanguage" />
       </list>
     </option>
   </component>
-  <component name="GOROOT" url="file://$PROJECT_DIR$/../../../../../../Program Files/Go" />
+  <component name="GOROOT" url="file://$PROJECT_DIR$/../../../../../Program Files/Go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="selectedUrlAndAccountId">
-      <UrlAndAccount>
-        <option name="accountId" value="b580bfe4-9be3-494b-944e-22b40ac238c2" />
-        <option name="url" value="https://github.com/mrredo/RedoLanguage.git" />
-      </UrlAndAccount>
-    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
-  </component>
-  <component name="ProjectId" id="2NuWmoc321lwmW9dXbkBVyKUv0g" />
+  <component name="ProjectId" id="2SYKVUDQit2LuEGZukh9rE5lTBh" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;TODO_SCOPE&quot;: &quot;All Places&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowPanel.toolwindow.highlight.mappings&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowPanel.toolwindow.highlight.symlinks&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowPanel.toolwindow.show.date&quot;: &quot;false&quot;,
-    &quot;WebServerToolWindowPanel.toolwindow.show.permissions&quot;: &quot;false&quot;,
-    &quot;WebServerToolWindowPanel.toolwindow.show.size&quot;: &quot;false&quot;,
-    &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lietotājs/Documents/GitHub/redolanguage2222/RedoLanguage&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "go.import.settings.migrated": "true",
+    "last_opened_file_path": "C:/Users/Lietotājs",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Lietotājs\Documents\GitHub\RedoLanguage\reader" />
-    </key>
-  </component>
-  <component name="RunAnythingCache">
-    <option name="myCommands">
-      <command value="go run main.go" />
-    </option>
-  </component>
-  <component name="RunManager" selected="Go Build.go build main.go">
-    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
-      <module name="RedoLanguage" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="FILE" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="RedoLanguage" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="FILE" />
-      <package value="RedoLanguage" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$/main.go" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go build scratch_1.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="RedoLanguage" />
-      <working_directory value="$PROJECT_DIR$" />
-      <envs>
-        <env name="GO111MODULE" value="off" />
-      </envs>
-      <kind value="FILE" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$APPLICATION_CONFIG_DIR$/scratches/scratch_1.go" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go build scratch_2.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="RedoLanguage" />
-      <working_directory value="$PROJECT_DIR$" />
-      <envs>
-        <env name="GO111MODULE" value="off" />
-      </envs>
-      <kind value="FILE" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$APPLICATION_CONFIG_DIR$/scratches/scratch_2.go" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
-      <module name="RedoLanguage" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="DIRECTORY" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <framework value="gotest" />
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Go Build.go build main.go" />
-        <item itemvalue="Go Build.go build scratch_2.go" />
-        <item itemvalue="Go Build.go build scratch_1.go" />
-      </list>
-    </recent_temporary>
-  </component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added 7 basic functions i need to add variables and operators and if/for/while statements" />
-    <MESSAGE value="Added basic parsing of variables need to check if key is a already exists when assigning to throw an error but only if var type is present" />
-    <MESSAGE value="Making interpret function, made is Variable, isFunction method, have to replace identifiers with their value." />
-    <MESSAGE value="now u can use variables in functions and to declare them use &#10;var key = value &#10;there are 3 types bool, string, integer" />
-    <MESSAGE value="added +=. -=, *=, /=, %=, = operators for variable assigning&#10;key = value&#10;key *= value" />
-    <MESSAGE value="e" />
-    <MESSAGE value="added free function but it takes variable name as argument" />
-    <MESSAGE value="still making math operators i will make them work on a paper then make it with a real plan" />
-    <MESSAGE value="made math operator parser but need to add the parser to the interpreter" />
-    <MESSAGE value="math operators work but not in function arguments need to fix this" />
-    <MESSAGE value="math operators work inside function arguments but u cant use operators to combine strings that will be a feature soon." />
-    <MESSAGE value="v1.7 fix is done" />
-    <MESSAGE value="v1.8 fix is done" />
-    <MESSAGE value="|| &amp;&amp; operators" />
-    <MESSAGE value="added to some spots advanced error messages" />
-    <MESSAGE value="later fixing stuff with parentheses almost done" />
-    <MESSAGE value="now you can read files but i havent aded that to args" />
-    <MESSAGE value="variable assiging operator += string this doesnt work&#10;var hello = &quot;world&quot;&#10;hello += &quot;!&quot; + &quot;!&quot;&#10;print(hello)//output: world!&#10;hello = &quot;world&quot;&#10;hello = &quot;!&quot; + &quot;!&quot;&#10;print(hello)//output: world!" />
-    <MESSAGE value="everything works well if u use semicolons at ends" />
-    <MESSAGE value="still making, school is slowing me down" />
-    <MESSAGE value="if statements are made but only if works else, else if doesnt work" />
-    <MESSAGE value="if statements dont work with variables only with hard coded values" />
-    <option name="LAST_COMMIT_MESSAGE" value="if statements dont work with variables only with hard coded values" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
