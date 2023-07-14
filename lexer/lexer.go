@@ -1,45 +1,28 @@
 package lexer
 
 import (
+	"RedoLanguagev2/types"
 	"strings"
 	"text/scanner"
 )
 
-type TokenType int
 
-const (
-	Number TokenType = iota
-	Plus
-	Minus
-	Multiply
-	Divide
-	LeftParenthesis
-	RightParenthesis
-	NewLine
-	STRING
-	Unknown
-)
 
-type Token struct {
-	Type  TokenType
-	Value string
-}
-
-func Tokenize(input string) []Token {
-	var tokens []Token
+func Tokenize(input string) []types.Token {
+	var tokens []types.Token
 	lines := strings.Split(input, "\n")
 
 	for _, line := range lines {
 		lineTokens := tokenizeLine(line)
 		tokens = append(tokens, lineTokens...)
-		tokens = append(tokens, Token{Type: NewLine, Value: "\n"})
+		tokens = append(tokens, types.Token{Type: types.NewLine, Value: "\n"})
 	}
 
 	return tokens
 }
 
-func tokenizeLine(line string) []Token {
-	var tokens []Token
+func tokenizeLine(line string) []types.Token {
+	var tokens []types.Token
 	var s scanner.Scanner
 	s.Init(strings.NewReader(line))
 	s.Mode = scanner.ScanIdents | scanner.ScanFloats | scanner.ScanChars | scanner.SkipComments
@@ -53,8 +36,8 @@ func tokenizeLine(line string) []Token {
 		if tok == '"' {
 			if inQuotes {
 				// Add the complete string token
-				token := Token{
-					Type:  STRING,
+				token := types.Token{
+					Type:  types.STRING,
 					Value: currentToken + `"`,
 				}
 				tokens = append(tokens, token)
@@ -70,7 +53,7 @@ func tokenizeLine(line string) []Token {
 		if inQuotes {
 			currentToken += tokenText
 		} else {
-			token := Token{
+			token := types.Token{
 				Type:  getTokenType(tok),
 				Value: tokenText,
 			}
@@ -81,24 +64,26 @@ func tokenizeLine(line string) []Token {
 	return tokens
 }
 
-func getTokenType(tok rune) TokenType {
+func getTokenType(tok rune) types.TokenType {
 	switch tok {
+	case scanner.Identifier: 
+	
 	case scanner.String:
-		return STRING
+		return types.STRING
 	case scanner.Int:
-		return Number
+		return types.Number
 	case '+':
-		return Plus
+		return types.Plus
 	case '-':
-		return Minus
+		return types.Minus
 	case '*':
-		return Multiply
+		return types.Multiply
 	case '/':
-		return Divide
+		return types.Divide
 	case '(':
-		return LeftParenthesis
+		return types.LeftParenthesis
 	case ')':
-		return RightParenthesis
+		return types.RightParenthesis
 	default:
 		//if isNumber(tok) {
 		//	return Number
