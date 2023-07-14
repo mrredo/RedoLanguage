@@ -75,9 +75,19 @@ func getTokenType(tok gtoken.Token) types.TokenType {
 		switch tok.String() {
 		case "var":
 			return types.Var
+		case "if":
+			return types.If
 
 		}
 		return types.Identifier
+	case gtoken.ADD_ASSIGN:
+		return types.PlusAssign
+	case gtoken.SUB_ASSIGN:
+		return types.MinusAssign
+	case gtoken.MUL_ASSIGN:
+		return types.MultAssign
+	case gtoken.QUO_ASSIGN:
+		return types.PlusAssign
 	case gtoken.STRING:
 		return types.String
 	case gtoken.INT, gtoken.FLOAT:
@@ -94,6 +104,12 @@ func getTokenType(tok gtoken.Token) types.TokenType {
 		return types.LeftParenthesis
 	case gtoken.RPAREN:
 		return types.RightParenthesis
+	case gtoken.LBRACK:
+		return types.LBrack
+	case gtoken.SEMICOLON:
+		return types.SemiColon
+	case gtoken.RBRACK:
+		return types.RBrack
 	default:
 		if isNumberToken(tok) {
 			return types.Number
