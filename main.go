@@ -1,16 +1,15 @@
 package main
 
 import (
-	"RedoLanguagev2/cli"
 	"RedoLanguagev2/lexer"
 	"fmt"
 )
 
 func main() {
-	cli.Execute()
+	//cli.Execute()
 	content := `
-	10+10*(20*20)
-10+10+10+"eeee"
+var hello = 10+10
+print(hello+10)
 `
 	tokens := lexer.Tokenize(content)
 	for _, v := range tokens {

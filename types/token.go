@@ -1,4 +1,5 @@
 package types
+
 type TokenType int
 
 const (
@@ -12,7 +13,7 @@ const (
 	NewLine
 	String
 	Identifier
-	
+	Var
 	Unknown
 )
 

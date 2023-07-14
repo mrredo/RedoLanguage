@@ -5,39 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="580614e5-8554-404d-9cc0-8f3c279d4496" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/RedoLanguage.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ast/ast.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/err/error.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/err/errorMessages.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/err/errorTypes.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/helloworld.rd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/parseArithmeticOperations.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hello.rd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/interpreter/interpret.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/interpreter/interpret_test.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/If.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/checking.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lexer/lexer.go" beforeDir="false" afterPath="$PROJECT_DIR$/lexer/lexer.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/lexerArithmeticOperations.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/lexerFunction.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/lexerIf.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/lexerVariable.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/lexerVariableOperator.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/outputTokens.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/parseExpressionv2.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer/reflectTypeToTokenType.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oryxBuildBinary" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/reader/readFileContent.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std/Variables.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/std/functions.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tokens/tokens.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/ast.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/token.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,23 +33,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultGoTemplateProperty": "Go File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "go.import.settings.migrated": "true",
-    "last_opened_file_path": "C:/Users/Lietotājs",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lietotājs&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />

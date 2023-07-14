@@ -2,11 +2,10 @@ package lexer
 
 import (
 	"RedoLanguagev2/types"
+	"go/scanner"
+	gtoken "go/token"
 	"strings"
-	"text/scanner"
 )
-
-
 
 func Tokenize(input string) []types.Token {
 	var tokens []types.Token
@@ -24,20 +23,26 @@ func Tokenize(input string) []types.Token {
 func tokenizeLine(line string) []types.Token {
 	var tokens []types.Token
 	var s scanner.Scanner
-	s.Init(strings.NewReader(line))
-	s.Mode = scanner.ScanIdents | scanner.ScanFloats | scanner.ScanChars | scanner.SkipComments
+	fset := gtoken.NewFileSet()
+	file := fset.AddFile("", -1, len(line))
+	s.Init(file, []byte(line), nil, 0)
 
 	var currentToken string
 	inQuotes := false
 
-	for tok := s.Scan(); tok != scanner.EOF; tok = s.Scan() {
-		tokenText := s.TokenText()
+	for {
+		/*pos,*/ _, tok, lit := s.Scan()
+		tokenText := lit
 
-		if tok == '"' {
+		if tok == gtoken.EOF {
+			break
+		}
+
+		if tok == gtoken.STRING {
 			if inQuotes {
 				// Add the complete string token
 				token := types.Token{
-					Type:  types.STRING,
+					Type:  types.String,
 					Value: currentToken + `"`,
 				}
 				tokens = append(tokens, token)
@@ -64,34 +69,39 @@ func tokenizeLine(line string) []types.Token {
 	return tokens
 }
 
-func getTokenType(tok rune) types.TokenType {
+func getTokenType(tok gtoken.Token) types.TokenType {
 	switch tok {
-	case scanner.Identifier: 
-	
-	case scanner.String:
-		return types.STRING
-	case scanner.Int:
+	case gtoken.IDENT:
+		switch tok.String() {
+		case "var":
+			return types.Var
+
+		}
+		return types.Identifier
+	case gtoken.STRING:
+		return types.String
+	case gtoken.INT, gtoken.FLOAT:
 		return types.Number
-	case '+':
+	case gtoken.ADD:
 		return types.Plus
-	case '-':
+	case gtoken.SUB:
 		return types.Minus
-	case '*':
+	case gtoken.MUL:
 		return types.Multiply
-	case '/':
+	case gtoken.QUO:
 		return types.Divide
-	case '(':
+	case gtoken.LPAREN:
 		return types.LeftParenthesis
-	case ')':
+	case gtoken.RPAREN:
 		return types.RightParenthesis
 	default:
-		//if isNumber(tok) {
-		//	return Number
-		//}
-		return Unknown
+		if isNumberToken(tok) {
+			return types.Number
+		}
+		return types.Unknown
 	}
 }
 
-func isNumber(tok rune) bool {
-	return (tok >= '0' && tok <= '9') || tok == '.'
+func isNumberToken(tok gtoken.Token) bool {
+	return tok == gtoken.INT || tok == gtoken.FLOAT
 }
