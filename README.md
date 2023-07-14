@@ -1,5 +1,7 @@
 # RedoLanguage
 Interpreter for redo language
+## In v2 it will now build to an AST tree so it leaves out lexing to improve performance
+
 ## Semicolons are needed after expressions where () characters arent present 
 for example
 ```
