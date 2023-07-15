@@ -31,7 +31,8 @@ func tokenizeLine(line string) []types.Token {
 	inQuotes := false
 
 	for {
-		/*pos,*/ _, tok, lit := s.Scan()
+		/*pos,*/ pos, tok, lit := s.Scan()
+
 		tokenText := lit
 
 		if tok == gtoken.EOF {
@@ -44,6 +45,7 @@ func tokenizeLine(line string) []types.Token {
 				token := types.Token{
 					Type:  types.String,
 					Value: currentToken + `"`,
+					Pos:   types.TokenPos{Start: int(pos)},
 				}
 				tokens = append(tokens, token)
 
@@ -58,67 +60,81 @@ func tokenizeLine(line string) []types.Token {
 		if inQuotes {
 			currentToken += tokenText
 		} else {
-			token := types.Token{
-				Type:  getTokenType(tok, tokenText),
-				Value: tokenText,
+			ty, text := getTokenType(tok, tokenText)
+			if text == "" {
+				token := types.Token{
+					Type:  ty,
+					Value: tokenText,
+				}
+				tokens = append(tokens, token)
+			} else {
+				token := types.Token{
+					Type:  ty,
+					Value: text,
+				}
+				tokens = append(tokens, token)
 			}
-			tokens = append(tokens, token)
+
 		}
 	}
 
 	return tokens
 }
 
-func getTokenType(tok gtoken.Token, tokText string) types.TokenType {
-
+func getTokenType(tok gtoken.Token, tokText string) (types.TokenType, string) {
+	ty := types.TokenType(0)
+	text := ""
 	switch tok {
 	case gtoken.VAR:
-		return types.Var
+		ty = types.Var
 	case gtoken.IDENT:
 		switch tokText {
 		case "var":
-			return types.Var
+			ty = types.Var
+
 		case "if":
-			return types.If
+			ty = types.If
 
 		}
-		return types.Identifier
+		ty = types.Identifier
 	case gtoken.ADD_ASSIGN:
-		return types.PlusAssign
+		ty = types.PlusAssign
 	case gtoken.SUB_ASSIGN:
-		return types.MinusAssign
+		ty = types.MinusAssign
 	case gtoken.MUL_ASSIGN:
-		return types.MultAssign
+		ty = types.MultAssign
 	case gtoken.QUO_ASSIGN:
-		return types.PlusAssign
+		ty = types.PlusAssign
 	case gtoken.STRING:
-		return types.String
+		ty = types.String
 	case gtoken.INT, gtoken.FLOAT:
-		return types.Number
+		ty = types.Number
 	case gtoken.ADD:
-		return types.Plus
+		text = "+"
+		ty = types.Plus
 	case gtoken.SUB:
-		return types.Minus
+		ty = types.Minus
 	case gtoken.MUL:
-		return types.Multiply
+		ty = types.Multiply
 	case gtoken.QUO:
-		return types.Divide
+		ty = types.Divide
 	case gtoken.LPAREN:
-		return types.LeftParenthesis
+		ty = types.LeftParenthesis
 	case gtoken.RPAREN:
-		return types.RightParenthesis
+		ty = types.RightParenthesis
 	case gtoken.LBRACK:
-		return types.LBrack
+		ty = types.LBrack
 	case gtoken.SEMICOLON:
-		return types.SemiColon
+		ty = types.SemiColon
 	case gtoken.RBRACK:
-		return types.RBrack
+		ty = types.RBrack
 	default:
 		if isNumberToken(tok) {
-			return types.Number
+			ty = types.Number
 		}
-		return types.Unknown
+		ty = types.Unknown
 	}
+	return ty, text
 }
 
 func isNumberToken(tok gtoken.Token) bool {

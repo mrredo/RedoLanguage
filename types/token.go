@@ -27,9 +27,15 @@ const (
 	//AST
 	IdentifierDeclaration
 	Expression
+	Assign
 )
 
 type Token struct {
 	Type  TokenType
 	Value string
+	Pos   TokenPos
+}
+type TokenPos struct {
+	Start int
+	//end   int
 }

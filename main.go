@@ -12,14 +12,15 @@ func main() {
 	content := `
 
 🌍
-var hello =10
+var hello =10+10+10+10
+var bzo = 10 + 10
 `
 
 	tokens := lexer.Tokenize(content)
 	for _, v := range tokens {
 		fmt.Printf("Type: %d, Value: %s\n", v.Type, v.Value)
 	}
-	astStr := ast.ParseTokens(tokens)
+	astStr, _ := ast.ParseTokens(tokens)
 	jsonData, err := json.Marshal(astStr)
 	if err != nil {
 		fmt.Println("Error marshaling JSON:", err)

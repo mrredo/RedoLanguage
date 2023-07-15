@@ -1,9 +1,12 @@
 package ast
 
-import "RedoLanguagev2/types"
+import (
+	"RedoLanguagev2/types"
+	"errors"
+)
 
 func ParseTokens(tokens []types.Token) (types.AST, []error) {
-	errors := []error{}
+	errorl := []error{}
 	var ast = types.AST{}
 	for i := 0; i < len(tokens); i++ {
 		v := tokens[i]
@@ -12,20 +15,20 @@ func ParseTokens(tokens []types.Token) (types.AST, []error) {
 			varT := types.Node{Type: types.IdentifierDeclaration, Body: []types.Node{}}
 			i++
 			key := tokens[i]
+			if key.Type != types.Identifier {
 
-			varT.Body = append(varT.Body, types.Node{
-				Type:  types.Identifier,
-				Value: key.Value,
-			})
+				errorl = append(errorl, errors.New("invalid type for key"))
+			}
 			i++
 			op := tokens[i]
-			varT.Body = append(varT.Body, types.Node{
-				Type:  op.Type,
-				Value: key.Value,
-			})
-			_ = op
+
+			if op.Type != types.Assign {
+
+				errorl = append(errorl, errors.New("invalid operator for identifier declaration"))
+			}
 			i++
-			expression := types.Node{Type: types.Expression}
+
+			expression := &types.Node{Type: types.Expression}
 			_ = expression
 			//expression
 			for i < len(tokens) {
@@ -37,9 +40,11 @@ func ParseTokens(tokens []types.Token) (types.AST, []error) {
 				expression.Value += tok.Value
 				i++
 			}
+			varT.Name = key.Value
+			varT.Expression = expression
 			ast.Body = append(ast.Body, varT)
 		}
 	}
 
-	return ast
+	return ast, errorl
 }
