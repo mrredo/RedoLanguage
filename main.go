@@ -11,9 +11,9 @@ func main() {
 	//cli.Execute()
 	content := `
 
-🌍
+
 var hello =10+10+10+10
-var bzo = 10 + 10
+hello += 10+10
 `
 
 	tokens := lexer.Tokenize(content)
