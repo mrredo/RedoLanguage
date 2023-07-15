@@ -23,7 +23,10 @@ const (
 	LBrack
 	RBrack
 	Unknown
+
 	//AST
+	IdentifierDeclaration
+	Expression
 )
 
 type Token struct {

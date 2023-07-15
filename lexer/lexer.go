@@ -59,7 +59,7 @@ func tokenizeLine(line string) []types.Token {
 			currentToken += tokenText
 		} else {
 			token := types.Token{
-				Type:  getTokenType(tok),
+				Type:  getTokenType(tok, tokenText),
 				Value: tokenText,
 			}
 			tokens = append(tokens, token)
@@ -69,10 +69,13 @@ func tokenizeLine(line string) []types.Token {
 	return tokens
 }
 
-func getTokenType(tok gtoken.Token) types.TokenType {
+func getTokenType(tok gtoken.Token, tokText string) types.TokenType {
+
 	switch tok {
+	case gtoken.VAR:
+		return types.Var
 	case gtoken.IDENT:
-		switch tok.String() {
+		switch tokText {
 		case "var":
 			return types.Var
 		case "if":

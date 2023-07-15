@@ -1,25 +1,17 @@
 package types
+
 type AST struct {
-	Blocks []TokenAST
-}
-type TokenAST interface {
-	IsToken()
-}
-type GeneralToken struct {
-	
-}
-func (t *GeneralToken) IsToken() {}
-type IdentifierFunction struct {
-	Key string
+	Body []Node
 }
 
-func (t *IdentifierToken) IsToken() {}
-type IdentifierToken struct {
-	Type TokenType
-	Key string
+type Node struct {
+	Type  TokenType
+	Value string
+	Name  string
+	//callee     *Node
+	Expression *Node
+	Body       []Node
+	//params     []Node
+	Arguments *[]Node
+	//context    *[]Node
 }
-func (t *IdentifierFunction) IsToken() {}
-type ExpressionAST struct {
-	Expression string
-}
-func (t *ExpressionAST) IsToken() {}
