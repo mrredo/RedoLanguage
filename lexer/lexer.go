@@ -2,7 +2,6 @@ package lexer
 
 import (
 	"RedoLanguagev2/types"
-	"fmt"
 	"go/scanner"
 	gtoken "go/token"
 	"strings"
@@ -39,6 +38,7 @@ func tokenizeLine(line string) []types.Token {
 		if tok == gtoken.EOF {
 			break
 		}
+		posi := fset.Position(pos)
 
 		if tok == gtoken.STRING {
 			if inQuotes {
@@ -46,10 +46,9 @@ func tokenizeLine(line string) []types.Token {
 				token := types.Token{
 					Type:  types.String,
 					Value: currentToken + `"`,
-					Pos:   types.TokenPos{Start: int(pos)},
+					Pos:   posi,
 				}
 				tokens = append(tokens, token)
-
 				currentToken = ""
 				inQuotes = false
 				continue
@@ -61,18 +60,19 @@ func tokenizeLine(line string) []types.Token {
 		if inQuotes {
 			currentToken += tokenText
 		} else {
-			fmt.Println(tokenText, tok.String())
 			ty, text := getTokenType(tok, tokenText)
 			if text == "" {
 				token := types.Token{
 					Type:  ty,
 					Value: tokenText,
+					Pos:   posi,
 				}
 				tokens = append(tokens, token)
 			} else {
 				token := types.Token{
 					Type:  ty,
 					Value: text,
+					Pos:   posi,
 				}
 				tokens = append(tokens, token)
 			}
@@ -89,7 +89,7 @@ func getTokenType(tok gtoken.Token, tokText string) (types.TokenType, string) {
 	switch tok {
 	case gtoken.VAR:
 		ty = types.Var
-	case gtoken.IDENT/*, gtoken.ILLEGAL*/:
+	case gtoken.IDENT /*, gtoken.ILLEGAL*/ :
 		switch tokText {
 		case "var":
 			ty = types.Var

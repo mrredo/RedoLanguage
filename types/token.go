@@ -1,5 +1,7 @@
 package types
 
+import gtoken "go/token"
+
 type TokenType int
 
 const (
@@ -34,9 +36,5 @@ const (
 type Token struct {
 	Type  TokenType
 	Value string
-	Pos   TokenPos
-}
-type TokenPos struct {
-	Start int
-	//end   int
+	Pos   gtoken.Position
 }
