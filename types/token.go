@@ -31,6 +31,7 @@ const (
 	Expression
 	Assign
 	AssignExpression
+	IdentifierExpression
 )
 
 type Token struct {

@@ -14,6 +14,7 @@ func main() {
 
 var hello =10+10+10+10
 hello += 10+10
+print(hello)
 `
 
 	tokens := lexer.Tokenize(content)
